@@ -1,0 +1,13 @@
+node_modules
+dist
+dist-single
+.art-tmp
+*.local
+.DS_Store
+
+# Cody's campaign source documents stay private (DM notes with unrevealed plot).
+DM Notes_ Valisar Worldbuilding Master Doc*.md
+DM Notes_ Valisar Worldbuilding Master Doc*.pdf
+Valisar Active Campaign Notes*.md
+Valisar Active Campaign Notes*.pdf
+bonemoon-art.zip
