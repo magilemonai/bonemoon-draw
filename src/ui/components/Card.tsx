@@ -3,6 +3,8 @@ import type { CardDef, Face, Keyword, RelicInstance } from '../../engine/types'
 import { rankLine } from '../../data'
 import { card as cardDef } from '../../data'
 import { Sigil } from '../sigils'
+import { ArtImage } from './ArtImage'
+import { useStore } from '../store'
 
 export type CardSize = 'lane' | 'hand' | 'full' | 'mini'
 
@@ -70,6 +72,7 @@ function printedStats(def: CardDef, face: Face) {
 
 function FaceView(props: CardProps & { which: Face }) {
   const { def, which, size } = props
+  const uiKit = useStore((s) => s.uiKit)
   const fd = which === 'upright' ? def.upright : def.reversed
   const active = which === props.face
   const stats = active && props.atk !== undefined ? { atk: props.atk, hp: props.hp ?? 0 } : printedStats(def, which)
@@ -150,6 +153,7 @@ function FaceView(props: CardProps & { which: Face }) {
           </>
         )}
         {def.type !== 'figure' && <span className="card-type">{def.type === 'omen' ? 'Omen' : 'Relic'}</span>}
+        {uiKit && size !== 'mini' && <ArtImage id={`ui/frame-${which === 'reversed' ? 'dusk' : def.suit}`} ext="png" className="card-frame-art" />}
       </div>
     </div>
   )

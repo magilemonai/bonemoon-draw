@@ -1,13 +1,15 @@
 import { useState } from 'react'
-import { ART_INLINE } from '../../generated/art-inline'
+import { artSrc } from '../art'
 
 const EXTS = ['jpg', 'png', 'webp']
 
-// Loads the embedded copy (single-file build) or public/art/<id>.jpg, then .png, then .webp.
-// Renders nothing if none exist.
-export function ArtImage({ id, className, alt = '', onLoad }: { id: string; className?: string; alt?: string; onLoad?: () => void }) {
+// Loads the embedded copy (single-file build) or public/art/<id>.<ext>, trying jpg, png, webp.
+// Pass `ext` to try one format only (the UI kit is transparent PNG). Renders nothing if absent.
+export function ArtImage({ id, className, alt = '', onLoad, ext }: { id: string; className?: string; alt?: string; onLoad?: () => void; ext?: string }) {
   const [i, setI] = useState(0)
-  if (i >= EXTS.length) return null
-  const src = ART_INLINE[id] ?? `${import.meta.env.BASE_URL}art/${id}.${EXTS[i]}`
+  const exts = ext ? [ext] : EXTS
+  if (i >= exts.length) return null
+  const src = artSrc(id, exts[i])
+  if (!src) return null
   return <img className={className} src={src} alt={alt} draggable={false} onLoad={onLoad} onError={() => setI((n) => n + 1)} />
 }

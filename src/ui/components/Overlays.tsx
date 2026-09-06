@@ -4,16 +4,19 @@ import { cardCost } from '../../engine/queries'
 import type { GameState } from '../../engine/types'
 import { useStore } from '../store'
 import { Card, CardSpread } from './Card'
+import { ArtImage } from './ArtImage'
 
 export function Banners() {
   const fx = useStore((s) => s.fx)
+  const uiKit = useStore((s) => s.uiKit)
   const banners = fx.filter((f) => f.kind === 'banner')
   const flashes = fx.filter((f) => f.kind === 'flash')
   return (
     <>
       <AnimatePresence>
         {banners.slice(-1).map((b) => (
-          <motion.div key={b.id} className="banner" initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.03 }} transition={{ duration: 0.35 }}>
+          <motion.div key={b.id} className={`banner ${uiKit ? 'has-ribbon' : ''}`} initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.03 }} transition={{ duration: 0.35 }}>
+            {uiKit && <ArtImage id="ui/banner" ext="png" className="banner-ribbon" />}
             <span className="banner-rule" />
             <span className="banner-text">{b.text}</span>
             {b.sub && <span className="banner-sub">{b.sub}</span>}

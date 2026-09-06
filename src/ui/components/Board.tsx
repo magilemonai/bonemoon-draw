@@ -6,6 +6,7 @@ import { LANE_NAMES } from '../../engine/types'
 import { useStore, type Selection } from '../store'
 import { Card } from './Card'
 import { significator } from '../../data'
+import { ArtImage } from './ArtImage'
 
 // Which slots light up given the current selection?
 export function computeHighlights(state: GameState, sel: Selection): { targets: TargetRef[]; lanes: LaneIndex[]; moves: LaneIndex[] } {
@@ -66,6 +67,7 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
   const inspect = useStore((s) => s.inspect)
   const dispatch = useStore((s) => s.dispatch)
   const playing = useStore((s) => s.playing)
+  const uiKit = useStore((s) => s.uiKit)
   const hl = computeHighlights(state, sel)
   const ref: TargetRef = { kind: 'figure', player: owner, lane }
   const isTarget = hl.targets.some((t) => sameRef(t, ref))
@@ -127,6 +129,7 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
   return (
     <div className={`slot ${isMine ? 'slot-mine' : 'slot-theirs'} hl-${highlight} ${fig ? 'has-fig' : 'is-empty'}`} id={`slot-${owner}-${lane}`} onClick={fig ? undefined : onClick} role={fig ? undefined : 'button'} tabIndex={fig ? undefined : 0}>
       <span className="slot-name">{LANE_NAMES[lane]}</span>
+      {!fig && uiKit && <ArtImage id="ui/lane-mark" ext="png" className="slot-mark" />}
       <AnimatePresence mode="popLayout">
         {fig && (
           <motion.div
@@ -183,8 +186,10 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
 export function Board({ state }: { state: GameState }) {
   const me = state.humanPlayer
   const them = other(me)
+  const tableArt = useStore((s) => s.tableArt)
   return (
-    <div className="board">
+    <div className={`board ${tableArt ? 'has-cloth' : ''}`}>
+      {tableArt && <ArtImage id="table" className="board-cloth" />}
       <div className="lane-row lane-row-theirs">
         {([0, 1, 2] as LaneIndex[]).map((l) => (
           <Slot key={l} state={state} owner={them} lane={l} fig={state.players[them].lanes[l]} isMine={false} />

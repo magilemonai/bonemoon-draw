@@ -4,7 +4,7 @@
 
 import { useState } from 'react'
 import type { CardDef, Face } from '../engine/types'
-import { ART_INLINE } from '../generated/art-inline'
+import { artSrc } from './art'
 
 const SUIT_INK: Record<string, string> = {
   suns: '#c9962b',
@@ -169,7 +169,8 @@ const EXTS = ['jpg', 'png', 'webp']
 
 export function Sigil({ def, face, className }: { def: CardDef; face: Face; className?: string }) {
   const [extIdx, setExtIdx] = useState(0)
-  const imgOk = extIdx < EXTS.length
+  const imgSrc = extIdx < EXTS.length ? artSrc(def.id, EXTS[extIdx]) : null
+  const imgOk = imgSrc !== null
   const ink = SUIT_INK[def.suit]
   const [w0, w1] = SUIT_WASH[def.suit]
   const seed = hash(def.id)
@@ -187,7 +188,7 @@ export function Sigil({ def, face, className }: { def: CardDef; face: Face; clas
       {imgOk && (
         <img
           className="sigil-img"
-          src={ART_INLINE[def.id] ?? `${import.meta.env.BASE_URL}art/${def.id}.${EXTS[extIdx]}`}
+          src={imgSrc ?? undefined}
           alt=""
           onError={() => setExtIdx((i) => i + 1)}
           draggable={false}

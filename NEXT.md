@@ -1,5 +1,8 @@
 # NEXT
 
+- [ ] [cody] Send docs/UI_REVIEW_PACKET.md and docs/UI_KIT_PROMPTS.md out for an interface critique and ornament kit
+    The packet points at the live page and asks nine questions. The kit is 13 transparent PNGs
+    (six card frames, a lane mark, a banner ribbon, five emblems); unzip into public/art/ and the game wears them.
 - [ ] [cody] Send docs/DESIGN_REVIEW_PACKET.md to an outside designer for a written critique
     The packet is read-only: rules, every card, the decks, a fresh sim, and eight questions. Ask for prose,
     with card names and numbers. Bring the answers back here; each proposal gets checked against `pnpm sim`

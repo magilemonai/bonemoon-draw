@@ -602,6 +602,62 @@ h3 {
   opacity: 1;
 }
 
+/* optional UI kit overlays (public/art/ui/*) */
+.card-frame-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0.95;
+}
+.face-reversed .card-frame-art {
+  filter: hue-rotate(-20deg) saturate(0.9);
+}
+.slot-mark {
+  position: absolute;
+  inset: 8%;
+  width: 84%;
+  height: 84%;
+  object-fit: contain;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.slot.has-fig .slot-mark {
+  display: none;
+}
+.board-cloth {
+  position: absolute;
+  inset: -2px -6px;
+  width: calc(100% + 12px);
+  height: calc(100% + 4px);
+  object-fit: cover;
+  border-radius: 18px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+.board.has-cloth::before {
+  background: none;
+}
+.banner.has-ribbon {
+  background: none;
+  padding: 26px 48px;
+}
+.banner-ribbon {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: -1;
+}
+.banner.has-ribbon .banner-rule {
+  display: none;
+}
+
 /* selection / highlight rings */
 .card::after {
   content: '';

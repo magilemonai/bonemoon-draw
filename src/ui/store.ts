@@ -8,6 +8,7 @@ import { chooseAction } from '../ai/ai'
 import type { Action, Face, GameEvent, GameState, LaneIndex, PlayerId, Step, TargetRef } from '../engine/types'
 import { card, significator } from '../data'
 import { figureName } from '../engine/queries'
+import { artSrc } from './art'
 
 export type Screen = 'title' | 'choose' | 'battle' | 'codex' | 'rules'
 
@@ -45,6 +46,8 @@ interface UIState {
   humanSig: string
   reduceMotion: boolean
   speed: number // 1 = normal
+  uiKit: boolean // public/art/ui/* is present (probed once)
+  tableArt: boolean // public/art/table.jpg is present
 
   goto: (s: Screen) => void
   startGame: (humanSig: string, aiSig: string) => void
@@ -218,6 +221,8 @@ export const useStore = create<UIState>((set, get) => ({
   humanSig: 'sig-daxon',
   reduceMotion: typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
   speed: 1,
+  uiKit: false,
+  tableArt: false,
 
   goto: (screen) => set({ screen, selection: { kind: 'none' } }),
   setSpeed: (speed) => set({ speed }),
@@ -290,6 +295,19 @@ export const useStore = create<UIState>((set, get) => ({
     }, wait)
   },
 }))
+
+// Probe once for optional art: the UI kit overlays and the table cloth.
+if (typeof window !== 'undefined') {
+  const probe = (id: string, key: 'uiKit' | 'tableArt') => {
+    const src = artSrc(id)
+    if (!src) return
+    const img = new Image()
+    img.onload = () => useStore.setState({ [key]: true } as Partial<UIState>)
+    img.src = src
+  }
+  probe('ui/frame-major', 'uiKit')
+  probe('table', 'tableArt')
+}
 
 // Expire fx on a timer so damage numbers fade.
 if (typeof window !== 'undefined') {

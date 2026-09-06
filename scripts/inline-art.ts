@@ -51,6 +51,19 @@ for (const f of readdirSync(SRC).sort()) {
   total += buf.length
   map[id] = `data:image/jpeg;base64,${buf.toString('base64')}`
 }
+// The UI kit: transparent PNG overlays, kept as PNG and only downscaled.
+const UI = join(SRC, 'ui')
+if (existsSync(UI)) {
+  for (const f of readdirSync(UI).sort()) {
+    if (!/\.png$/i.test(f)) continue
+    const id = f.replace(/\.[^.]+$/, '')
+    const out = join(TMP, `ui-${id}.png`)
+    execFileSync('sips', ['-Z', '640', join(UI, f), '--out', out], { stdio: 'ignore' })
+    const buf = readFileSync(out)
+    total += buf.length
+    map[`ui/${id}`] = `data:image/png;base64,${buf.toString('base64')}`
+  }
+}
 rmSync(TMP, { recursive: true, force: true })
 write(map)
 console.log(`inlined ${Object.keys(map).length} images, ${(total / 1024 / 1024).toFixed(2)} MB of jpeg before base64`)
