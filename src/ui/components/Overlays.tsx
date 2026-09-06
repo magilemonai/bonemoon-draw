@@ -3,8 +3,9 @@ import { card, significator } from '../../data'
 import { cardCost } from '../../engine/queries'
 import type { GameState } from '../../engine/types'
 import { useStore } from '../store'
-import { Card, CardSpread } from './Card'
+import { Card } from './Card'
 import { ArtImage } from './ArtImage'
+import { CardInspect } from './Hero'
 
 export function Banners() {
   const fx = useStore((s) => s.fx)
@@ -78,8 +79,7 @@ export function InspectModal({ state }: { state: GameState | null }) {
             Close
           </button>
         </div>
-        <CardSpread def={def} cost={cost} />
-        {sel.face === 'reversed' && <p className="modal-copy">This card is currently Reversed.</p>}
+        <CardInspect key={`${def.id}-${sel.face}`} def={def} initialFace={sel.face} cost={cost} />
       </motion.div>
     </motion.div>
   )

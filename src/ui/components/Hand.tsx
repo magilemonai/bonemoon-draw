@@ -4,6 +4,7 @@ import { availableSpark, cardCost, playableFaces, targetsFor } from '../../engin
 import type { Face, GameState } from '../../engine/types'
 import { useStore } from '../store'
 import { Card, RulesText } from './Card'
+import { Sigil } from '../sigils'
 
 export function Hand({ state }: { state: GameState }) {
   const p = state.humanPlayer
@@ -109,6 +110,10 @@ export function FaceChooser({ state }: { state: GameState }) {
           Cancel
         </button>
       </div>
+      <div className="face-chooser-body">
+      <div className={`face-chooser-hero suit-${def.suit}`}>
+        <Sigil def={def} face="upright" />
+      </div>
       <div className="face-chooser-faces">
         {(['upright', 'reversed'] as Face[]).map((face) => {
           const fd = face === 'upright' ? def.upright : def.reversed
@@ -129,6 +134,7 @@ export function FaceChooser({ state }: { state: GameState }) {
             </button>
           )
         })}
+      </div>
       </div>
     </motion.div>
   )

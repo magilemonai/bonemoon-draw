@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { SIGNIFICATORS, SUIT_NAMES, card } from '../../data'
+import { SIGNIFICATORS, SUIT_NAMES } from '../../data'
 import { useStore } from '../store'
-import { Card } from '../components/Card'
+import { ArtImage } from '../components/ArtImage'
 
 export function Choose() {
   const goto = useStore((s) => s.goto)
@@ -31,8 +31,9 @@ export function Choose() {
       <div className="sig-grid">
         {SIGNIFICATORS.map((s) => (
           <button key={s.id} type="button" className={`sig-choice suit-${s.suits[0]} ${mine === s.id ? 'is-picked' : ''}`} onClick={() => setMine(s.id)}>
-            <div className="sig-choice-card">
-              <Card def={card(s.cardId)} face="upright" size="mini" />
+            <div className="sig-choice-portrait">
+              <ArtImage id={s.id} />
+              <span className="sig-choice-numeral">{s.numeral}</span>
             </div>
             <div className="sig-choice-body">
               <span className="sig-choice-name">{s.name}</span>

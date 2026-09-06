@@ -5,6 +5,7 @@ import type { Suit } from '../../engine/types'
 import { useStore } from '../store'
 import { Card } from '../components/Card'
 import { InspectModal } from '../components/Overlays'
+import { Sigil } from '../sigils'
 
 const RANK_ORDER = ['ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'page', 'knight', 'queen', 'king']
 
@@ -14,6 +15,7 @@ export function Codex() {
   const sel = useStore((s) => s.selection)
   const [suit, setSuit] = useState<Suit | 'tokens'>('major')
   const [q, setQ] = useState('')
+  const [view, setView] = useState<'paintings' | 'cards'>('paintings')
 
   const cards = useMemo(() => {
     const pool = suit === 'tokens' ? TOKENS : DECK_CARDS.filter((c) => c.suit === suit)
@@ -42,12 +44,33 @@ export function Codex() {
           </button>
         ))}
         <input className="codex-search" placeholder="Search names and text" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search the codex" />
+        <span className="codex-view" role="group" aria-label="View">
+          <button type="button" className={view === 'paintings' ? 'is-on' : ''} onClick={() => setView('paintings')}>
+            Paintings
+          </button>
+          <button type="button" className={view === 'cards' ? 'is-on' : ''} onClick={() => setView('cards')}>
+            Cards
+          </button>
+        </span>
       </div>
-      <div className="codex-grid">
-        {cards.map((c) => (
-          <Card key={c.id} def={c} face="upright" size="hand" onClick={() => inspect(c.id, 'upright')} />
-        ))}
-      </div>
+      {view === 'cards' ? (
+        <div className="codex-grid">
+          {cards.map((c) => (
+            <Card key={c.id} def={c} face="upright" size="hand" onClick={() => inspect(c.id, 'upright')} />
+          ))}
+        </div>
+      ) : (
+        <div className="gallery">
+          {cards.map((c) => (
+            <button key={c.id} type="button" className={`gallery-tile suit-${c.suit}`} onClick={() => inspect(c.id, 'upright')}>
+              <span className="gallery-art">
+                <Sigil def={c} face="upright" />
+              </span>
+              <span className="gallery-name">{c.name}</span>
+            </button>
+          ))}
+        </div>
+      )}
       <AnimatePresence>{sel.kind === 'inspect' && <InspectModal key="inspect" state={null} />}</AnimatePresence>
     </div>
   )
