@@ -94,7 +94,7 @@ export function FaceChooser({ state }: { state: GameState }) {
 
   const hint = (face: Face) => {
     const fd = face === 'upright' ? def.upright : def.reversed
-    if (def.type === 'figure') return fd.target && fd.target !== 'none' && targetsFor(state, p, fd.target).length ? 'Then choose a target, then a lane.' : 'Then choose a lane.'
+    if (def.type === 'figure') return fd.target && fd.target !== 'none' && targetsFor(state, p, fd.target, { pierceVeil: fd.pierceVeil }).length ? 'Then choose a target, then a lane.' : 'Then choose a lane.'
     if (def.type === 'relic') return 'Then choose one of your Figures.'
     return fd.target && fd.target !== 'none' && targetsFor(state, p, fd.target, { fromOmen: true }).length ? 'Then choose a target.' : 'Cast now.'
   }

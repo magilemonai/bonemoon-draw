@@ -5,6 +5,19 @@ import type { CardDef } from '../engine/types'
 
 export const TOKENS: CardDef[] = [
   {
+    id: 'tok-spark',
+    name: 'Spent Sphere',
+    suit: 'gears',
+    rank: 'token',
+    type: 'omen',
+    cost: 0,
+    token: true,
+    upright: { text: 'Gain 1 Spark this turn.', effects: [{ trigger: 'cast', ops: [{ op: 'spark', n: 1 }] }] },
+    reversed: { text: 'Gain 1 Spark this turn.', effects: [{ trigger: 'cast', ops: [{ op: 'spark', n: 1 }] }] },
+    flavor: 'One charge left in it. The second player at the table gets to spend it.',
+    art: 'a dim Eldertech sphere with a single crystal still glowing, resting in an open palm',
+  },
+  {
     id: 'tok-gloomghast',
     name: 'Gloomghast',
     suit: 'antlers',

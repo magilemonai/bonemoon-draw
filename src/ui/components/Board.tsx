@@ -23,14 +23,14 @@ export function computeHighlights(state: GameState, sel: Selection): { targets: 
       if (def.type === 'figure') {
         // Figures with an Arrive target: choose the target first, then the lane.
         if (fd.target && fd.target !== 'none' && !sel.target) {
-          const targets = targetsFor(state, p, fd.target)
+          const targets = targetsFor(state, p, fd.target, { pierceVeil: fd.pierceVeil })
           if (targets.length) return { targets, lanes: [], moves: [] }
         }
         const lanes = ([0, 1, 2] as LaneIndex[]).filter((l) => me.lanes[l] === null)
         return { targets: [], lanes, moves: [] }
       }
       if (def.type === 'relic') return { targets: targetsFor(state, p, 'friendlyFigure'), lanes: [], moves: [] }
-      if (fd.target && fd.target !== 'none') return { targets: targetsFor(state, p, fd.target, { fromOmen: true }), lanes: [], moves: [] }
+      if (fd.target && fd.target !== 'none') return { targets: targetsFor(state, p, fd.target, { fromOmen: true, pierceVeil: fd.pierceVeil }), lanes: [], moves: [] }
       return { targets: [], lanes: [], moves: [] }
     }
     case 'figure': {
@@ -57,7 +57,7 @@ export function figureNeedsTarget(state: GameState, defId: string, face: 'uprigh
   const def = card(defId)
   const fd = face === 'upright' ? def.upright : def.reversed
   if (def.type !== 'figure' || !fd.target || fd.target === 'none') return false
-  return targetsFor(state, state.humanPlayer, fd.target).length > 0
+  return targetsFor(state, state.humanPlayer, fd.target, { pierceVeil: fd.pierceVeil }).length > 0
 }
 
 function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: PlayerId; lane: LaneIndex; fig: FigureInstance | null; isMine: boolean }) {

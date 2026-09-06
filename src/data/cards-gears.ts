@@ -56,8 +56,9 @@ export const GEARS: CardDef[] = [
     attack: 2,
     health: 2,
     upright: {
-      text: '**Arrive:** an enemy Figure loses **Veiled** and **Guard**. (A jailbroken Knock.)',
+      text: '**Arrive:** an enemy Figure (even a Veiled one) loses **Veiled** and **Guard**. (A jailbroken Knock.)',
       target: 'enemyFigure',
+      pierceVeil: true,
       effects: [{ trigger: 'arrive', ops: [{ op: 'removeKw', to: 'chosen', kw: 'veiled' }, { op: 'removeKw', to: 'chosen', kw: 'guard' }] }],
     },
     reversed: {

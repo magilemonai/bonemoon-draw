@@ -119,9 +119,31 @@ You have Lake Mirrara in hand. Upright, it flips a Figure and draws you a card, 
 
 You have Fin & Bin for 2. You play them Upright into Present. Their Arrive makes your next card this turn cost 1 less. Now Lake Mirrara costs 3, and you have 1 left. Not enough.
 
-So you play Fin & Bin and end the turn. The Oondray swings into Present, trades with Fin & Bin (3 damage kills the 1/2, and Fin & Bin's 1 Attack scratches the Oondray to 3/1). Next turn you have 4 Spark, Lake Mirrara flips the scratched Oondray Upright: it becomes a 2/3 with one wound, a 2/2. You draw a card. Now you have a turn to deal with a 2/2 instead of a 3/2 that hits face every round.
+So you play Fin & Bin and end the turn. The Oondray swings into Present and kills Fin & Bin (3 damage on a 1/2), and their 1 Attack scratches the Oondray to 3/1. Next turn you have 4 Spark. Lake Mirrara flips the scratched Oondray Upright: it becomes a 2/3 with one wound, a 2/2, and you draw a card. Now you face a 2/2 instead of a 3/2 that hits you every round, and your Fin & Bin are Reversed in your hand's memory only: they died.
 
-Or, with 4 Spark, you flip Fin & Bin. They become 2/1. Not this time.
+The sharper version of the same trick: an enemy Heartwood (1/8) that has taken a single wound is an 8/1 with a single wound after Lake Mirrara, which is to say a dead Heartwood for 4 Spark and a card.
+
+## How things resolve
+
+The fine print. Every line here is what the engine does, and each has a test.
+
+- **Start of a turn, in order.** Your Spark maximum rises and refills. The Bone Moon bites if it is up. You draw (two on a Full Moon). Aegis you carry recharges. Start-of-turn text fires. A Significator at 0 Health loses at once, at any point, and nothing later in the turn brings them back.
+- **One face at a time.** A Figure's text, keywords, and auras are those of its current face. Turn it over and the old face is gone, including anything it was about to do at the end of the turn. The Sleepless Sentry played Reversed, attacked, and turned Upright is a Guard that stays.
+- **Flipping.** Wounds are checked the moment a face turns. A Figure that dies from its own flip fires none of its flip triggers. "Becomes Upright" is a flip and respects Fixed. A global flip (the Wheel, the Dome, Cernis) turns every Figure at once, checks wounds, then fires the survivors' flip triggers in lane order, yours first. Rekindle's return to Reversed is not a flip.
+- **Rekindle replaces death.** No Last Rite, no death triggers, once per Figure. Fixed does not stop the return.
+- **Effects resolve one at a time**, and deaths are checked after each one. Damage to every enemy Figure is one effect; the Last Rites it causes happen before the next effect.
+- **Targets are exact.** An effect that chose a Figure follows that Figure. If it has left the lane, the effect fizzles rather than hitting whatever arrived.
+- **Copies.** Mordeaux repeats an Omen after the original resolves, with the same face and target. The copy costs nothing, is not a cast (it wakes no other Mordeaux and pays no Magician), fizzles if the chosen Figure is gone, and never happens if the original was countered. Two Mordeaux make two copies.
+- **Spark gained this turn** can exceed your maximum and ten.
+- **Aegis.** Granted Aegis (Dawn, the Lovers, Soren) is one shield. Aegis a Figure carries (a Relic, a face, Rorik's aura) is on when the Figure enters and recharges at the start of your turn.
+- **Guard** intercepts attacks aimed at your Significator from an adjacent empty lane, including Gale attacks. With a Guard on each side, the one nearer Past steps in.
+- **An attack stops** if its defender leaves the lane before the blow. The attacker does not retarget.
+- **Arrive** fires when a card is played from hand. Summoned Figures do not Arrive.
+- **Shatters, ceases to exist** (Mr. Zero, Vel): removed with no Last Rite. **Dissolves** (the Sentry): a death.
+- **Moving** is a Figure's action for the turn, and a Figure may move the turn it enters. When an effect moves a Figure, an enemy Figure is pushed toward Past if that lane is open and toward Future otherwise; your own Figure goes toward Present when it can.
+- **Read** with a full hand burns the card you keep. Read with one card in the deck draws it.
+- **Calvera Upright** against fewer than two cards deals 5 and leaves the hand alone. **Brog** costs 2.
+- **The Bone Moon Reversed** rises at the start of the next round, one point for each player, then grows. It does nothing if the Moon is already up or already due sooner.
 
 ## Design notes
 
@@ -256,7 +278,7 @@ Format: name, rank, type, cost, printed Attack/Health for Figures. Upright text,
 
 **The Moon: The Bone Moon** (XVIII, omen, cost 5)
 - Upright: The stars glow brighter: draw 2 cards and gain 2 Spark this turn.
-- Reversed (The Bone Moon Rises): The Bone Moon rises now. Every Significator takes damage at the start of each turn from here on, and it grows.
+- Reversed (The Bone Moon Rises): The Bone Moon rises at the start of the next round. Every Significator takes damage at the start of each of their turns from then on, and it grows.
 
 **The Sun: The Spark** (XIX, omen, cost 3)
 - Upright: A friendly Figure becomes Upright, gets +2/+2, and is **Fixed**.
@@ -459,7 +481,7 @@ Format: name, rank, type, cost, printed Attack/Health for Figures. Upright text,
 - Reversed (Mr. Boscoe, Treats I Have): **Arrive:** draw a card.
 
 **Yvette Mirthwell** (Three of Gears, figure, cost 2, 2/2)
-- Upright: **Arrive:** an enemy Figure loses **Veiled** and **Guard**. (A jailbroken Knock.)
+- Upright: **Arrive:** an enemy Figure (even a Veiled one) loses **Veiled** and **Guard**. (A jailbroken Knock.)
 - Reversed (Yvette, Too Close to the Leylines): **Arrive:** draw 2 cards. Your Significator takes 2 damage.
 
 **Null-Zone Pylon** (Four of Gears, figure, cost 3, 1/4)
@@ -508,6 +530,8 @@ Format: name, rank, type, cost, printed Attack/Health for Figures. Upright text,
 
 ### Tokens
 
+**Spent Sphere** (token omen, undefined/undefined). Upright: Gain 1 Spark this turn. Reversed: Gain 1 Spark this turn.
+
 **Gloomghast** (token figure, 1/1). Upright: no text Reversed: **Veiled.**
 
 **Raccoon** (token figure, 1/1). Upright: Chittering. Reversed: **Windborne.**
@@ -524,49 +548,49 @@ Format: name, rank, type, cost, printed Attack/Health for Figures. Upright text,
 
 ## Simulation
 
-120 games, a greedy one-step AI playing both sides, every Significator against a rotating opponent. Average length 10.3 rounds (shortest 5, longest 16). The Bone Moon rises in round 10.
+120 games, a greedy one-step AI playing both sides, every Significator against a rotating opponent. Average length 8.1 rounds (shortest 5, longest 14). The Bone Moon rises in round 10.
 
 | Significator | Wins | Games | Rate |
 |---|---|---|---|
-| Daxon Lamn | 6 | 40 | 15% |
-| Rorik Flamebeard | 34 | 40 | 85% |
-| Lirielle Starwhisper | 12 | 40 | 30% |
-| Lord-Provost Elaina Masque | 28 | 40 | 70% |
-| Luigi Bonemoon | 22 | 40 | 55% |
-| Imperator Amegmon Shazz | 18 | 40 | 45% |
+| Daxon Lamn | 12 | 40 | 30% |
+| Rorik Flamebeard | 28 | 40 | 70% |
+| Lirielle Starwhisper | 11 | 40 | 28% |
+| Lord-Provost Elaina Masque | 29 | 40 | 73% |
+| Luigi Bonemoon | 27 | 40 | 68% |
+| Imperator Amegmon Shazz | 13 | 40 | 33% |
 
 Cards by win rate of the player who played them (at least 8 appearances). High is a hint of strength, low a hint of weakness, with the AI caveat above.
 
 | Card | Win rate | Games played |
 |---|---|---|
-| Tyserion I, the Golden Blade | 88% | 17 |
-| Judgement: The Septor’s Chorus | 88% | 16 |
-| The Hermit: Luigi Bonemoon | 86% | 22 |
-| The Star: Lirielle Starwhisper | 86% | 22 |
-| Dawn Over Aurengate | 85% | 53 |
-| The Fool: Daxon Lamn | 82% | 17 |
-| The Heartwood | 82% | 17 |
-| Ilzaren, the Resplendent King | 82% | 45 |
-| Wheel of Fortune: The Orrery | 81% | 21 |
-| The Festival of Radiant Dawn | 76% | 45 |
-| Lake Mirrara | 73% | 26 |
-| Archmage Severyn Caldreth | 70% | 27 |
-| Kaelen Goldeneye | 68% | 47 |
-| Thorn of the Bladed Wind | 68% | 34 |
-| The Oondray | 67% | 60 |
+| The Festival of Radiant Dawn | 96% | 25 |
+| The Chariot: The Solar Wind | 88% | 8 |
+| The Fool: Daxon Lamn | 79% | 14 |
+| The Hermit: Luigi Bonemoon | 75% | 16 |
+| Tyserion I, the Golden Blade | 75% | 8 |
+| Judgement: The Septor’s Chorus | 73% | 15 |
+| The Magician: Luigi Castanata | 71% | 21 |
+| Mr. Zero | 71% | 42 |
+| Wheel of Fortune: The Orrery | 70% | 10 |
+| Dawn Over Aurengate | 70% | 46 |
+| Ilzaren, the Resplendent King | 68% | 28 |
+| Brog | 68% | 40 |
+| Archmage Severyn Caldreth | 65% | 17 |
+| The Garbage Boyz | 64% | 14 |
+| Thorn of the Bladed Wind | 64% | 36 |
 | ... | | |
-| Archivist Esmerelda Gotch | 38% | 47 |
-| Kaipo Nuvane | 36% | 25 |
-| The Solar Flare Cannon | 32% | 37 |
-| Brookskippers | 32% | 22 |
-| Vraxxis, the Hungering Cinder | 31% | 16 |
-| Vel, the Emberlight | 31% | 29 |
-| Taranis, the Laughing Crow | 28% | 36 |
-| Kaipo’s Pearl | 27% | 49 |
-| Tidecaller: Low Tide | 16% | 25 |
-| Inspector Bramble | 15% | 13 |
-| Marin, Spirit of Ocean Waves | 15% | 26 |
-| Calvera Blackwake, the Mad Pirate Queen | 14% | 28 |
-| Bimp Bossington | 14% | 21 |
-| Bill Boggs, Cartel Runner | 14% | 14 |
-| The Hanged Man: Rorik Flamebeard | 14% | 22 |
+| The Empress: Que’Rubra | 43% | 21 |
+| Archivist Esmerelda Gotch | 42% | 38 |
+| Yvette Mirthwell | 42% | 53 |
+| Wisplight | 40% | 52 |
+| The High Priestess: Nitriti | 38% | 24 |
+| Elder Voren Nightbloom | 36% | 39 |
+| Lorien of the Hand | 36% | 14 |
+| Marin, Spirit of Ocean Waves | 33% | 12 |
+| Lake Mirrara | 31% | 16 |
+| Bimp Bossington | 30% | 10 |
+| Shadowling Stalkers | 27% | 22 |
+| The Emperor: Izuriel Sakazarac II | 25% | 8 |
+| Taranis, the Laughing Crow | 21% | 28 |
+| Bill Boggs, Cartel Runner | 20% | 15 |
+| Fin & Bin | 20% | 15 |

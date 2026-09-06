@@ -1,12 +1,19 @@
 # NEXT
 
+- [ ] [cody] Read docs/REVIEW_RESPONSE.md and decide the first balance experiment
+    Recommendation there: ship the rules fixes (done in code), then trial the Spent Sphere for the second seat.
+    The seat split is 65/35 in the 600-game baseline; the token takes it to 58/42. Fallback: first player skips the turn-one draw.
+- [ ] [crew] Lirielle burns two cards a game; test a Full Moon passive of Read 2 instead of an extra draw
+    Define it as a variant in scripts/variants.ts and run `pnpm experiment lirielle-read` against the current baseline.
+- [ ] [crew] Rorik's conditional passive measured 71% to 63%; queue it as the second experiment after the seat fix
+    Variant `rorik-conditional` exists. Rerun it against the post-seat baseline before deciding.
 - [ ] [cody] Second art pass from docs/ART_REVIEW.md: twelve touch-ups, Vraxxis and Cernis first
     The list is at the bottom of the review, one line per file. Same zip format as the first delivery;
     unzip over public/art and the game picks up the new files.
 - [ ] [cody] Send docs/UI_REVIEW_PACKET.md and docs/UI_KIT_PROMPTS.md out for an interface critique and ornament kit
     The packet points at the live page and asks nine questions. The kit is 13 transparent PNGs
     (six card frames, a lane mark, a banner ribbon, five emblems); unzip into public/art/ and the game wears them.
-- [ ] [cody] Send docs/DESIGN_REVIEW_PACKET.md to an outside designer for a written critique
+- [x] [cody] Send docs/DESIGN_REVIEW_PACKET.md to an outside designer for a written critique
     The packet is read-only: rules, every card, the decks, a fresh sim, and eight questions. Ask for prose,
     with card names and numbers. Bring the answers back here; each proposal gets checked against `pnpm sim`
     before it touches a card. Regenerate the packet with `pnpm review-packet` after any card change.

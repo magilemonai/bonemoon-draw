@@ -403,8 +403,8 @@ export const MAJORS: CardDef[] = [
     },
     reversed: {
       name: 'The Bone Moon Rises',
-      text: 'The Bone Moon rises now. Every Significator takes damage at the start of each turn from here on, and it grows.',
-      effects: [{ trigger: 'cast', ops: [{ op: 'boneMoon', rounds: 0 }] }],
+      text: 'The Bone Moon rises at the start of the next round. Every Significator takes damage at the start of each of their turns from then on, and it grows.',
+      effects: [{ trigger: 'cast', ops: [{ op: 'boneMoon', rounds: 1 }] }],
     },
     flavor: 'Gossip in Ebon Vale: goblins in the hills. Ol’ Noggy’s got the mold again. The moon is too big.',
     art: 'a colossal cratered white moon filling the sky over a dead grey plain of twisted trees, tiny human silhouettes casting long shadows toward it',

@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { card, significator } from '../../data'
-import { cardCost } from '../../engine/queries'
+import { attackOf, cardCost, healthOf, keywords } from '../../engine/queries'
 import type { GameState } from '../../engine/types'
 import { useStore } from '../store'
 import { Card } from './Card'
@@ -70,6 +70,22 @@ export function InspectModal({ state }: { state: GameState | null }) {
   if (sel.kind !== 'inspect') return null
   const def = card(sel.defId)
   const cost = state ? cardCost(state, state.humanPlayer, def.id) : def.cost
+  // If this is a Figure on the table, say what it is now and what a flip would do to it.
+  let onTable: string | null = null
+  if (state && sel.uid !== undefined) {
+    for (const pl of state.players) {
+      for (const f of pl.lanes) {
+        if (!f || f.uid !== sel.uid) continue
+        const nowA = attackOf(state, f)
+        const nowH = healthOf(state, f)
+        const fixed = keywords(state, f).includes('fixed')
+        const flipped = { ...f, face: f.face === 'upright' ? 'reversed' : 'upright' } as typeof f
+        const thenA = attackOf(state, flipped)
+        const thenH = healthOf(state, flipped)
+        onTable = `On the table now: ${nowA}/${nowH}${f.damage ? ` with ${f.damage} wound${f.damage > 1 ? 's' : ''}` : ''}. ` + (fixed ? 'Fixed: it cannot be turned.' : thenH <= 0 ? `Turned over it would be ${thenA}/${thenH}, which is to say dead.` : `Turned over it would be ${thenA}/${thenH}.`)
+      }
+    }
+  }
   return (
     <motion.div className="modal-scrim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onClick={close}>
       <motion.div className="modal inspect-modal" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onClick={(e) => e.stopPropagation()}>
@@ -79,6 +95,7 @@ export function InspectModal({ state }: { state: GameState | null }) {
             Close
           </button>
         </div>
+        {onTable && <p className="modal-copy inspect-now">{onTable}</p>}
         <CardInspect key={`${def.id}-${sel.face}`} def={def} initialFace={sel.face} cost={cost} />
       </motion.div>
     </motion.div>

@@ -1,0 +1,744 @@
+{
+  "method": "Constructed scenario arithmetic and snapshot deck parsing; not match simulation.",
+  "source": "/Users/cody/Desktop/Games/Valisar Tarot Battler/docs/DESIGN_REVIEW_PACKET.md",
+  "sha256": "7259a416929f3c22fb3d94d6aa700e92cc732747a4f122ce25d3bd0364fc787c",
+  "packet_audit": {
+    "card_definitions": 78,
+    "decks": {
+      "Daxon Lamn, 0. The Fool": {
+        "cards": 30,
+        "types": {
+          "figure": 20,
+          "omen": 5,
+          "relic": 5
+        },
+        "costs": {
+          "1": 2,
+          "2": 11,
+          "3": 6,
+          "4": 3,
+          "5": 4,
+          "6": 3,
+          "7": 1,
+          "8": 0,
+          "9": 0
+        },
+        "six_plus": 4,
+        "mean_cost": 3.3
+      },
+      "Lirielle Starwhisper, XVII. The Star": {
+        "cards": 30,
+        "types": {
+          "figure": 21,
+          "omen": 9,
+          "relic": 0
+        },
+        "costs": {
+          "1": 4,
+          "2": 9,
+          "3": 2,
+          "4": 7,
+          "5": 2,
+          "6": 3,
+          "7": 2,
+          "8": 1,
+          "9": 0
+        },
+        "six_plus": 6,
+        "mean_cost": 3.53
+      },
+      "Luigi Bonemoon, IX. The Hermit": {
+        "cards": 30,
+        "types": {
+          "figure": 16,
+          "omen": 11,
+          "relic": 3
+        },
+        "costs": {
+          "1": 3,
+          "2": 8,
+          "3": 3,
+          "4": 8,
+          "5": 2,
+          "6": 3,
+          "7": 1,
+          "8": 1,
+          "9": 1
+        },
+        "six_plus": 6,
+        "mean_cost": 3.73
+      },
+      "Rorik Flamebeard, XII. The Hanged Man": {
+        "cards": 30,
+        "types": {
+          "figure": 22,
+          "omen": 7,
+          "relic": 1
+        },
+        "costs": {
+          "1": 4,
+          "2": 7,
+          "3": 4,
+          "4": 8,
+          "5": 2,
+          "6": 2,
+          "7": 2,
+          "8": 1,
+          "9": 0
+        },
+        "six_plus": 5,
+        "mean_cost": 3.53
+      },
+      "Lord-Provost Elaina Masque, V. The Hierophant": {
+        "cards": 30,
+        "types": {
+          "figure": 19,
+          "omen": 10,
+          "relic": 1
+        },
+        "costs": {
+          "1": 2,
+          "2": 4,
+          "3": 4,
+          "4": 7,
+          "5": 4,
+          "6": 5,
+          "7": 1,
+          "8": 2,
+          "9": 1
+        },
+        "six_plus": 9,
+        "mean_cost": 4.4
+      },
+      "Imperator Amegmon Shazz, XV. The Devil": {
+        "cards": 30,
+        "types": {
+          "figure": 18,
+          "omen": 12,
+          "relic": 0
+        },
+        "costs": {
+          "1": 2,
+          "2": 5,
+          "3": 5,
+          "4": 8,
+          "5": 1,
+          "6": 4,
+          "7": 3,
+          "8": 1,
+          "9": 1
+        },
+        "six_plus": 9,
+        "mean_cost": 4.2
+      }
+    },
+    "shipped_deck_owners": {
+      "The Star: Lirielle Starwhisper": [
+        "Rorik Flamebeard, XII. The Hanged Man"
+      ],
+      "The Hermit: Luigi Bonemoon": [
+        "Rorik Flamebeard, XII. The Hanged Man"
+      ],
+      "The Fool: Daxon Lamn": [
+        "Rorik Flamebeard, XII. The Hanged Man"
+      ],
+      "The Heartwood": [
+        "Rorik Flamebeard, XII. The Hanged Man"
+      ],
+      "Calvera Blackwake, the Mad Pirate Queen": [
+        "Daxon Lamn, 0. The Fool"
+      ],
+      "The Hanged Man: Rorik Flamebeard": [
+        "Daxon Lamn, 0. The Fool"
+      ],
+      "Bill Boggs, Cartel Runner": [
+        "Daxon Lamn, 0. The Fool"
+      ],
+      "Tidecaller: Low Tide": [
+        "Daxon Lamn, 0. The Fool"
+      ]
+    }
+  },
+  "T01_wound_flip": {
+    "heartwood_remaining_before": 7,
+    "heartwood_remaining_after": 0,
+    "oondray_R_remaining_before": 1,
+    "oondray_U_remaining_after": 2
+  },
+  "T02_sentry": {
+    "shazz_arrival_face_damage": 6,
+    "sentry_plus_hero_flip_cost": 6,
+    "sentry_plus_sphere_cost": 5,
+    "sphere_final_u_attack": 3,
+    "sphere_final_u_health": 6,
+    "masque_final_u_health": 6
+  },
+  "T03_liquid_mana": {
+    "current_U": {
+      "no_mordeaux_at_4": 3,
+      "with_mordeaux_at_5_uncapped": 7,
+      "with_mordeaux_at_5_global_cap_10": 7,
+      "with_mordeaux_at_5_current_max_cap_5": 5
+    },
+    "earlier_proposal_U": {
+      "no_mordeaux_at_4": 5,
+      "with_mordeaux_at_5_uncapped": 11,
+      "with_mordeaux_at_5_global_cap_10": 10,
+      "with_mordeaux_at_5_current_max_cap_5": 5
+    },
+    "sphere_with_mordeaux_at_5_uncapped": 6,
+    "dome_with_mordeaux_face_damage": 12,
+    "revised_U_gain3_draw1": {
+      "no_mordeaux_at_4_spark": 3,
+      "no_mordeaux_cards_drawn": 1,
+      "with_mordeaux_at_5_uncapped": 7,
+      "with_mordeaux_cards_drawn": 2
+    }
+  },
+  "T04_pearl": {
+    "turn_two_total_cost": 2,
+    "reversed_pearl": {
+      "attack": 5,
+      "health": 1,
+      "survives_elira_2": false
+    },
+    "upright_pearl": {
+      "attack": 3,
+      "health": 3,
+      "after_elira_2": 1
+    },
+    "earlier_upright_buff": {
+      "attack": 4,
+      "health": 3
+    }
+  },
+  "T05_brookskippers": {
+    "cost": 2,
+    "cards_drawn": 1,
+    "merrick_damage_to_guard_without_move": 4,
+    "merrick_hero_damage_after_move": 4,
+    "merrick_health_after_guard_combat": 1
+  },
+  "T06_tidecaller": {
+    "current_R_on_fisherman": {
+      "attack": 5,
+      "health": 3,
+      "cost_to_daxon": 4
+    },
+    "proposed_R_on_fisherman": {
+      "attack": 4,
+      "health": 3,
+      "cost_to_daxon": 4
+    },
+    "aurium_R_on_fisherman": {
+      "attack": 6,
+      "health": 3,
+      "cost_to_daxon": 4
+    }
+  },
+  "T07_masque": {
+    "current_center_pylon_after_4_damage": 1,
+    "proposed_center_pylon_after_4_damage": 0,
+    "proposed_edge_guardpost_after_3_damage": 1,
+    "proposed_guardpost_after_move_center": 0
+  },
+  "T08_moon_races": {
+    "start12_enemy0": {
+      "no_healing": {
+        "death_round": 14,
+        "death_stage": "own start",
+        "turns": [
+          {
+            "round": 10,
+            "before": 12,
+            "bite": 1,
+            "after_bite": 11,
+            "after_healing": 11,
+            "after_enemy_damage": 11
+          },
+          {
+            "round": 11,
+            "before": 11,
+            "bite": 2,
+            "after_bite": 9,
+            "after_healing": 9,
+            "after_enemy_damage": 9
+          },
+          {
+            "round": 12,
+            "before": 9,
+            "bite": 3,
+            "after_bite": 6,
+            "after_healing": 6,
+            "after_enemy_damage": 6
+          },
+          {
+            "round": 13,
+            "before": 6,
+            "bite": 4,
+            "after_bite": 2,
+            "after_healing": 2,
+            "after_enemy_damage": 2
+          },
+          {
+            "round": 14,
+            "before": 2,
+            "bite": 5,
+            "after_bite": -3,
+            "death": "own start"
+          }
+        ]
+      },
+      "active_only_or_condition_unmet": {
+        "death_round": 17,
+        "death_stage": "own start",
+        "turns": [
+          {
+            "round": 10,
+            "before": 12,
+            "bite": 1,
+            "after_bite": 11,
+            "after_healing": 14,
+            "after_enemy_damage": 14
+          },
+          {
+            "round": 11,
+            "before": 14,
+            "bite": 2,
+            "after_bite": 12,
+            "after_healing": 15,
+            "after_enemy_damage": 15
+          },
+          {
+            "round": 12,
+            "before": 15,
+            "bite": 3,
+            "after_bite": 12,
+            "after_healing": 15,
+            "after_enemy_damage": 15
+          },
+          {
+            "round": 13,
+            "before": 15,
+            "bite": 4,
+            "after_bite": 11,
+            "after_healing": 14,
+            "after_enemy_damage": 14
+          },
+          {
+            "round": 14,
+            "before": 14,
+            "bite": 5,
+            "after_bite": 9,
+            "after_healing": 12,
+            "after_enemy_damage": 12
+          },
+          {
+            "round": 15,
+            "before": 12,
+            "bite": 6,
+            "after_bite": 6,
+            "after_healing": 9,
+            "after_enemy_damage": 9
+          },
+          {
+            "round": 16,
+            "before": 9,
+            "bite": 7,
+            "after_bite": 2,
+            "after_healing": 5,
+            "after_enemy_damage": 5
+          },
+          {
+            "round": 17,
+            "before": 5,
+            "bite": 8,
+            "after_bite": -3,
+            "death": "own start"
+          }
+        ]
+      },
+      "current_rorik_or_condition_met_every_turn": {
+        "death_round": 18,
+        "death_stage": "own start",
+        "turns": [
+          {
+            "round": 10,
+            "before": 12,
+            "bite": 1,
+            "after_bite": 11,
+            "after_healing": 15,
+            "after_enemy_damage": 15
+          },
+          {
+            "round": 11,
+            "before": 15,
+            "bite": 2,
+            "after_bite": 13,
+            "after_healing": 17,
+            "after_enemy_damage": 17
+          },
+          {
+            "round": 12,
+            "before": 17,
+            "bite": 3,
+            "after_bite": 14,
+            "after_healing": 18,
+            "after_enemy_damage": 18
+          },
+          {
+            "round": 13,
+            "before": 18,
+            "bite": 4,
+            "after_bite": 14,
+            "after_healing": 18,
+            "after_enemy_damage": 18
+          },
+          {
+            "round": 14,
+            "before": 18,
+            "bite": 5,
+            "after_bite": 13,
+            "after_healing": 17,
+            "after_enemy_damage": 17
+          },
+          {
+            "round": 15,
+            "before": 17,
+            "bite": 6,
+            "after_bite": 11,
+            "after_healing": 15,
+            "after_enemy_damage": 15
+          },
+          {
+            "round": 16,
+            "before": 15,
+            "bite": 7,
+            "after_bite": 8,
+            "after_healing": 12,
+            "after_enemy_damage": 12
+          },
+          {
+            "round": 17,
+            "before": 12,
+            "bite": 8,
+            "after_bite": 4,
+            "after_healing": 8,
+            "after_enemy_damage": 8
+          },
+          {
+            "round": 18,
+            "before": 8,
+            "bite": 9,
+            "after_bite": -1,
+            "death": "own start"
+          }
+        ]
+      }
+    },
+    "start12_enemy2": {
+      "no_healing": {
+        "death_round": 12,
+        "death_stage": "enemy turn",
+        "turns": [
+          {
+            "round": 10,
+            "before": 12,
+            "bite": 1,
+            "after_bite": 11,
+            "after_healing": 11,
+            "after_enemy_damage": 9
+          },
+          {
+            "round": 11,
+            "before": 9,
+            "bite": 2,
+            "after_bite": 7,
+            "after_healing": 7,
+            "after_enemy_damage": 5
+          },
+          {
+            "round": 12,
+            "before": 5,
+            "bite": 3,
+            "after_bite": 2,
+            "after_healing": 2,
+            "after_enemy_damage": 0,
+            "death": "enemy turn"
+          }
+        ]
+      },
+      "active_only_or_condition_unmet": {
+        "death_round": 15,
+        "death_stage": "own start",
+        "turns": [
+          {
+            "round": 10,
+            "before": 12,
+            "bite": 1,
+            "after_bite": 11,
+            "after_healing": 14,
+            "after_enemy_damage": 12
+          },
+          {
+            "round": 11,
+            "before": 12,
+            "bite": 2,
+            "after_bite": 10,
+            "after_healing": 13,
+            "after_enemy_damage": 11
+          },
+          {
+            "round": 12,
+            "before": 11,
+            "bite": 3,
+            "after_bite": 8,
+            "after_healing": 11,
+            "after_enemy_damage": 9
+          },
+          {
+            "round": 13,
+            "before": 9,
+            "bite": 4,
+            "after_bite": 5,
+            "after_healing": 8,
+            "after_enemy_damage": 6
+          },
+          {
+            "round": 14,
+            "before": 6,
+            "bite": 5,
+            "after_bite": 1,
+            "after_healing": 4,
+            "after_enemy_damage": 2
+          },
+          {
+            "round": 15,
+            "before": 2,
+            "bite": 6,
+            "after_bite": -4,
+            "death": "own start"
+          }
+        ]
+      },
+      "current_rorik_or_condition_met_every_turn": {
+        "death_round": 16,
+        "death_stage": "own start",
+        "turns": [
+          {
+            "round": 10,
+            "before": 12,
+            "bite": 1,
+            "after_bite": 11,
+            "after_healing": 15,
+            "after_enemy_damage": 13
+          },
+          {
+            "round": 11,
+            "before": 13,
+            "bite": 2,
+            "after_bite": 11,
+            "after_healing": 15,
+            "after_enemy_damage": 13
+          },
+          {
+            "round": 12,
+            "before": 13,
+            "bite": 3,
+            "after_bite": 10,
+            "after_healing": 14,
+            "after_enemy_damage": 12
+          },
+          {
+            "round": 13,
+            "before": 12,
+            "bite": 4,
+            "after_bite": 8,
+            "after_healing": 12,
+            "after_enemy_damage": 10
+          },
+          {
+            "round": 14,
+            "before": 10,
+            "bite": 5,
+            "after_bite": 5,
+            "after_healing": 9,
+            "after_enemy_damage": 7
+          },
+          {
+            "round": 15,
+            "before": 7,
+            "bite": 6,
+            "after_bite": 1,
+            "after_healing": 5,
+            "after_enemy_damage": 3
+          },
+          {
+            "round": 16,
+            "before": 3,
+            "bite": 7,
+            "after_bite": -4,
+            "death": "own start"
+          }
+        ]
+      }
+    },
+    "start12_enemy4": {
+      "no_healing": {
+        "death_round": 12,
+        "death_stage": "own start",
+        "turns": [
+          {
+            "round": 10,
+            "before": 12,
+            "bite": 1,
+            "after_bite": 11,
+            "after_healing": 11,
+            "after_enemy_damage": 7
+          },
+          {
+            "round": 11,
+            "before": 7,
+            "bite": 2,
+            "after_bite": 5,
+            "after_healing": 5,
+            "after_enemy_damage": 1
+          },
+          {
+            "round": 12,
+            "before": 1,
+            "bite": 3,
+            "after_bite": -2,
+            "death": "own start"
+          }
+        ]
+      },
+      "active_only_or_condition_unmet": {
+        "death_round": 13,
+        "death_stage": "own start",
+        "turns": [
+          {
+            "round": 10,
+            "before": 12,
+            "bite": 1,
+            "after_bite": 11,
+            "after_healing": 14,
+            "after_enemy_damage": 10
+          },
+          {
+            "round": 11,
+            "before": 10,
+            "bite": 2,
+            "after_bite": 8,
+            "after_healing": 11,
+            "after_enemy_damage": 7
+          },
+          {
+            "round": 12,
+            "before": 7,
+            "bite": 3,
+            "after_bite": 4,
+            "after_healing": 7,
+            "after_enemy_damage": 3
+          },
+          {
+            "round": 13,
+            "before": 3,
+            "bite": 4,
+            "after_bite": -1,
+            "death": "own start"
+          }
+        ]
+      },
+      "current_rorik_or_condition_met_every_turn": {
+        "death_round": 14,
+        "death_stage": "own start",
+        "turns": [
+          {
+            "round": 10,
+            "before": 12,
+            "bite": 1,
+            "after_bite": 11,
+            "after_healing": 15,
+            "after_enemy_damage": 11
+          },
+          {
+            "round": 11,
+            "before": 11,
+            "bite": 2,
+            "after_bite": 9,
+            "after_healing": 13,
+            "after_enemy_damage": 9
+          },
+          {
+            "round": 12,
+            "before": 9,
+            "bite": 3,
+            "after_bite": 6,
+            "after_healing": 10,
+            "after_enemy_damage": 6
+          },
+          {
+            "round": 13,
+            "before": 6,
+            "bite": 4,
+            "after_bite": 2,
+            "after_healing": 6,
+            "after_enemy_damage": 2
+          },
+          {
+            "round": 14,
+            "before": 2,
+            "bite": 5,
+            "after_bite": -3,
+            "death": "own start"
+          }
+        ]
+      }
+    }
+  },
+  "T09_rorik_wording": {
+    "earlier_once_per_turn_max_heals_in_two_player_round": 2,
+    "recommended_own_end_turn_max_heals_in_round": 1
+  },
+  "T10_lirielle_lovers": {
+    "start_hand_before_full_moon_draw": 6,
+    "full_moon_draws": 3,
+    "hand_after_draw": 8,
+    "burned_on_draw": 1,
+    "hand_after_playing_lovers": 7,
+    "wisplight_last_rite_plus_lovers_draws": 3,
+    "extra_burns_after_lovers": 2,
+    "total_burns": 3,
+    "replacement_windborne_attack": 3
+  },
+  "T11_calvera": {
+    "enemy_hp_empty_hand": 5,
+    "upright_arrive_damage": 5,
+    "own_hp_low": 3,
+    "reversed_self_damage": 3,
+    "reversed_body_attack": 5,
+    "reversed_body_health": 5
+  },
+  "T12_first_turn_bonus": {
+    "daxon_first_turn_spark_without": 1,
+    "with_proposed_bonus": 2,
+    "guard_post_plus_pearl_R_cost": 2,
+    "possible_arrival_hero_damage": 5
+  },
+  "T13_board_slot_clear": {
+    "full_own_board": 3,
+    "can_play_vel_from_hand": false,
+    "can_cast_cannon_R": true,
+    "cannon_enemy_aoe": 3,
+    "vel_enemy_aoe_if_slot_available": 5
+  },
+  "T14_bone_moon_totals": {
+    "1": 1,
+    "2": 3,
+    "3": 6,
+    "4": 10,
+    "5": 15,
+    "6": 21
+  }
+}

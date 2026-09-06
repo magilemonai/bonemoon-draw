@@ -13,7 +13,9 @@
     "sim": "tsx scripts/sim.ts",
     "art-prompts": "tsx scripts/art-prompts.ts",
     "lint": "tsc --noEmit -p tsconfig.app.json",
-    "review-packet": "tsx scripts/review-packet.ts"
+    "review-packet": "tsx scripts/review-packet.ts",
+    "baseline": "tsx scripts/baseline.ts",
+    "experiment": "tsx scripts/baseline.ts --variant"
   },
   "dependencies": {
     "motion": "^12.23.0",

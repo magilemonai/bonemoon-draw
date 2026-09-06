@@ -41,7 +41,7 @@ export function figAt(state: GameState, p: PlayerId, lane: LaneIndex): FigureIns
 }
 
 export function refOf(fig: FigureInstance): TargetRef {
-  return { kind: 'figure', player: fig.owner, lane: fig.lane }
+  return { kind: 'figure', player: fig.owner, lane: fig.lane, uid: fig.uid }
 }
 
 export function sigRef(p: PlayerId): TargetRef {
@@ -50,7 +50,10 @@ export function sigRef(p: PlayerId): TargetRef {
 
 export function resolveRef(state: GameState, ref: TargetRef | undefined): FigureInstance | null {
   if (!ref || ref.kind !== 'figure' || ref.lane === undefined) return null
-  return figAt(state, ref.player, ref.lane)
+  const f = figAt(state, ref.player, ref.lane)
+  if (!f) return null
+  if (ref.uid !== undefined && f.uid !== ref.uid) return null // the Figure that was meant has left this lane
+  return f
 }
 
 // ---- Auras ------------------------------------------------------------------
@@ -230,11 +233,11 @@ export function boneMoonRisen(state: GameState): boolean {
 
 // ---- Targeting --------------------------------------------------------------
 
-export function targetsFor(state: GameState, p: PlayerId, spec: TargetSpec, opts?: { self?: FigureInstance; fromOmen?: boolean; fromAbility?: boolean }): TargetRef[] {
+export function targetsFor(state: GameState, p: PlayerId, spec: TargetSpec, opts?: { self?: FigureInstance; fromOmen?: boolean; fromAbility?: boolean; pierceVeil?: boolean }): TargetRef[] {
   const enemy = other(p)
   const out: TargetRef[] = []
   const enemyFigs = figures(state, enemy).filter((f) => {
-    if (hasKw(state, f, 'veiled')) return false
+    if (!opts?.pierceVeil && hasKw(state, f, 'veiled')) return false
     if (opts?.fromOmen && untargetableByEnemyOmens(state, f)) return false
     return true
   })

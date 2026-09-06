@@ -99,9 +99,31 @@ You have Lake Mirrara in hand. Upright, it flips a Figure and draws you a card, 
 
 You have Fin & Bin for 2. You play them Upright into Present. Their Arrive makes your next card this turn cost 1 less. Now Lake Mirrara costs 3, and you have 1 left. Not enough.
 
-So you play Fin & Bin and end the turn. The Oondray swings into Present, trades with Fin & Bin (3 damage kills the 1/2, and Fin & Bin's 1 Attack scratches the Oondray to 3/1). Next turn you have 4 Spark, Lake Mirrara flips the scratched Oondray Upright: it becomes a 2/3 with one wound, a 2/2. You draw a card. Now you have a turn to deal with a 2/2 instead of a 3/2 that hits face every round.
+So you play Fin & Bin and end the turn. The Oondray swings into Present and kills Fin & Bin (3 damage on a 1/2), and their 1 Attack scratches the Oondray to 3/1. Next turn you have 4 Spark. Lake Mirrara flips the scratched Oondray Upright: it becomes a 2/3 with one wound, a 2/2, and you draw a card. Now you face a 2/2 instead of a 3/2 that hits you every round, and your Fin & Bin are Reversed in your hand's memory only: they died.
 
-Or, with 4 Spark, you flip Fin & Bin. They become 2/1. Not this time.
+The sharper version of the same trick: an enemy Heartwood (1/8) that has taken a single wound is an 8/1 with a single wound after Lake Mirrara, which is to say a dead Heartwood for 4 Spark and a card.
+
+## How things resolve
+
+The fine print. Every line here is what the engine does, and each has a test.
+
+- **Start of a turn, in order.** Your Spark maximum rises and refills. The Bone Moon bites if it is up. You draw (two on a Full Moon). Aegis you carry recharges. Start-of-turn text fires. A Significator at 0 Health loses at once, at any point, and nothing later in the turn brings them back.
+- **One face at a time.** A Figure's text, keywords, and auras are those of its current face. Turn it over and the old face is gone, including anything it was about to do at the end of the turn. The Sleepless Sentry played Reversed, attacked, and turned Upright is a Guard that stays.
+- **Flipping.** Wounds are checked the moment a face turns. A Figure that dies from its own flip fires none of its flip triggers. "Becomes Upright" is a flip and respects Fixed. A global flip (the Wheel, the Dome, Cernis) turns every Figure at once, checks wounds, then fires the survivors' flip triggers in lane order, yours first. Rekindle's return to Reversed is not a flip.
+- **Rekindle replaces death.** No Last Rite, no death triggers, once per Figure. Fixed does not stop the return.
+- **Effects resolve one at a time**, and deaths are checked after each one. Damage to every enemy Figure is one effect; the Last Rites it causes happen before the next effect.
+- **Targets are exact.** An effect that chose a Figure follows that Figure. If it has left the lane, the effect fizzles rather than hitting whatever arrived.
+- **Copies.** Mordeaux repeats an Omen after the original resolves, with the same face and target. The copy costs nothing, is not a cast (it wakes no other Mordeaux and pays no Magician), fizzles if the chosen Figure is gone, and never happens if the original was countered. Two Mordeaux make two copies.
+- **Spark gained this turn** can exceed your maximum and ten.
+- **Aegis.** Granted Aegis (Dawn, the Lovers, Soren) is one shield. Aegis a Figure carries (a Relic, a face, Rorik's aura) is on when the Figure enters and recharges at the start of your turn.
+- **Guard** intercepts attacks aimed at your Significator from an adjacent empty lane, including Gale attacks. With a Guard on each side, the one nearer Past steps in.
+- **An attack stops** if its defender leaves the lane before the blow. The attacker does not retarget.
+- **Arrive** fires when a card is played from hand. Summoned Figures do not Arrive.
+- **Shatters, ceases to exist** (Mr. Zero, Vel): removed with no Last Rite. **Dissolves** (the Sentry): a death.
+- **Moving** is a Figure's action for the turn, and a Figure may move the turn it enters. When an effect moves a Figure, an enemy Figure is pushed toward Past if that lane is open and toward Future otherwise; your own Figure goes toward Present when it can.
+- **Read** with a full hand burns the card you keep. Read with one card in the deck draws it.
+- **Calvera Upright** against fewer than two cards deals 5 and leaves the hand alone. **Brog** costs 2.
+- **The Bone Moon Reversed** rises at the start of the next round, one point for each player, then grows. It does nothing if the Moon is already up or already due sooner.
 
 ## Design notes
 

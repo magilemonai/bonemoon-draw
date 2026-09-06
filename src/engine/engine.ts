@@ -4,6 +4,7 @@
 
 import { card, significator } from '../data'
 import { nextRandom, shuffleWithSeed } from './rng'
+import { RULES } from './rules'
 import {
   activeAuras,
   attackLanes,
@@ -95,14 +96,15 @@ function log(c: Ctx, text: string) {
 // Game creation
 // ---------------------------------------------------------------------------
 
-export function createGame(opts: { sigs: [string, string]; seed: number; humanPlayer?: PlayerId; firstPlayer?: PlayerId }): GameState {
+export function createGame(opts: { sigs: [string, string]; seed: number; humanPlayer?: PlayerId; firstPlayer?: PlayerId; deckSeeds?: [number, number] }): GameState {
   let seed = opts.seed
   let uid = 1
   const mk = (p: PlayerId): GameState['players'][0] => {
     const sig = significator(opts.sigs[p])
     const cards: CardInstance[] = sig.deck.filter((id) => id !== sig.cardId).map((defId) => ({ uid: uid++, defId }))
-    const sh = shuffleWithSeed(cards, seed)
-    seed = sh.seed
+    // A per-player deck seed keeps a hero's deck order fixed across a seat swap (used by the sims).
+    const sh = shuffleWithSeed(cards, opts.deckSeeds ? opts.deckSeeds[p] : seed)
+    if (!opts.deckSeeds) seed = sh.seed
     return {
       id: p,
       sigId: sig.id,
@@ -121,6 +123,8 @@ export function createGame(opts: { sigs: [string, string]; seed: number; humanPl
       omenDiscount: 0,
       handRevealed: false,
       omensCastThisTurn: 0,
+      friendlyDeathsThisTurn: 0,
+      burnsThisGame: 0,
     }
   }
   const players: [GameState['players'][0], GameState['players'][1]] = [mk(0), mk(1)]
@@ -154,8 +158,31 @@ export function createGame(opts: { sigs: [string, string]; seed: number; humanPl
     if (significator(state.players[p].sigId).id === 'sig-luigi') {
       state.players[p].hand.push({ uid: state.nextUid++, defId: 'tok-brog' })
     }
+    if (RULES.secondPlayerSparkToken && p !== first) {
+      state.players[p].hand.push({ uid: state.nextUid++, defId: 'tok-spark' })
+    }
   }
   return state
+}
+
+// Partial mulligan (experiment): set aside any of the drawn opening cards, draw that many
+// replacements, then shuffle the set-aside cards back into the deck. Brog is not exchangeable.
+export function mulligan(state: GameState, p: PlayerId, setAside: number[]): GameState {
+  const s = structuredClone(state)
+  const pl = s.players[p]
+  const aside: CardInstance[] = []
+  for (const uid of setAside) {
+    const i = pl.hand.findIndex((h) => h.uid === uid && h.defId !== 'tok-brog')
+    if (i >= 0) aside.push(...pl.hand.splice(i, 1))
+  }
+  for (let i = 0; i < aside.length; i++) {
+    const top = pl.deck.shift()
+    if (top) pl.hand.push(top)
+  }
+  const sh = shuffleWithSeed([...pl.deck, ...aside], s.seed)
+  pl.deck = sh.arr
+  s.seed = sh.seed
+  return s
 }
 
 // Start the very first turn (separate so the UI can animate the opening).
@@ -229,30 +256,38 @@ function startTurn(c: Ctx) {
   me.omensCastThisTurn = 0
   s.players[0].handRevealed = false
   s.players[1].handRevealed = false
+  me.friendlyDeathsThisTurn = 0
   for (const f of figures(s, p)) {
     f.attacksThisTurn = 0
     f.movedThisTurn = false
     f.onceUsed = []
   }
 
-  // Bone Moon
+  // Bone Moon. A Significator at 0 loses at once; nothing later in the turn can save them.
   if (s.round >= s.boneMoonRound) {
     const bite = s.round - s.boneMoonRound + 1
     if (s.round === s.boneMoonRound && s.turn % 2 === 1) emit(c, { kind: 'boneMoon', round: s.round })
-    me.health -= bite
     emit(c, { kind: 'boneMoonBite', player: p, n: bite })
-    emit(c, { kind: 'damage', target: sigRef(p), n: bite })
+    dealDamage(c, sigRef(p), bite)
+    if (s.phase === 'over') return
   }
+
+  // Seat experiments: applied to the first turn of the game only.
+  if (s.turn === 2 && RULES.secondPlayerFirstTurnSpark) me.tempSpark += 1
 
   // Draw
   let draws = 1
+  if (s.turn === 1 && RULES.firstPlayerSkipsFirstDraw) draws = 0
   if (moonPhase(s.round) === 'full') {
     draws += 1
     if (significator(me.sigId).id === 'sig-lirielle') draws += 1
   }
-  for (let i = 0; i < draws; i++) drawCard(c, p)
+  for (let i = 0; i < draws; i++) {
+    drawCard(c, p)
+    if (s.phase === 'over') return
+  }
 
-  refreshAegis(c)
+  rechargeAegis(c, p)
   fireTrigger(c, 'startTurn', p)
   checkDeaths(c)
   checkGameOver(c)
@@ -265,7 +300,9 @@ function endTurn(c: Ctx) {
   c.owner = p
   fireTrigger(c, 'endTurn', p)
   checkDeaths(c)
-  if (significator(s.players[p].sigId).id === 'sig-rorik') heal(c, sigRef(p), 1)
+  if (significator(s.players[p].sigId).id === 'sig-rorik') {
+    if (!RULES.rorikConditional || s.players[p].friendlyDeathsThisTurn > 0) heal(c, sigRef(p), 1)
+  }
   for (const f of figures(s, p)) {
     f.tempAtk = 0
     f.tempHp = 0
@@ -287,13 +324,14 @@ function drawCard(c: Ctx, p: PlayerId) {
   const top = me.deck.shift()
   if (!top) {
     me.fatigue += 1
-    me.health -= me.fatigue
     emit(c, { kind: 'fatigue', player: p, n: me.fatigue })
-    emit(c, { kind: 'damage', target: sigRef(p), n: me.fatigue })
+    dealDamage(c, sigRef(p), me.fatigue)
     return
   }
   if (me.hand.length >= MAX_HAND) {
     me.graveyard.push(top)
+    me.burnsThisGame += 1
+    emit(c, { kind: 'burn', player: p, defId: top.defId })
     log(c, `${card(top.defId).name} burns: the hand is full.`)
     return
   }
@@ -327,9 +365,14 @@ function doPlay(c: Ctx, a: { uid: number; face: Face; lane?: LaneIndex; target?:
     if (!a.target || !resolveRef(s, a.target) || a.target.player !== p) throw new Error('relic needs a friendly Figure')
   }
   if (def.type !== 'relic' && face.target && face.target !== 'none') {
-    const legal = targetsFor(s, p, face.target, { fromOmen: def.type === 'omen' })
+    const legal = targetsFor(s, p, face.target, { fromOmen: def.type === 'omen', pierceVeil: face.pierceVeil })
     if (legal.length > 0 && !legal.some((t) => sameRef(t, a.target))) throw new Error('bad target')
     if (legal.length === 0) a.target = undefined
+  }
+  // From here on the target means this exact Figure, whatever later takes its lane.
+  if (a.target?.kind === 'figure') {
+    const tf = resolveRef(s, a.target)
+    if (tf) a.target = refOf(tf)
   }
 
   // Pay.
@@ -348,6 +391,9 @@ function doPlay(c: Ctx, a: { uid: number; face: Face; lane?: LaneIndex; target?:
       c.self = fig
       c.chosen = a.target
       runEffects(c, fig, 'arrive')
+      // A Figure that enters with Aegis (its own keyword, or next to Rorik) has it at once;
+      // a Figure that brings the aura shields its neighbors at once.
+      if (s.players[p].lanes[fig.lane]?.uid === fig.uid) chargeAegisAround(c, fig)
     }
   } else if (def.type === 'omen') {
     castOmen(c, p, inst, a.face, a.target)
@@ -355,11 +401,11 @@ function doPlay(c: Ctx, a: { uid: number; face: Face; lane?: LaneIndex; target?:
     const holder = resolveRef(s, a.target)!
     holder.relics.push({ uid: inst.uid, defId: def.id, face: a.face })
     emit(c, { kind: 'buff', target: refOf(holder), atk: 0, hp: 0 })
+    if (keywords(s, holder).includes('aegis')) holder.aegis = true
     c.self = holder
     runEffects(c, holder, 'onRelicAttached')
     fireTrigger(c, 'onEnemyRelic', other(p))
   }
-  refreshAegis(c)
   checkDeaths(c)
   checkGameOver(c)
 }
@@ -409,6 +455,10 @@ function castOmen(c: Ctx, p: PlayerId, inst: CardInstance, face: Face, target: T
         if (eff.oncePerTurn && fig.onceUsed.includes(key)) continue
         if (eff.oncePerTurn) fig.onceUsed.push(key)
         if (eff.ops.some((o) => o.op === 'echoOmen')) {
+          if (target?.kind === 'figure' && !resolveRef(s, target)) {
+            log(c, `${card(fig.defId).name} tries to repeat ${def.name}, but its target is gone.`)
+            continue
+          }
           c.echoing = true
           c.chosen = target
           for (const e2 of f.effects ?? []) if (e2.trigger === 'cast') runOps(c, e2.ops)
@@ -455,6 +505,7 @@ function summon(c: Ctx, p: PlayerId, defId: string, lane: LaneIndex, face: Face,
   }
   me.lanes[lane] = fig
   emit(c, { kind: 'summon', player: p, uid: fig.uid, defId, lane, face: fig.face })
+  if (uid === undefined) chargeAegisAround(c, fig) // a token; a played Figure is charged after its Arrive
   return fig
 }
 
@@ -487,8 +538,8 @@ function doAttack(c: Ctx, lane: LaneIndex, targetLane?: LaneIndex) {
   const power = attackOf(s, atk)
   const defender = resolveRef(s, defRef)
   if (defRef.kind === 'figure' && !defender) {
-    // The defender left. Hit the Significator instead.
-    dealDamage(c, sigRef(other(p)), power, atk)
+    // The defender left the lane before the blow (a flip killed it, a Last Rite moved things). The attack stops.
+    log(c, `${figureNameOf(atk)}'s target is gone. The attack stops.`)
   } else if (defender) {
     const before = healthOf(s, defender)
     dealDamage(c, refOf(defender), power, atk)
@@ -568,6 +619,10 @@ function doAbility(c: Ctx, target?: TargetRef) {
   emit(c, { kind: 'ability', player: p })
   c.owner = p
   c.self = undefined
+  if (target?.kind === 'figure') {
+    const tf = resolveRef(s, target)
+    if (tf) target = refOf(tf)
+  }
   c.chosen = target
   switch (sig.id) {
     case 'sig-daxon':
@@ -629,6 +684,7 @@ function dealDamage(c: Ctx, target: TargetRef, n: number, source?: FigureInstanc
     s.players[target.player].health -= n
     emit(c, { kind: 'damage', target, n })
     if (source && hasKw(s, source, 'feast')) heal(c, sigRef(source.owner), n)
+    checkGameOver(c)
     return
   }
   const fig = resolveRef(s, target)
@@ -670,6 +726,11 @@ function flip(c: Ctx, fig: FigureInstance, force = false) {
   if (!force && hasKw(s, fig, 'fixed')) return
   fig.face = fig.face === 'upright' ? 'reversed' : 'upright'
   emit(c, { kind: 'flip', target: refOf(fig), face: fig.face })
+  if (healthOf(s, fig) <= 0) {
+    // Wounds are checked the moment the face turns. A Figure that dies here never fires its flip triggers.
+    checkDeaths(c)
+    return
+  }
   const saveFlipped = c.flipped
   const saveSelf = c.self
   c.flipped = refOf(fig)
@@ -754,10 +815,10 @@ function checkDeaths(c: Ctx) {
 }
 
 function afterDeath(c: Ctx, fig: FigureInstance) {
+  if (c.s.active === fig.owner) c.s.players[fig.owner].friendlyDeathsThisTurn += 1
   fireTrigger(c, 'onAnyDeath', 0)
   fireTrigger(c, 'onAnyDeath', 1)
   fireTrigger(c, 'onFriendlyDeath', fig.owner)
-  refreshAegis(c)
 }
 
 function checkGameOver(c: Ctx) {
@@ -771,17 +832,32 @@ function checkGameOver(c: Ctx) {
   emit(c, { kind: 'gameOver', winner: s.winner })
 }
 
-// Rorik's aura and friends: adjacent figures carry Aegis, refreshed at turn start.
-function refreshAegis(c: Ctx) {
+// Aegis carried as a keyword (a face, a Relic) or lent by an aura (Rorik) recharges at the
+// start of its controller's turn. Granted Aegis (Dawn, Lovers, Soren) is one-shot.
+function rechargeAegis(c: Ctx, p: PlayerId) {
   const s = c.s
-  for (const p of [0, 1] as PlayerId[]) {
-    const sources = activeAuras(s, p).filter((a) => a.aura.kind === 'adjacentAegis').map((a) => a.source)
-    for (const fig of figures(s, p)) {
-      // Aegis printed on a face or carried by a relic recharges at each refresh point.
-      if (keywords(s, fig).includes('aegis')) fig.aegis = true
-      if (sources.some((src) => src.uid !== fig.uid && Math.abs(src.lane - fig.lane) === 1)) fig.aegis = true
-    }
+  const sources = activeAuras(s, p).filter((a) => a.aura.kind === 'adjacentAegis').map((a) => a.source)
+  for (const fig of figures(s, p)) {
+    if (keywords(s, fig).includes('aegis')) fig.aegis = true
+    if (sources.some((src) => src.uid !== fig.uid && Math.abs(src.lane - fig.lane) === 1)) fig.aegis = true
   }
+}
+
+// A Figure that has just entered: shield it if it carries Aegis or stands next to a source,
+// and shield its neighbors if it is itself a source.
+function chargeAegisAround(c: Ctx, fig: FigureInstance) {
+  const s = c.s
+  const sources = activeAuras(s, fig.owner).filter((a) => a.aura.kind === 'adjacentAegis').map((a) => a.source)
+  if (keywords(s, fig).includes('aegis')) fig.aegis = true
+  if (sources.some((src) => src.uid !== fig.uid && Math.abs(src.lane - fig.lane) === 1)) fig.aegis = true
+  if (sources.some((src) => src.uid === fig.uid)) {
+    for (const f of figures(s, fig.owner)) if (f.uid !== fig.uid && Math.abs(f.lane - fig.lane) === 1) f.aegis = true
+  }
+}
+
+function figureNameOf(fig: FigureInstance): string {
+  const def = card(fig.defId)
+  return faceDef(def, fig.face).name ?? def.name
 }
 
 // ---------------------------------------------------------------------------
@@ -935,7 +1011,11 @@ function select(c: Ctx, sel: Selector): TargetRef[] {
 }
 
 function runOps(c: Ctx, ops: Op[]) {
-  for (const op of ops) runOp(c, op)
+  for (const op of ops) {
+    if (c.s.phase === 'over') return
+    runOp(c, op)
+    checkDeaths(c)
+  }
 }
 
 function runOp(c: Ctx, op: Op) {
@@ -988,12 +1068,39 @@ function runOp(c: Ctx, op: Op) {
       }
       return
     }
-    case 'flip':
-      for (const t of select(c, op.to)) {
-        const f = resolveRef(s, t)
+    case 'flip': {
+      const targets = select(c, op.to)
+      if (targets.length <= 1) {
+        const f = resolveRef(s, targets[0])
         if (f) flip(c, f)
+        return
+      }
+      // A global flip: every Figure turns at once, wounds are checked, then the survivors'
+      // flip triggers fire in lane order (yours first). A Figure that died fires nothing.
+      const turned: FigureInstance[] = []
+      for (const t of targets) {
+        const f = resolveRef(s, t)
+        if (!f || hasKw(s, f, 'fixed')) continue
+        f.face = f.face === 'upright' ? 'reversed' : 'upright'
+        emit(c, { kind: 'flip', target: refOf(f), face: f.face })
+        turned.push(f)
+      }
+      checkDeaths(c)
+      for (const f of turned) {
+        if (s.players[f.owner].lanes[f.lane]?.uid !== f.uid) continue
+        const saveFlipped = c.flipped
+        const saveSelf = c.self
+        c.flipped = refOf(f)
+        c.self = f
+        runEffects(c, f, 'onFlipped')
+        fireTrigger(c, 'onAnyFlip', 0)
+        fireTrigger(c, 'onAnyFlip', 1)
+        fireTrigger(c, 'onEnemyFlip', other(f.owner))
+        c.flipped = saveFlipped
+        c.self = saveSelf
       }
       return
+    }
     case 'setFace':
       for (const t of select(c, op.to)) {
         const f = resolveRef(s, t)
@@ -1085,8 +1192,9 @@ function runOp(c: Ctx, op: Op) {
         const lanesEmpty = emptyLanes(s, f.owner)
         const options = op.where === 'adjacentEmpty' ? lanesEmpty.filter((l) => Math.abs(l - f.lane) === 1) : lanesEmpty
         if (!options.length) continue
-        // Enemy figures get pushed where it hurts them most (away from anything to hit); own figures toward the middle.
-        const dest = f.owner === me ? (options.includes(1) ? 1 : options[0]) : options[options.length - 1]
+        // Your own Figure goes toward Present when it can. An enemy Figure is pushed toward Past
+        // when that lane is open, otherwise toward Future.
+        const dest = f.owner === me ? (options.includes(1) ? 1 : options[0]) : options[0]
         moveFigure(c, f, dest, false)
       }
       return
@@ -1253,7 +1361,7 @@ export function legalActions(state: GameState): Action[] {
       if (def.type === 'figure') {
         const lanes = emptyLanes(s, p)
         if (!lanes.length) continue
-        const targets = fd.target && fd.target !== 'none' ? targetsFor(s, p, fd.target) : []
+        const targets = fd.target && fd.target !== 'none' ? targetsFor(s, p, fd.target, { pierceVeil: fd.pierceVeil }) : []
         for (const lane of lanes) {
           if (fd.target && fd.target !== 'none' && targets.length) {
             for (const t of targets) out.push({ type: 'play', uid: h.uid, face, lane, target: t })
@@ -1263,7 +1371,7 @@ export function legalActions(state: GameState): Action[] {
         for (const f of figures(s, p)) out.push({ type: 'play', uid: h.uid, face, target: refOf(f) })
       } else {
         if (fd.target && fd.target !== 'none') {
-          const targets = targetsFor(s, p, fd.target, { fromOmen: true })
+          const targets = targetsFor(s, p, fd.target, { fromOmen: true, pierceVeil: fd.pierceVeil })
           if (!targets.length) continue
           for (const t of targets) out.push({ type: 'play', uid: h.uid, face, target: t })
         } else out.push({ type: 'play', uid: h.uid, face })
@@ -1290,4 +1398,4 @@ export function legalActions(state: GameState): Action[] {
 }
 
 // Re-export a few helpers the UI wants in one place.
-export { keywords, attackOf, healthOf, maxHealthOf, cardCost, canAttack, canMove, attackLanes, resolveDefender, moonPhase }
+export { keywords, attackOf, healthOf, maxHealthOf, cardCost, canAttack, canMove, attackLanes, resolveDefender, moonPhase, RULES }

@@ -112,6 +112,8 @@ function durationFor(ev: GameEvent, speed: number): number {
         return 250
       case 'fatigue':
         return 400
+      case 'burn':
+        return 350
       case 'log':
         return ev.text ? 120 : 0
     }
@@ -169,6 +171,8 @@ function describe(ev: GameEvent, st: GameState): string | null {
       return `${figName(ev.target)} is hushed.`
     case 'fatigue':
       return `${nameOf(ev.player)}'s deck is empty: ${ev.n} damage.`
+    case 'burn':
+      return `${card(ev.defId).name} burns: ${nameOf(ev.player)}'s hand is full.`
     case 'log':
       return ev.text || null
     default:
@@ -305,6 +309,7 @@ if (typeof window !== 'undefined') {
     img.onload = () => useStore.setState({ [key]: true } as Partial<UIState>)
     img.src = src
   }
+  probe('ui/frame-suns', 'uiKit')
   probe('ui/frame-major', 'uiKit')
   probe('table', 'tableArt')
 }

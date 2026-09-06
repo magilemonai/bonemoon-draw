@@ -63,7 +63,7 @@ export function Rules() {
           <dt>Fixed</dt>
           <dd>Can&apos;t be flipped.</dd>
           <dt>Aegis</dt>
-          <dd>Absorbs the next damage it would take. Recharges at the start of your turn if the Figure carries it.</dd>
+          <dd>Absorbs the next damage it would take. Granted Aegis is one shield; Aegis a Figure carries (a Relic, its face, Rorik&apos;s aura) recharges at the start of your turn.</dd>
           <dt>Rekindle</dt>
           <dd>The first time this would die, it returns Reversed with 1 Health.</dd>
           <dt>Feast</dt>
@@ -77,6 +77,11 @@ export function Rules() {
           <dt>Read N</dt>
           <dd>Look at the top N cards of your deck. Keep one; the rest go to the bottom.</dd>
         </dl>
+
+        <h3>Fine print</h3>
+        <p>
+          A Figure&apos;s text is its current face&apos;s text; turn it over and the old face is gone, end-of-turn clauses included. Wounds are checked the moment a face turns, and a Figure that dies from its own flip fires no flip triggers. Effects resolve one at a time and deaths are checked after each. A chosen target is that exact Figure; if it leaves, the effect fizzles. Mordeaux&apos;s copy costs nothing, is not a cast, and fizzles with its target. Spark gained this turn can go past your maximum. A Significator at 0 loses at once. The full list is in the rulebook.
+        </p>
 
         <h3>The deck</h3>
         <p>

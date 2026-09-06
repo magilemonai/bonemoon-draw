@@ -40,6 +40,7 @@ export interface TargetRef {
   kind: 'figure' | 'sig'
   player: PlayerId
   lane?: LaneIndex
+  uid?: number // when present, the ref means this exact Figure; a different Figure in the lane does not match
 }
 
 // ---- Effect language -------------------------------------------------------
@@ -170,6 +171,7 @@ export interface FaceDef {
   effects?: EffectDef[]
   auras?: AuraDef[]
   target?: TargetSpec // what the player must choose when playing this face
+  pierceVeil?: boolean // this face's targeting ignores Veiled (Yvette's jailbroken Knock)
 }
 
 export interface RelicDef {
@@ -274,6 +276,8 @@ export interface PlayerState {
   omenDiscount: number
   handRevealed: boolean
   omensCastThisTurn: number
+  friendlyDeathsThisTurn: number // own Figures that died during this player's own turn
+  burnsThisGame: number
 }
 
 export type MoonPhase = 'new' | 'waxing' | 'full' | 'waning'
@@ -314,6 +318,7 @@ export type GameEvent =
   | { kind: 'turnStart'; player: PlayerId; round: number; moon: MoonPhase }
   | { kind: 'draw'; player: PlayerId; uid: number; defId: string }
   | { kind: 'fatigue'; player: PlayerId; n: number }
+  | { kind: 'burn'; player: PlayerId; defId: string }
   | { kind: 'played'; player: PlayerId; uid: number; defId: string; face: Face; lane?: LaneIndex; cardType: CardType }
   | { kind: 'summon'; player: PlayerId; uid: number; defId: string; lane: LaneIndex; face: Face }
   | { kind: 'attackStart'; attacker: TargetRef; defender: TargetRef }
