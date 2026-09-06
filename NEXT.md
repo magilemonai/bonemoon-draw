@@ -1,5 +1,8 @@
 # NEXT
 
+- [ ] [cody] Second art pass from docs/ART_REVIEW.md: twelve touch-ups, Vraxxis and Cernis first
+    The list is at the bottom of the review, one line per file. Same zip format as the first delivery;
+    unzip over public/art and the game picks up the new files.
 - [ ] [cody] Send docs/UI_REVIEW_PACKET.md and docs/UI_KIT_PROMPTS.md out for an interface critique and ornament kit
     The packet points at the live page and asks nine questions. The kit is 13 transparent PNGs
     (six card frames, a lane mark, a banner ribbon, five emblems); unzip into public/art/ and the game wears them.
