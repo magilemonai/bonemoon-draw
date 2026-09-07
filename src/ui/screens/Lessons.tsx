@@ -14,7 +14,7 @@ export function Lessons() {
         <button type="button" className="btn-quiet" onClick={() => goto('title')}>
           Title screen
         </button>
-        <h2>Learn to play</h2>
+        <h2>Tutorial</h2>
         <span className="choose-sub">
           Three short lessons on fixed positions. Each one tells you what to do, lights up where to tap, and ends with a small problem you solve on your own. The opponent only ends turns, and nothing here goes on your record.
         </span>

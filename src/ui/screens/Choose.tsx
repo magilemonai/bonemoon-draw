@@ -47,7 +47,7 @@ export function Choose() {
         <h2>Choose your character</h2>
         <span className="choose-sub">Your Significator is the card that stands for you at the table. Tap one to read about it.</span>
         <button type="button" className="btn choose-learn" onClick={() => goto('lessons')}>
-          New here? Three short lessons
+          Tutorial: three short lessons
         </button>
       </div>
       <div className="sig-grid">

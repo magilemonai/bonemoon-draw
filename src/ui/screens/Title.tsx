@@ -121,7 +121,7 @@ export function Title() {
           The Codex
         </button>
         <button type="button" className="btn" onClick={() => goto('lessons')}>
-          Learn to play
+          Tutorial
         </button>
         <button type="button" className="btn" onClick={() => goto('rules')}>
           How to play

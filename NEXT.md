@@ -1,7 +1,7 @@
 # NEXT
 
 - [ ] [cody] Play the three lessons once on your phone and say where the words ran ahead of the table
-    Learn to play is on the title and on the character screen. Each lesson ends with an exercise you solve without the lights.
+    The tutorial is on the title and on the character screen. Each lesson ends with an exercise you solve without the lights.
 - [ ] [cody] Build a deck in Your decks, play it, and say what the builder still makes hard
     Cards, filters on both faces, the curve by printed cost, and Play from the builder or Choose. docs/READABILITY_RESPONSE.md has the round.
 - [ ] [crew] Play focused custom decks against the AI (low curve, control, one-combo) and record how it copes before calling anything Expert
