@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 /Users/cody/Desktop/Projects/ArtforValisar/tutorial-review/sandbox
+
+ ✓ src/audit-477ae92.test.ts (8 tests) 37ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  00:54:51
+   Duration  583ms (transform 182ms, setup 0ms, collect 351ms, tests 37ms, environment 0ms, prepare 54ms)
+

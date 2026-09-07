@@ -232,8 +232,8 @@ export function formFor(p: Profile, hero: string, version = RULES_VERSION): { la
 }
 
 // Readings with one list, from the detail kept (the last 200). Sample size is the point.
-export function deckRecord(p: Profile, deckId: string): { games: number; wins: number; latestRev: number } {
-  const mine = p.matches.filter((m) => m.deck?.id === deckId)
+export function deckRecord(p: Profile, deckId: string, rev?: number): { games: number; wins: number; latestRev: number } {
+  const mine = p.matches.filter((m) => m.deck?.id === deckId && (rev === undefined || m.deck?.rev === rev))
   return { games: mine.length, wins: mine.filter((m) => m.result === 'win').length, latestRev: mine.reduce((r, m) => Math.max(r, m.deck?.rev ?? 0), 0) }
 }
 

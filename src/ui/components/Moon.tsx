@@ -88,7 +88,11 @@ export function MoonDial({ state }: { state: GameState }) {
         <MoonDisc phase={phase} bone={bone} size={30} />
         <span>{over ? 'Over' : myTurn ? (busy ? 'Resolving' : 'End turn') : 'Waiting'}</span>
       </button>
-      <span className="turn-bone">{bone ? 'The Bone Moon is up.' : `Bone Moon in ${untilBone} round${untilBone === 1 ? '' : 's'}`}</span>
+      <span className="turn-bone">
+        {bone
+          ? `The Bone Moon is up. Your next bite: ${Math.max(1, f.round - state.boneMoonRound + 1)}.`
+          : `Bone Moon in ${untilBone} round${untilBone === 1 ? '' : 's'}, first bite 1, then 1 more each round.`}
+      </span>
     </div>
   )
 }

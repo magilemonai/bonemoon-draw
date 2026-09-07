@@ -1,5 +1,9 @@
 # NEXT
 
+- [ ] [cody] Play a reading on your phone after the 477ae92 round and say whether the table finally keeps its regions
+    The lanes now size themselves to the space the panels leave; the coach folds to two lines; the review strip floats. docs/HANDOFF_477AE92_RESPONSE.md has the round.
+- [ ] [crew] A loss recap on the result screen: the decisive public sequence and the deck revision, from the log
+- [ ] [crew] The visual language, second pass: the builder's filter rows and the record screen on the brass, ink, and vellum tokens
 - [ ] [cody] Play the three lessons once on your phone and say where the words ran ahead of the table
     The tutorial is on the title and on the character screen. Each lesson ends with an exercise you solve without the lights.
 - [ ] [cody] Build a deck in Your decks, play it, and say what the builder still makes hard

@@ -4669,3 +4669,503 @@ h3 {
   margin-bottom: 26px;
   padding: 5px 8px 2px;
 }
+
+/* ==== After the 477ae92 handoff: regions, a type floor, and one control language ===== */
+
+/* 1. Every region keeps its space. Lane cards are sized so two rows never run into the HUD. */
+:root {
+  --cw-lane: min(112px, 11.5vh);
+  --cw-hand: min(110px, 12.5vh);
+}
+.slot-fig {
+  overflow: visible;
+}
+/* The coach on a phone sits at the top and the opponent's block moves down under it. */
+.battle.is-lesson .table-top {
+  padding-top: var(--coach-h, 0px);
+}
+.battle.is-lesson {
+  --cw-lane: min(100px, 10.5vh);
+  --cw-hand: min(96px, 11vh);
+}
+/* The post-game strip floats like the coach, never in the columns. */
+.over-strip {
+  position: fixed;
+  left: 8px;
+  right: 8px;
+  top: max(8px, env(safe-area-inset-top));
+  z-index: 60;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: center;
+  background: rgba(12, 10, 34, 0.94);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+}
+.over-strip .btn,
+.over-strip .btn-quiet {
+  width: 100%;
+}
+@media (min-width: 1000px) {
+  .over-strip {
+    left: auto;
+    right: 16px;
+    top: 16px;
+    width: 320px;
+  }
+  .battle.is-lesson .table-top {
+    padding-top: 0;
+  }
+  .battle.is-lesson {
+    --cw-lane: min(176px, 20vh);
+    --cw-hand: min(126px, 13vh);
+  }
+  .is-reviewing .board {
+    align-items: flex-start;
+  }
+  .is-reviewing .lane-row {
+    justify-content: flex-start;
+  }
+}
+
+/* 2. A type floor for what the player must read on a card. */
+.size-hand .card-name,
+.size-lane .card-name {
+  font-size: 13px;
+  line-height: 1.12;
+}
+.kw {
+  font-size: 10px;
+  padding: 2px 5px;
+}
+.size-hand .card-stat,
+.size-lane .card-stat {
+  min-width: 22px;
+  height: 22px;
+  font-size: 14px;
+}
+.card-wounds {
+  font-size: 10px;
+  bottom: 27px;
+}
+@media (min-width: 720px) {
+  .size-hand .card-name,
+  .size-lane .card-name {
+    font-size: 14px;
+  }
+  .kw {
+    font-size: 11px;
+  }
+}
+
+/* The play sheet on a phone: the two cards stacked and readable, with both actions
+   pinned at the foot of the sheet. */
+@media (max-width: 719px) {
+  .face-chooser-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding-bottom: 8px;
+  }
+  .face-card {
+    width: 100%;
+    max-width: 360px;
+  }
+  .face-card .card {
+    --cw: min(78vw, 300px);
+    zoom: 1.15;
+  }
+  .face-chooser {
+    max-height: 90dvh;
+  }
+  .face-chooser-actions {
+    position: sticky;
+    bottom: -10px;
+    display: flex;
+    gap: 8px;
+    padding: 10px 0 12px;
+    margin: 0 -10px -10px;
+    background: linear-gradient(180deg, rgba(23, 20, 58, 0), rgba(12, 10, 34, 0.98) 30%);
+    justify-content: center;
+  }
+  .face-chooser-actions .btn {
+    flex: 1 1 0;
+    min-height: 44px;
+  }
+}
+@media (min-width: 720px) {
+  .face-chooser-actions {
+    display: none;
+  }
+}
+
+/* 6. Read rows around their decision: a header, the two faces, a full-width Keep. */
+.read-options {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.read-option {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(12, 10, 34, 0.55);
+  border: 1px solid rgba(232, 199, 108, 0.25);
+  max-width: none;
+}
+.read-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+.read-thumb {
+  position: relative;
+  display: block;
+  width: 64px;
+  aspect-ratio: 5 / 6;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1.5px solid var(--suit, var(--gold));
+  background: var(--night-mid);
+}
+.read-thumb .sigil-img,
+.read-thumb .sigil-svg {
+  object-fit: cover;
+}
+.read-title {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.read-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--gold-3);
+}
+.read-kind {
+  font-size: 0.95rem;
+  color: rgba(239, 228, 204, 0.75);
+}
+.read-option .read-text {
+  font-size: 1rem;
+}
+.read-option .read-keep {
+  width: 100%;
+  min-height: 44px;
+  white-space: normal;
+}
+@media (min-width: 720px) {
+  .read-options {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    align-items: stretch;
+  }
+  .read-option .read-text {
+    flex: 1 1 auto;
+  }
+}
+
+/* 7. A cast is opaque and calm: no hand card grows under it. */
+.flash.has-card {
+  background: rgba(12, 10, 34, 0.94);
+}
+.flash-card .card-3d-front,
+.flash-card .card {
+  opacity: 1;
+}
+.battle.is-casting .hand.is-my-turn .hand-card:hover {
+  transform: none !important;
+}
+
+/* 9. One control language. Gold is the primary action and a true selection; brass edges
+   for structure; quiet text where the job is small; rectangles for rows and tabs. */
+.btn {
+  border-radius: 10px;
+}
+.btn-quiet {
+  border-radius: 8px;
+}
+.chip {
+  border-radius: 6px;
+  border-color: rgba(201, 150, 43, 0.35);
+  background: rgba(12, 10, 34, 0.45);
+}
+.chip.is-on {
+  background: rgba(232, 199, 108, 0.14);
+  border-color: var(--gold);
+  box-shadow: inset 0 -2px 0 var(--gold-2);
+}
+.tab {
+  border-radius: 6px;
+}
+.title-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.title-go {
+  min-width: 220px;
+  min-height: 48px;
+  font-size: 1.1rem;
+}
+.title-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 22px;
+}
+.title-link {
+  background: none;
+  border: 0;
+  padding: 6px 2px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--gold-2);
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+}
+.title-link:hover,
+.title-link:focus-visible {
+  color: var(--gold-3);
+  border-bottom-color: rgba(232, 199, 108, 0.6);
+  outline: none;
+}
+@media (min-width: 1000px) {
+  .title-actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 22px;
+  }
+}
+/* The result stands apart from routine choices. */
+.modal.gameover {
+  position: relative;
+  padding-top: 26px;
+  border-top: 3px solid var(--gold);
+  background: linear-gradient(180deg, rgba(12, 10, 34, 0.98), rgba(23, 20, 58, 0.98));
+}
+.modal.gameover.is-loss {
+  border-top-color: var(--dusk-3);
+}
+.gameover-moon {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, var(--moon), #cfc6b4 70%, #8f8878);
+  box-shadow: 0 0 24px rgba(243, 239, 227, 0.55);
+}
+.modal.gameover.is-loss .gameover-moon {
+  background: radial-gradient(circle at 40% 35%, #b98fa9, var(--dusk-2) 70%, var(--dusk));
+  box-shadow: 0 0 20px rgba(176, 102, 143, 0.5);
+}
+.modal.gameover .modal-title {
+  font-size: 1.8rem;
+  text-align: center;
+}
+.modal.gameover .modal-copy,
+.modal.gameover .award {
+  text-align: center;
+}
+.modal.gameover .modal-actions {
+  justify-content: center;
+}
+.gameover .btn-note,
+.over-strip .btn-note {
+  display: block;
+}
+.sig-deck {
+  font-size: 0.85rem;
+  color: rgba(239, 228, 204, 0.65);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sig-names {
+  overflow: hidden;
+}
+.sig-mine .sig-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* The coach folds to two lines on a phone; More opens it. Nothing below moves. */
+.battle.is-lesson .table-top {
+  padding-top: 0;
+}
+.battle.is-lesson {
+  --cw-hand: min(104px, 12vh);
+}
+.lesson-panel-say.is-folded {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  cursor: pointer;
+}
+.lesson-panel-more {
+  align-self: flex-start;
+  min-height: 0;
+  padding: 0 2px;
+  font-size: 0.95rem;
+}
+.lesson-panel {
+  gap: 4px;
+  padding: 8px 12px;
+}
+.lesson-panel-actions {
+  gap: 4px 14px;
+}
+@media (min-width: 1000px) {
+  .lesson-panel-say.is-folded {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+  .lesson-panel-more {
+    display: none;
+  }
+}
+/* Phone HUD, compact enough that two rows of cards always fit above the hand. */
+@media (max-width: 999px) {
+  .sig-theirs {
+    padding: 4px 8px;
+    gap: 0;
+  }
+  .sig-theirs .sig-top {
+    gap: 8px;
+  }
+  .sig-theirs .portrait {
+    width: 36px !important;
+    height: 36px !important;
+  }
+  .sig-theirs .sig-role {
+    display: none;
+  }
+  .sig-theirs .sig-name {
+    font-size: 1.1rem;
+  }
+  .sig-theirs .sig-health b {
+    font-size: 1.3rem;
+  }
+  .sig-theirs .sig-hpbar {
+    display: none;
+  }
+  .sig-theirs .sig-numbers {
+    gap: 2px 10px;
+  }
+  .sig-theirs .sig-num b {
+    font-size: 1rem;
+  }
+  .sig-theirs .sig-num small {
+    font-size: 0.85rem;
+  }
+  .sig-mine {
+    padding: 5px 10px;
+    gap: 2px 8px;
+  }
+  .sig-mine .portrait {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .sig-mine .sig-name {
+    font-size: 1.1rem;
+  }
+  .sig-mine .sig-title,
+  .sig-deck {
+    font-size: 0.8rem;
+  }
+  .sig-mine .sig-numbers {
+    gap: 2px 8px;
+  }
+  .sig-mine .sig-num b {
+    font-size: 1.15rem;
+  }
+  .sig-mine .sig-num small {
+    font-size: 0.85rem;
+  }
+  .sig-mine .ability {
+    min-height: 36px;
+    padding: 4px 8px;
+    gap: 6px;
+  }
+  .sig-mine .ability-name {
+    font-size: 0.95rem;
+  }
+  .sig-mine .ability-cost {
+    font-size: 0.8rem;
+    padding: 1px 6px;
+  }
+  .sig-health b {
+    font-size: 1.5rem;
+  }
+  .turn-panel {
+    padding: 5px 10px;
+    row-gap: 1px;
+  }
+  .turn-line,
+  .forecast,
+  .turn-bone {
+    font-size: 0.88rem;
+    line-height: 1.25;
+  }
+  .end-turn {
+    min-height: 42px;
+    padding: 4px 12px;
+    font-size: 1rem;
+  }
+  .table-tools .btn-quiet {
+    min-height: 28px;
+    padding: 0 6px;
+  }
+  :root {
+    --cw-hand: min(104px, 11vh);
+  }
+  .hand {
+    min-height: calc(var(--cw-hand) * 1.6 + 14px);
+    padding-top: 10px;
+    padding-bottom: 4px;
+  }
+  .battle {
+    gap: 3px;
+  }
+  .board {
+    padding: 3px 0;
+    gap: 6px;
+  }
+}
+@media (min-width: 1000px) {
+  .lesson-panel-actions {
+    display: flex !important;
+  }
+}
+/* The phone play sheet: rules at 16px once the card's zoom is counted. */
+@media (max-width: 719px) {
+  .face-card .size-full .card-text {
+    font-size: 14px;
+  }
+  .face-card .size-full .card-flavor {
+    font-size: 12px;
+  }
+  .face-card .size-full .card-name {
+    font-size: 16px;
+  }
+  .face-card .card {
+    --cw: min(76vw, 290px);
+    zoom: 1.15;
+  }
+}

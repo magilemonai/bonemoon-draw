@@ -111,21 +111,23 @@ export function Title() {
         <p className="title-foot">The stars observe everything that occurs beneath them. They always have.</p>
       </div>
       <nav className="title-actions" aria-label="Where to">
-        <button type="button" className={`btn ${saved ? '' : 'btn-primary'}`} onClick={() => goto('choose')}>
+        <button type="button" className={`btn ${saved ? '' : 'btn-primary'} title-go`} onClick={() => goto('choose')}>
           {saved ? 'New reading' : 'Begin a reading'}
         </button>
-        <button type="button" className="btn" onClick={() => goto('decks')}>
-          Your decks
-        </button>
-        <button type="button" className="btn" onClick={() => goto('codex')}>
-          The Codex
-        </button>
-        <button type="button" className="btn" onClick={() => goto('lessons')}>
-          Tutorial
-        </button>
-        <button type="button" className="btn" onClick={() => goto('rules')}>
-          How to play
-        </button>
+        <span className="title-links">
+          <button type="button" className="title-link" onClick={() => goto('lessons')}>
+            Tutorial
+          </button>
+          <button type="button" className="title-link" onClick={() => goto('decks')}>
+            Your decks
+          </button>
+          <button type="button" className="title-link" onClick={() => goto('codex')}>
+            The Codex
+          </button>
+          <button type="button" className="title-link" onClick={() => goto('rules')}>
+            How to play
+          </button>
+        </span>
       </nav>
       <Standing onRecord={() => setRecord(true)} />
       {record && <RecordModal onClose={() => setRecord(false)} />}

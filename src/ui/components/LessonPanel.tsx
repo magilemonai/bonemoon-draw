@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useStore } from '../store'
 import { LESSONS, currentStep, lessonById } from '../../tutorial/lessons'
 
@@ -12,14 +12,17 @@ export function LessonPanel() {
   const nudge = lesson?.nudge ?? null
   const stepNo = lesson?.progress.step ?? 0
   const [open, setOpen] = useState(true)
+  const [expanded, setExpanded] = useState(false)
+  const box = useRef<HTMLDivElement>(null)
   useEffect(() => {
     if (!nudge) return
     const t = window.setTimeout(clearNudge, 2600)
     return () => window.clearTimeout(t)
   }, [nudge, clearNudge])
-  // A new step opens the panel again.
+  // A new step opens the panel again, folded to its first lines.
   useEffect(() => {
     setOpen(true)
+    setExpanded(false)
   }, [stepNo])
   if (!lesson) return null
   const def = lessonById(lesson.id)
@@ -27,10 +30,11 @@ export function LessonPanel() {
   const index = LESSONS.findIndex((l) => l.id === def.id)
   const step = currentStep(def, lesson.progress)
   const next = LESSONS[index + 1]
+  const trouble = lesson.progress.missed ? (step?.missedSay ?? 'That turn ended before the step was done. Retry this step.') : lesson.stuck ? (step?.stuckSay ?? 'This position cannot finish the step. Retry this step.') : null
 
   if (lesson.progress.complete) {
     return (
-      <div className="lesson-panel is-complete" role="status">
+      <div className="lesson-panel is-complete" role="status" ref={box}>
         <span className="lesson-panel-head">
           Lesson {index + 1} of {LESSONS.length}: {def.title}
         </span>
@@ -50,7 +54,7 @@ export function LessonPanel() {
   }
 
   return (
-    <div className={`lesson-panel ${step?.free ? 'is-free' : ''} ${open ? '' : 'is-shut'}`} role="status" aria-live="polite">
+    <div className={`lesson-panel ${step?.free ? 'is-free' : ''} ${open ? '' : 'is-shut'} ${trouble ? 'is-trouble' : ''}`} role="status" aria-live="polite" ref={box}>
       <div className="lesson-panel-top">
         <span className="lesson-panel-head">
           Lesson {index + 1} of {LESSONS.length}: {def.title}. Step {lesson.progress.step + 1} of {def.steps.length}
@@ -60,11 +64,21 @@ export function LessonPanel() {
           {open ? 'Hide' : 'Show'}
         </button>
       </div>
-      {open && <p className="lesson-panel-say">{step?.say}</p>}
-      {nudge && <p className="lesson-panel-nudge">{nudge}</p>}
-      {open && (
+      {open && !trouble && (
+        <p className={`lesson-panel-say ${expanded ? '' : 'is-folded'}`} onClick={() => setExpanded((v) => !v)}>
+          {step?.say}
+        </p>
+      )}
+      {open && !trouble && (
+        <button type="button" className="btn-quiet lesson-panel-more" onClick={() => setExpanded((v) => !v)} aria-expanded={expanded}>
+          {expanded ? 'Less' : 'More'}
+        </button>
+      )}
+      {trouble && <p className="lesson-panel-nudge">{trouble}</p>}
+      {nudge && !trouble && <p className="lesson-panel-nudge">{nudge}</p>}
+      {open && (expanded || !!trouble) && (
         <div className="lesson-panel-actions">
-          <button type="button" className="btn-quiet" onClick={retryStep}>
+          <button type="button" className={trouble ? 'btn btn-primary' : 'btn-quiet'} onClick={retryStep}>
             Retry this step
           </button>
           <button type="button" className="btn-quiet" onClick={leaveLesson}>

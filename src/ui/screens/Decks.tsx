@@ -23,7 +23,7 @@ function DeckRow({ deck, starter }: { deck: DeckList; starter: boolean }) {
         <span className="deck-row-meta">
           {deck.cards.length} of {DECK_SIZE} cards{starter ? ', the starter list' : `, revision ${deck.rev}`}
           {legal ? '' : `. ${problems[0]}`}
-          {rec.games > 0 ? `. ${rec.wins} of ${rec.games} readings won with it` : ''}
+          {rec.games > 0 ? `. ${rec.wins} of ${rec.games} readings won with it, all revisions` : ''}
         </span>
       </div>
       <div className="deck-row-actions">

@@ -5,6 +5,8 @@ import type { Face, GameState } from '../../engine/types'
 import { useStore } from '../store'
 import { Card, RulesText } from './Card'
 import { FlipIn } from './CardBack'
+import { Sigil } from '../sigils'
+import { isLegalDeck } from '../../engine/deck'
 import { ArtImage } from './ArtImage'
 import { CardInspect, type LiveInfo, type Stats } from './Hero'
 import { shortName } from './Card'
@@ -61,11 +63,23 @@ export function ReadChooser({ state }: { state: GameState }) {
         <div className="read-options">
           {pend.options.map((o, i) => {
             const def = card(o.defId)
+            const cost = cardCost(state, pend.player, def.id)
+            const kind = def.type === 'figure' ? `${def.attack}/${def.health}` : def.type === 'omen' ? 'Omen' : 'Relic'
             return (
-              <div key={o.uid} className="read-option">
-                <FlipIn delay={0.15 + i * 0.22}>
-                  <Card def={def} face="upright" size="hand" cost={cardCost(state, pend.player, def.id)} onClick={() => inspect(def.id, 'upright', o.uid)} />
-                </FlipIn>
+              <div key={o.uid} className={`read-option suit-${def.suit}`}>
+                <button type="button" className="read-head" onClick={() => inspect(def.id, 'upright', o.uid)} aria-label={`Inspect ${def.name}`}>
+                  <FlipIn delay={0.15 + i * 0.22}>
+                    <span className="read-thumb">
+                      <Sigil def={def} face="upright" />
+                    </span>
+                  </FlipIn>
+                  <span className="read-title">
+                    <span className="read-name">{def.name}</span>
+                    <span className="read-kind">
+                      {cost} Spark, {kind}
+                    </span>
+                  </span>
+                </button>
                 <div className="read-text">
                   <span className="rt-up">
                     <b>Upright</b> <RulesText text={def.upright.text || 'No text.'} />
@@ -74,7 +88,7 @@ export function ReadChooser({ state }: { state: GameState }) {
                     <b>Reversed</b> <RulesText text={def.reversed.text || 'No text.'} />
                   </span>
                 </div>
-                <button type="button" className="btn btn-primary" onClick={() => dispatch({ type: 'choose', uid: o.uid })}>
+                <button type="button" className="btn btn-primary read-keep" onClick={() => dispatch({ type: 'choose', uid: o.uid })}>
                   Keep {shortName(def.name)}
                 </button>
               </div>
@@ -234,11 +248,24 @@ function AwardLine({ state }: { state: GameState }) {
   return <p className="award">Recorded. Renown never falls.{kept}</p>
 }
 
+// The rematch plays the finished reading's own list again, never a starter in its place.
+function RematchButton({ className = 'btn btn-primary' }: { className?: string }) {
+  const rematch = useStore((s) => s.rematch)
+  const lastDeck = useStore((s) => s.lastDeck)
+  const humanSig = useStore((s) => s.humanSig)
+  const lesson = useStore((s) => s.lesson)
+  if (lesson) return null
+  const legal = !!lastDeck && isLegalDeck(humanSig, lastDeck.cards)
+  return (
+    <button type="button" className={className} onClick={rematch} disabled={!legal} title={legal ? '' : 'That list is not legal under these rules'}>
+      Draw again
+      {lastDeck ? <small className="btn-note">{lastDeck.starter ? lastDeck.name : `${lastDeck.name}, revision ${lastDeck.rev}`}</small> : null}
+    </button>
+  )
+}
+
 export function GameOver({ state }: { state: GameState }) {
   const goto = useStore((s) => s.goto)
-  const startGame = useStore((s) => s.startGame)
-  const humanSig = useStore((s) => s.humanSig)
-  const aiSig = useStore((s) => s.aiSig)
   const queue = useStore((s) => s.queue)
   const reviewing = useStore((s) => s.reviewing)
   const setReviewing = useStore((s) => s.setReviewing)
@@ -246,14 +273,13 @@ export function GameOver({ state }: { state: GameState }) {
   const win = state.winner === state.humanPlayer
   return (
     <motion.div className="modal-scrim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}>
-      <motion.div className="modal gameover" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.3 }}>
+      <motion.div className={`modal gameover ${win ? 'is-win' : 'is-loss'}`} initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.3 }}>
+        <div className="gameover-moon" aria-hidden />
         <div className="modal-title">{state.winner === 'draw' ? 'Both readings end together' : win ? 'The reading is yours' : 'The reading goes against you'}</div>
         <p className="modal-copy">{resultLine(state)}</p>
         <AwardLine state={state} />
         <div className="modal-actions">
-          <button type="button" className="btn btn-primary" onClick={() => startGame(humanSig, aiSig)}>
-            Draw again
-          </button>
+          <RematchButton />
           <button type="button" className="btn" onClick={() => setReviewing(true)}>
             Review the final turn
           </button>
@@ -273,16 +299,11 @@ export function GameOver({ state }: { state: GameState }) {
 // ways out sit in a strip instead of a modal.
 export function OverStrip({ state }: { state: GameState }) {
   const goto = useStore((s) => s.goto)
-  const startGame = useStore((s) => s.startGame)
-  const humanSig = useStore((s) => s.humanSig)
-  const aiSig = useStore((s) => s.aiSig)
   return (
     <div className="over-strip" role="status">
       <span className="over-strip-text">{resultLine(state)} Tap any card to inspect it.</span>
       <AwardLine state={state} />
-      <button type="button" className="btn btn-primary" onClick={() => startGame(humanSig, aiSig)}>
-        Draw again
-      </button>
+      <RematchButton />
       <button type="button" className="btn-quiet" onClick={() => goto('choose')}>
         Change Significator
       </button>

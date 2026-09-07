@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest'
 import { finalState, runAction } from '../engine/engine'
 import type { Action } from '../engine/types'
-import { LESSONS, afterAction, afterInspect, allowed, lessonById, type InspectTarget, type LessonProgress } from './lessons'
+import { LESSONS, afterAction, afterInspect, allowed, hintsFor, isStuck, lessonById, type InspectTarget, type LessonProgress } from './lessons'
 
 function player(lessonId: string) {
   const lesson = lessonById(lessonId)!
@@ -119,7 +119,7 @@ describe('lessons', () => {
     expect(t.progress().step).toBe(7)
     // The exercise: end with six or fewer in hand.
     const hand = () => t.state().players[0].hand
-    while (hand().length > 6) {
+    while (hand().length > 7) {
       const lane = t.state().players[0].lanes.findIndex((f) => f === null)
       const cheap = hand().find((h) => ['antlers-ace', 'gears-2', 'gears-3', 'antlers-3'].includes(h.defId))
       const mana = hand().find((h) => h.defId === 'gears-6') // Liquid Mana, an Omen: no lane needed
@@ -139,5 +139,61 @@ describe('lessons', () => {
     expect(t.progress().step).toBe(2)
     t.act({ type: 'choose', uid: t.state().pending!.options[0].uid }) // a keep is always allowed
     expect(t.progress().step).toBe(4) // past 'look' and 'keep', on to counting again
+  })
+
+  it('your first reading: the lights follow where the Guard Post really went', () => {
+    const t = player('first-reading')
+    t.act({ type: 'play', uid: t.uidOf('suns-2'), face: 'reversed', lane: 0 }) // Past, not the suggested Present
+    expect(t.progress().step).toBe(1)
+    const lit = hintsFor(t.lesson, t.progress(), t.state())
+    expect(lit).toContainEqual({ kind: 'slot', player: 0, lane: 0 })
+    expect(lit).toContainEqual({ kind: 'slot', player: 1, lane: 0 })
+    expect(lit).not.toContainEqual({ kind: 'slot', player: 0, lane: 1 })
+    t.act({ type: 'attack', lane: 0, targetLane: 0 })
+    expect(t.progress().step).toBe(2)
+  })
+
+  it('your first reading: the closing deadline is real, and the Pearl line is a fair answer', () => {
+    const line = () => {
+      const t = player('first-reading')
+      t.act({ type: 'play', uid: t.uidOf('suns-2'), face: 'reversed', lane: 1 })
+      t.act({ type: 'attack', lane: 1, targetLane: 1 })
+      t.act({ type: 'endTurn' })
+      t.opponent()
+      t.act({ type: 'play', uid: t.uidOf('tides-3'), face: 'upright', lane: 0 })
+      expect(t.progress().step).toBe(4)
+      return t
+    }
+    // Attack without Sword Guy, end the turn: the exercise is missed, and a later attack does not rescue it.
+    const a = line()
+    a.act({ type: 'attack', lane: 1, targetLane: 1 })
+    a.act({ type: 'endTurn' })
+    expect(a.progress().missed).toBe(true)
+    a.opponent()
+    a.act({ type: 'attack', lane: 1, targetLane: 1 })
+    expect(a.progress().complete).toBe(false)
+    expect(hintsFor(a.lesson, a.progress(), a.state())).toEqual([])
+    // Kaipo's Pearl Reversed on the Guard Post, then the attack: 18 minus 5 is 13, in the same turn.
+    const b = line()
+    b.act({ type: 'play', uid: b.uidOf('tides-ace'), face: 'reversed', target: { kind: 'figure', player: 0, lane: 1 } })
+    b.act({ type: 'attack', lane: 1, targetLane: 1 })
+    expect(b.state().players[1].health).toBe(13)
+    expect(b.progress().complete).toBe(true)
+    expect(b.state().round).toBe(2)
+  })
+
+  it('read the moon: a stall is named, and the lights only point at cards you can play', () => {
+    const t = player('read-the-moon')
+    t.act({ type: 'play', uid: t.uidOf('antlers-ace'), face: 'upright', lane: 0 }) // the Wisplight, for 1
+    t.act({ type: 'ability' })
+    t.act({ type: 'choose', uid: t.state().pending!.options[0].uid })
+    expect(t.progress().step).toBe(4)
+    expect(t.state().players[0].spark).toBe(2)
+    // Yvette Reversed spends the last Spark. Nothing affordable is left: stuck, and said so.
+    t.act({ type: 'play', uid: t.uidOf('gears-3'), face: 'reversed', lane: 1 })
+    if (t.state().pending) t.act({ type: 'choose', uid: t.state().pending!.options[0].uid })
+    expect(t.progress().step).toBe(4)
+    expect(isStuck(t.lesson, t.progress(), t.state())).toBe(true)
+    expect(hintsFor(t.lesson, t.progress(), t.state())).toEqual([])
   })
 })

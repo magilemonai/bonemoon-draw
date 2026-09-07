@@ -1,0 +1,53 @@
+{
+  "review_target": "477ae92",
+  "loaded_browser_script": "https://magilemonai.github.io/moonwyld/assets/index-BAtMHkXL.js",
+  "viewports": [
+    [
+      1280,
+      800
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "later_local_head": "3c826bbad5629db0b2fa9c7f3e8c2cac43f1ecae",
+  "snapshot_checks": [
+    {
+      "file": "src/styles/global.css",
+      "matches_477ae92": true,
+      "sha256": "f6c81d2319327874d80675636e804bd13e87392a3037929a0c98773cf4b13f37"
+    },
+    {
+      "file": "src/ui/components/Overlays.tsx",
+      "matches_477ae92": true,
+      "sha256": "0c1af8c42d8cf3fc37f9b68669f191724c27748da4de6708048bebc88c5546ee"
+    },
+    {
+      "file": "src/ui/components/Hand.tsx",
+      "matches_477ae92": true,
+      "sha256": "d1207e2fe29bdbf66f0480fea8bd3436e577f78b5ee9a51702401014eaf6cf9d"
+    },
+    {
+      "file": "src/ui/components/CardBack.tsx",
+      "matches_477ae92": true,
+      "sha256": "7c41ca26bb5b9ecf8c3cf0b2ae92779c3629f00ec5252a750f13127c21941b5d"
+    },
+    {
+      "file": "src/ui/store.ts",
+      "matches_477ae92": true,
+      "sha256": "46af14cabe02eb3a88d28e135f1d63cdf0361cc05c28f9f4122088bd01cb0a83"
+    },
+    {
+      "file": "src/tutorial/lessons.ts",
+      "matches_477ae92": true,
+      "sha256": "310697d80755ab073b6f60957986900ee9c8d0a2dde382e0e67e9af1478b65af"
+    },
+    {
+      "file": "src/ai/ai.ts",
+      "matches_477ae92": true,
+      "sha256": "2d802e650892cd8beccd9a167d454fecb569524a243ff53fab86fbc8e7972d98"
+    }
+  ],
+  "browser_scope": "Existing IAB tab kept loaded. No reload after later local commit was discovered. Fresh-profile and live OS reduced-motion blocked by native CUA permissions."
+}

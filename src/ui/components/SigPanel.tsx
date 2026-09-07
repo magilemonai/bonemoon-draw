@@ -30,6 +30,7 @@ export function SigPanel({ state, player }: { state: GameState; player: PlayerId
   const fx = useStore((s) => s.fx)
   const playing = useStore((s) => s.playing)
   const ref = { kind: 'sig' as const, player }
+  const deckName = useStore((s) => (isMine ? (s.savedMatch?.deck ?? s.lastDeck) : null))
   const hints = useLessonHints()
   const litSig = hints.some((h) => h.kind === 'sig' && h.player === player)
   const litAbility = isMine && hints.some((h) => h.kind === 'ability')
@@ -111,6 +112,12 @@ export function SigPanel({ state, player }: { state: GameState; player: PlayerId
             {isMine ? sig.name : shortSigName(sig.id, sig.name)}
           </span>
           {isMine && <span className="sig-title">{sig.title}</span>}
+          {isMine && deckName && (
+            <span className="sig-deck" title="The deck in play">
+              {deckName.name}
+              {deckName.starter ? '' : `, rev ${deckName.rev}`}
+            </span>
+          )}
         </div>
         <span className="sig-health" title="Health">
           <b>{health}</b> <small>Health</small>

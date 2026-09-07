@@ -171,6 +171,16 @@ export function FaceChooser({ state }: { state: GameState }) {
           )
         })}
       </div>
+      <div className="face-chooser-actions" aria-label="Play a face">
+        {(['upright', 'reversed'] as Face[]).map((face) => {
+          const ok = faces.includes(face) && affordable && !busy
+          return (
+            <button key={face} type="button" className={`btn ${ok ? 'btn-primary' : ''}`} disabled={!ok} onClick={() => choose(face)}>
+              {face === 'upright' ? 'Play Upright' : 'Play Reversed'}
+            </button>
+          )
+        })}
+      </div>
     </motion.div>
   )
 }

@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'motion/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { card, significator } from '../../data'
 import { faceDef, figureName, other, whyNoAttack, whyNoMove } from '../../engine/queries'
 import type { GameState } from '../../engine/types'
@@ -52,8 +52,36 @@ export function Battle() {
   const concede = useStore((s) => s.concede)
   const lesson = useStore((s) => s.lesson)
   const leaveLesson = useStore((s) => s.leaveLesson)
+  const casting = useStore((s) => s.fx.some((f) => f.kind === 'flash' && !!f.defId))
   const [showLog, setShowLog] = useState(false)
   const [conceding, setConceding] = useState(false)
+  const root = useRef<HTMLDivElement>(null)
+  // On a phone the board takes what the panels and the hand leave, so nothing overlaps:
+  // the lane width follows the free height. Wide screens size the lanes by height already.
+  useEffect(() => {
+    const el = root.current
+    if (!el) return
+    const fit = () => {
+      if (window.innerWidth >= 1000) {
+        el.style.removeProperty('--cw-lane')
+        return
+      }
+      const h = (sel: string) => el.querySelector(sel)?.getBoundingClientRect().height ?? 0
+      const used = h('.table-top') + h('.table-mid') + h('.table-bottom') + h('.hand-wrap') + 30
+      const free = el.clientHeight - used
+      const w = Math.max(60, Math.min(112, Math.floor((free - 14) / 2 / 1.62)))
+      el.style.setProperty('--cw-lane', `${w}px`)
+    }
+    fit()
+    const ro = new ResizeObserver(fit)
+    ro.observe(el)
+    el.querySelectorAll('.table-top, .table-mid, .table-bottom, .hand-wrap').forEach((n) => ro.observe(n))
+    window.addEventListener('resize', fit)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', fit)
+    }
+  }, [display?.phase, !!lesson, reviewing])
   // Reviewing the final turn opens the log so the last events are in view.
   useEffect(() => {
     if (reviewing) setShowLog(true)
@@ -66,7 +94,8 @@ export function Battle() {
 
   return (
     <div
-      className={`battle ${display.round >= display.boneMoonRound ? 'is-bone' : ''} ${reviewing ? 'is-reviewing' : ''} ${lesson ? 'is-lesson' : ''}`}
+      ref={root}
+      className={`battle ${display.round >= display.boneMoonRound ? 'is-bone' : ''} ${reviewing ? 'is-reviewing' : ''} ${lesson ? 'is-lesson' : ''} ${casting ? 'is-casting' : ''}`}
       onClick={(e) => {
         // Tapping the felt clears a selection.
         if ((e.target as HTMLElement).classList.contains('battle') || (e.target as HTMLElement).classList.contains('board')) select({ kind: 'none' })
@@ -108,8 +137,8 @@ export function Battle() {
             </button>
           </div>
         )}
-        {reviewing && display.phase === 'over' && <OverStrip state={display} />}
       </div>
+      {reviewing && display.phase === 'over' && <OverStrip state={display} />}
       {lesson && <LessonPanel />}
       {conceding && display.phase !== 'over' && (
         <div className="modal-scrim" onClick={() => setConceding(false)}>

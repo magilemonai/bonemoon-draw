@@ -13,7 +13,7 @@ import { artSrc } from './art'
 import { abandon, checkSaved, loadProfile, saveProfile, settleMatch, type Award, type Profile, type SavedMatch } from './profile'
 import { isLegalDeck } from '../engine/deck'
 import { loadDecks, resolveDeck, saveDecks, stampOf, starterDeck, type DeckList } from './decks'
-import { afterAction, afterInspect, allowed, currentStep, lessonById, type InspectTarget, type LessonProgress } from '../tutorial/lessons'
+import { afterAction, afterInspect, allowed, currentStep, isStuck, lessonById, type InspectTarget, type LessonProgress } from '../tutorial/lessons'
 import { completeLesson } from './profile'
 
 export type Screen = 'title' | 'choose' | 'battle' | 'codex' | 'rules' | 'decks' | 'build' | 'lessons'
@@ -99,12 +99,13 @@ interface UIState {
   choosePreset: { mine: string; theirs: string; deck?: string } | null // what the choose screen should open with
   decks: DeckList[] // built decks, kept in this browser
   buildingId: string | null // the deck open in the builder
-  lesson: { id: string; progress: LessonProgress; stepStart: GameState; nudge: string | null } | null // a lesson in play
+  lesson: { id: string; progress: LessonProgress; stepStart: GameState; nudge: string | null; stuck: boolean } | null // a lesson in play
+  lastDeck: NonNullable<SavedMatch['deck']> | null // the list the last finished reading was played with
   uiKit: boolean // public/art/ui/* is present (probed once)
   tableArt: boolean // public/art/table.jpg is present
 
   goto: (s: Screen) => void
-  startGame: (humanSig: string, aiSig: string, deckId?: string) => void
+  startGame: (humanSig: string, aiSig: string, deckId?: string, list?: NonNullable<SavedMatch['deck']>) => void
   dispatch: (a: Action) => void
   select: (sel: Selection) => void
   inspect: (defId: string, face: Face, uid?: number) => void
@@ -120,6 +121,7 @@ interface UIState {
   setDecks: (decks: DeckList[]) => void
   openBuilder: (id: string) => void
   startLesson: (id: string) => void
+  rematch: () => void
   retryStep: () => void
   leaveLesson: () => void
   clearNudge: () => void
@@ -310,6 +312,7 @@ export const useStore = create<UIState>((set, get) => ({
   decks: loadDecks(),
   buildingId: null,
   lesson: null,
+  lastDeck: null,
   uiKit: false,
   tableArt: false,
 
@@ -348,7 +351,7 @@ export const useStore = create<UIState>((set, get) => ({
       award: null,
       humanSig: lesson.sigs[0],
       aiSig: lesson.sigs[1],
-      lesson: { id, progress: { step: 0, complete: false }, stepStart: s, nudge: null },
+      lesson: { id, progress: { step: 0, complete: false }, stepStart: s, nudge: null, stuck: false },
       screen: 'battle',
     })
     get().tick()
@@ -356,7 +359,13 @@ export const useStore = create<UIState>((set, get) => ({
   retryStep: () => {
     const l = get().lesson
     if (!l) return
-    set({ committed: l.stepStart, display: l.stepStart, queue: [], playing: false, fx: [], selection: { kind: 'none' }, lesson: { ...l, nudge: null } })
+    set({ committed: l.stepStart, display: l.stepStart, queue: [], playing: false, fx: [], selection: { kind: 'none' }, lesson: { ...l, progress: { ...l.progress, missed: false }, nudge: null, stuck: false } })
+  },
+  // The same list again, against the same opponent.
+  rematch: () => {
+    const { lastDeck, humanSig, aiSig } = get()
+    if (!lastDeck) return
+    get().startGame(humanSig, aiSig, undefined, lastDeck)
   },
   leaveLesson: () => set({ lesson: null, screen: 'lessons', selection: { kind: 'none' } }),
   clearNudge: () => {
@@ -373,17 +382,22 @@ export const useStore = create<UIState>((set, get) => ({
   },
   setReviewing: (reviewing) => set({ reviewing, selection: { kind: 'none' } }),
 
-  startGame: (humanSig, aiSig, deckId) => {
-    // The list is snapshotted here; editing the deck later cannot touch this reading.
-    const deck = (deckId ? resolveDeck(get().decks, deckId) : null) ?? starterDeck(humanSig)
-    if (deck.sig !== humanSig || !isLegalDeck(humanSig, deck.cards)) return
+  startGame: (humanSig, aiSig, deckId, list) => {
+    // The list is snapshotted here; editing the deck later cannot touch this reading. A
+    // rematch passes the finished reading's own snapshot, so it is the same list, not the
+    // deck's latest revision.
+    const stamp = list ?? (() => {
+      const deck = (deckId ? resolveDeck(get().decks, deckId) : null) ?? starterDeck(humanSig)
+      return deck.sig === humanSig ? { ...stampOf(deck), cards: deck.cards.slice() } : null
+    })()
+    if (!stamp || !isLegalDeck(humanSig, stamp.cards)) return
     const seed = (Date.now() ^ Math.floor(Math.random() * 1e9)) | 0
-    const g = createGame({ sigs: [humanSig, aiSig], seed, humanPlayer: 0, decks: [deck.cards.slice(), undefined] })
+    const g = createGame({ sigs: [humanSig, aiSig], seed, humanPlayer: 0, decks: [stamp.cards.slice(), undefined] })
     const steps = beginGame(g, true)
     const committed = finalState(steps, g)
     const matchId = `${Date.now().toString(36)}-${(seed >>> 0).toString(36)}`
     const seat: 'first' | 'second' = g.active === 0 ? 'first' : 'second'
-    const saved: SavedMatch = { id: matchId, humanSig, aiSig, seat, version: RULES_VERSION, deck: { ...stampOf(deck), cards: deck.cards.slice() }, committed, log: [] }
+    const saved: SavedMatch = { id: matchId, humanSig, aiSig, seat, version: RULES_VERSION, deck: { ...stamp, cards: stamp.cards.slice() }, committed, log: [] }
     // A reading left unfinished and replaced is counted as abandoned, and disclosed.
     let profile = get().profile
     let storageOk = get().storageOk
@@ -405,6 +419,7 @@ export const useStore = create<UIState>((set, get) => ({
       profile,
       storageOk,
       savedMatch: saved,
+      lastDeck: null,
       staleMatch: null,
       choosePreset: null,
       humanSig,
@@ -426,7 +441,7 @@ export const useStore = create<UIState>((set, get) => ({
       next = { profile: r.profile, award: r.award, storageOk: saveProfile(r.profile) && next.storageOk }
     }
     storeMatch(null)
-    set({ committed: over, display: over, queue: [], playing: false, fx: [], selection: { kind: 'none' }, reviewing: false, savedMatch: null, ...next })
+    set({ committed: over, display: over, queue: [], playing: false, fx: [], selection: { kind: 'none' }, reviewing: false, savedMatch: null, lastDeck: savedMatch?.deck ?? null, ...next })
   },
 
   // Pick an unfinished reading back up where it was left, with no replay of what happened.
@@ -468,7 +483,8 @@ export const useStore = create<UIState>((set, get) => ({
         prof = completeLesson(profile, lesson.id, Date.now())
         saveProfile(prof)
       }
-      set({ committed: next, queue: [...queue, ...steps], selection: { kind: 'none' }, profile: prof, lesson: { ...lesson, progress, stepStart: moved ? next : lesson.stepStart, nudge: null } })
+      const stuck = !progress.complete && isStuck(def, progress, next)
+      set({ committed: next, queue: [...queue, ...steps], selection: { kind: 'none' }, profile: prof, lesson: { ...lesson, progress, stepStart: moved ? next : lesson.stepStart, nudge: null, stuck } })
       get().tick()
       return
     }
@@ -484,7 +500,7 @@ export const useStore = create<UIState>((set, get) => ({
         set({ profile: r.profile, award: r.award, storageOk: get().storageOk && ok })
       }
       storeMatch(null)
-      set({ savedMatch: null })
+      set({ savedMatch: null, lastDeck: savedMatch?.deck ?? null })
     } else if (savedMatch) {
       const saved: SavedMatch = { ...savedMatch, committed: next, log: log.slice(-40) }
       const ok = storeMatch(saved)
@@ -540,7 +556,7 @@ export const useStore = create<UIState>((set, get) => ({
       queue: rest,
       playing: true,
       fx: [...st.fx.filter((f) => f.until > now), ...newFx],
-      log: text ? [...st.log.slice(-79), text] : st.log,
+      log: text ? [...st.log.slice(-239), text] : st.log,
     })
     const wait = durationFor(step.ev, speed)
     setTimeout(() => {

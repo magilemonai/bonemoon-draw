@@ -1,3 +1,4 @@
+import { MotionConfig } from 'motion/react'
 import { useStore } from './ui/store'
 import { Title } from './ui/screens/Title'
 import { Choose } from './ui/screens/Choose'
@@ -11,6 +12,7 @@ import { Lessons } from './ui/screens/Lessons'
 export default function App() {
   const screen = useStore((s) => s.screen)
   return (
+    <MotionConfig reducedMotion="user">
     <div className="app">
       <div className="sky" aria-hidden>
         <div className="sky-stars" />
@@ -41,5 +43,6 @@ export default function App() {
       {screen === 'build' && <Builder />}
       {screen === 'lessons' && <Lessons />}
     </div>
+    </MotionConfig>
   )
 }

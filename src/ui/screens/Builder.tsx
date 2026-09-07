@@ -135,6 +135,7 @@ export function Builder() {
   const legal = problems.length === 0
   const shape = deckShape(deck.cards)
   const rec = deckRecord(profile, deck.id)
+  const recRev = deckRecord(profile, deck.id, deck.rev)
   const update = (d: DeckList) => setDecks(upsert(decks, d))
 
   const shown = useMemo(() => {
@@ -234,7 +235,12 @@ export function Builder() {
           <span className="builder-count-inline">
             {deck.cards.length} of {DECK_SIZE}
           </span>
-          {rec.games > 0 && <span className="builder-record">{rec.wins} of {rec.games} readings won with this list</span>}
+          {rec.games > 0 && (
+            <span className="builder-record">
+              {rec.wins} of {rec.games} readings won across all revisions
+              {recRev.games > 0 ? `; this revision ${recRev.wins} of ${recRev.games}` : '; this revision unplayed'}
+            </span>
+          )}
         </div>
         <div className="builder-head-row builder-actions">
           {starter ? (
