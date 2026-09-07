@@ -7,8 +7,10 @@ import { beginGame, createGame, finalState, runAction } from '../engine/engine'
 import { chooseAction } from '../ai/ai'
 import type { Action, Face, GameEvent, GameState, LaneIndex, PlayerId, Step, TargetRef } from '../engine/types'
 import { card, significator } from '../data'
-import { figureName } from '../engine/queries'
+import { figureName, other } from '../engine/queries'
+import { RULES_VERSION } from '../engine/rules'
 import { artSrc } from './art'
+import { loadProfile, recordMatch, saveProfile, type Award, type MatchRecord, type Profile } from './profile'
 
 export type Screen = 'title' | 'choose' | 'battle' | 'codex' | 'rules'
 
@@ -32,6 +34,38 @@ export type Selection =
   | { kind: 'ability' } // waiting for an ability target
   | { kind: 'inspect'; defId: string; face: Face; uid?: number }
 
+// An unfinished reading, kept so leaving the page does not throw it away.
+export interface SavedMatch {
+  id: string
+  humanSig: string
+  aiSig: string
+  seat: 'first' | 'second'
+  committed: GameState
+  log: string[]
+}
+
+const MATCH_KEY = 'bonemoon.match'
+
+function loadMatch(): SavedMatch | null {
+  try {
+    const raw = localStorage.getItem(MATCH_KEY)
+    if (!raw) return null
+    const m = JSON.parse(raw) as SavedMatch
+    return m && m.committed && m.committed.phase === 'main' ? m : null
+  } catch {
+    return null
+  }
+}
+
+function storeMatch(m: SavedMatch | null): void {
+  try {
+    if (m) localStorage.setItem(MATCH_KEY, JSON.stringify(m))
+    else localStorage.removeItem(MATCH_KEY)
+  } catch {
+    // storage is optional
+  }
+}
+
 interface UIState {
   screen: Screen
   committed: GameState | null
@@ -47,6 +81,11 @@ interface UIState {
   reduceMotion: boolean
   speed: number // 1 = normal, 2.2 = quick
   reviewing: boolean // the reading is over and the player is looking at the final table
+  profile: Profile // the player's record, kept in this browser
+  award: Award | null // what the last completed match earned
+  matchId: string | null
+  seat: 'first' | 'second'
+  savedMatch: SavedMatch | null // an unfinished reading to come back to
   uiKit: boolean // public/art/ui/* is present (probed once)
   tableArt: boolean // public/art/table.jpg is present
 
@@ -59,6 +98,7 @@ interface UIState {
   tick: () => void
   setSpeed: (n: number) => void
   setReviewing: (v: boolean) => void
+  resumeGame: () => void
 }
 
 function storedSpeed(): number {
@@ -237,6 +277,11 @@ export const useStore = create<UIState>((set, get) => ({
   reduceMotion: typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
   speed: storedSpeed(),
   reviewing: false,
+  profile: loadProfile(),
+  award: null,
+  matchId: null,
+  seat: 'first',
+  savedMatch: loadMatch(),
   uiKit: false,
   tableArt: false,
 
@@ -255,8 +300,13 @@ export const useStore = create<UIState>((set, get) => ({
     const seed = (Date.now() ^ Math.floor(Math.random() * 1e9)) | 0
     const g = createGame({ sigs: [humanSig, aiSig], seed, humanPlayer: 0 })
     const steps = beginGame(g, true)
+    const committed = finalState(steps, g)
+    const matchId = `${Date.now().toString(36)}-${(seed >>> 0).toString(36)}`
+    const seat: 'first' | 'second' = g.active === 0 ? 'first' : 'second'
+    const saved: SavedMatch = { id: matchId, humanSig, aiSig, seat, committed, log: [] }
+    storeMatch(saved)
     set({
-      committed: finalState(steps, g),
+      committed,
       display: g,
       queue: steps,
       playing: false,
@@ -264,6 +314,10 @@ export const useStore = create<UIState>((set, get) => ({
       log: [],
       selection: { kind: 'none' },
       reviewing: false,
+      award: null,
+      matchId,
+      seat,
+      savedMatch: saved,
       humanSig,
       aiSig,
       screen: 'battle',
@@ -271,11 +325,61 @@ export const useStore = create<UIState>((set, get) => ({
     get().tick()
   },
 
+  // Pick an unfinished reading back up where it was left, with no replay of what happened.
+  resumeGame: () => {
+    const m = get().savedMatch
+    if (!m) return
+    set({
+      committed: m.committed,
+      display: m.committed,
+      queue: [],
+      playing: false,
+      fx: [],
+      log: m.log,
+      selection: { kind: 'none' },
+      reviewing: false,
+      award: null,
+      matchId: m.id,
+      seat: m.seat,
+      humanSig: m.humanSig,
+      aiSig: m.aiSig,
+      screen: 'battle',
+    })
+    get().tick()
+  },
+
   dispatch: (a) => {
-    const { committed, queue } = get()
+    const { committed, queue, matchId, humanSig, aiSig, seat, profile, log } = get()
     if (!committed || committed.phase === 'over') return
     const steps = runAction(committed, a, true)
-    set({ committed: finalState(steps, committed), queue: [...queue, ...steps], selection: { kind: 'none' } })
+    const next = finalState(steps, committed)
+    set({ committed: next, queue: [...queue, ...steps], selection: { kind: 'none' } })
+    if (next.phase === 'over') {
+      // A completed match goes on the record once, and the unfinished-match slot clears.
+      if (matchId) {
+        const me = next.humanPlayer
+        const rec: MatchRecord = {
+          id: matchId,
+          when: Date.now(),
+          hero: humanSig,
+          opponent: aiSig,
+          seat,
+          result: next.winner === 'draw' ? 'draw' : next.winner === me ? 'win' : 'loss',
+          rounds: next.round,
+          health: [next.players[me].health, next.players[other(me)].health],
+          version: RULES_VERSION,
+        }
+        const r = recordMatch(profile, rec)
+        saveProfile(r.profile)
+        set({ profile: r.profile, award: r.award })
+      }
+      storeMatch(null)
+      set({ savedMatch: null })
+    } else if (matchId) {
+      const saved: SavedMatch = { id: matchId, humanSig, aiSig, seat, committed: next, log: log.slice(-40) }
+      storeMatch(saved)
+      set({ savedMatch: saved })
+    }
     get().tick()
   },
 

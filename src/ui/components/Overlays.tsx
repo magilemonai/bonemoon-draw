@@ -193,6 +193,26 @@ function resultLine(state: GameState): string {
   return who ? `${who.name}, ${who.title}, holds the table after ${state.round} rounds.` : `Both Significators fell in round ${state.round}.`
 }
 
+// What the record says about this match. Renown counts accomplishments and never falls.
+function AwardLine({ state }: { state: GameState }) {
+  const award = useStore((s) => s.award)
+  const humanSig = useStore((s) => s.humanSig)
+  const aiSig = useStore((s) => s.aiSig)
+  if (!award || !award.counted) return null
+  const win = state.winner === state.humanPlayer
+  const opp = significator(aiSig).name
+  const hero = significator(humanSig).name
+  if (award.firstClear) {
+    return (
+      <p className="award">
+        <b>+{award.gained} Renown.</b> First win over {opp} as {hero}.
+      </p>
+    )
+  }
+  if (win) return <p className="award">Already on the record: {hero} over {opp}. Renown unchanged.</p>
+  return <p className="award">Recorded. Renown never falls.</p>
+}
+
 export function GameOver({ state }: { state: GameState }) {
   const goto = useStore((s) => s.goto)
   const startGame = useStore((s) => s.startGame)
@@ -208,6 +228,7 @@ export function GameOver({ state }: { state: GameState }) {
       <motion.div className="modal gameover" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.3 }}>
         <div className="modal-title">{state.winner === 'draw' ? 'Both readings end together' : win ? 'The reading is yours' : 'The reading goes against you'}</div>
         <p className="modal-copy">{resultLine(state)}</p>
+        <AwardLine state={state} />
         <div className="modal-actions">
           <button type="button" className="btn btn-primary" onClick={() => startGame(humanSig, aiSig)}>
             Draw again
@@ -237,6 +258,7 @@ export function OverStrip({ state }: { state: GameState }) {
   return (
     <div className="over-strip" role="status">
       <span className="over-strip-text">{resultLine(state)} Tap any card to inspect it.</span>
+      <AwardLine state={state} />
       <button type="button" className="btn btn-primary" onClick={() => startGame(humanSig, aiSig)}>
         Draw again
       </button>

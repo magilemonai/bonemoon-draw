@@ -216,11 +216,6 @@ export function Sigil({ def, face, className }: { def: CardDef; face: Face; clas
             <RankMark rank={def.rank} ink={ink} />
           </g>
         )}
-        {def.suit === 'major' && def.numeral && (
-          <text x={W / 2} y={H * 0.93} textAnchor="middle" fontFamily="'Cormorant Garamond', serif" fontWeight={700} fontSize={22} fill={ink} opacity={0.9}>
-            {def.numeral}
-          </text>
-        )}
       </svg>
     </div>
   )

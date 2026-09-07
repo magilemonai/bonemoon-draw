@@ -1,5 +1,10 @@
 # NEXT
 
+- [ ] [cody] Play a few readings and see whether Renown, the next goal, and Continue the reading feel right
+    Renown is 10 per first Standard win in a matchup, kept in this browser. Rank milestones are provisional. docs/METAGAME_RESPONSE.md has the values and what is parked.
+- [ ] [crew] Export and import of the local profile, since browser storage is device-bound and can be cleared
+- [ ] [crew] A first curated Reading: fixed Significator, deck, opponents, and seeds, with a personal best kept per version
+    Only after a validated pool exists; label a returning Reading as such.
 - [ ] [crew] Expert opponent: search a bounded set of the enemy's replies after the AI's turn, same rules and information
     Standard is the current two-step planner over dealt worlds. Expert should look at what the human can do back before committing. Budget it so the table never stalls.
 - [ ] [crew] Three lessons on fixed positions: first reading, turn the fight, read the moon

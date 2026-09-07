@@ -13,7 +13,6 @@ function Portrait({ sigId, size }: { sigId: string; size: number }) {
   return (
     <div className="portrait" style={{ width: size, height: size }}>
       <ArtImage id={sig.id} />
-      <span className="portrait-numeral">{sig.numeral}</span>
     </div>
   )
 }
@@ -88,11 +87,11 @@ export function SigPanel({ state, player }: { state: GameState; player: PlayerId
         className="sig-portrait"
         onClick={onSigClick}
         animate={lunge ? { scale: [1, 0.96, 1], x: [0, isMine ? 0 : 0, 0] } : { scale: 1 }}
-        aria-label={`${sig.name}, ${pl.health} health${previewText ? `. ${previewText}` : ''}`}
+        aria-label={`${sig.name}, ${Math.max(0, pl.health)} health${previewText ? `. ${previewText}` : ''}`}
       >
         <Portrait sigId={sig.id} size={isMine ? 52 : 44} />
         <span className="sig-hp" title="Health">
-          {pl.health}
+          {Math.max(0, pl.health)}
         </span>
         {previewText && (
           <span className="sig-preview" aria-hidden>

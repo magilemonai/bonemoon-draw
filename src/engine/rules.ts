@@ -10,3 +10,7 @@ export const RULES = {
   secondPlayerSparkToken: false, // the second player opens with a one-shot Spark token (Eldertech Sphere, cost 0)
   secondPlayerFirstTurnSpark: false, // the second player has +1 Spark on their first turn only
 }
+
+// The rules and decks a match is played under. A profile credits Renown only for matches
+// under the current version; bump it when a card or rule change would change a matchup.
+export const RULES_VERSION = '2026-09-06'
