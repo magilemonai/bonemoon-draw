@@ -11,8 +11,10 @@ import { figureName, other } from '../engine/queries'
 import { RULES_VERSION } from '../engine/rules'
 import { artSrc } from './art'
 import { abandon, checkSaved, loadProfile, saveProfile, settleMatch, type Award, type Profile, type SavedMatch } from './profile'
+import { isLegalDeck } from '../engine/deck'
+import { loadDecks, resolveDeck, saveDecks, stampOf, starterDeck, type DeckList } from './decks'
 
-export type Screen = 'title' | 'choose' | 'battle' | 'codex' | 'rules'
+export type Screen = 'title' | 'choose' | 'battle' | 'codex' | 'rules' | 'decks' | 'build'
 
 export interface Fx {
   id: number
@@ -90,12 +92,14 @@ interface UIState {
   savedMatch: SavedMatch | null // the reading in progress, as last saved
   staleMatch: StaleMatch | null // a reading that cannot continue under these rules
   storageOk: boolean // false once a save has failed in this session
-  choosePreset: { mine: string; theirs: string } | null // what the choose screen should open with
+  choosePreset: { mine: string; theirs: string; deck?: string } | null // what the choose screen should open with
+  decks: DeckList[] // built decks, kept in this browser
+  buildingId: string | null // the deck open in the builder
   uiKit: boolean // public/art/ui/* is present (probed once)
   tableArt: boolean // public/art/table.jpg is present
 
   goto: (s: Screen) => void
-  startGame: (humanSig: string, aiSig: string) => void
+  startGame: (humanSig: string, aiSig: string, deckId?: string) => void
   dispatch: (a: Action) => void
   select: (sel: Selection) => void
   inspect: (defId: string, face: Face, uid?: number) => void
@@ -106,8 +110,10 @@ interface UIState {
   resumeGame: () => void
   concede: () => void
   dismissStale: () => void
-  openChoose: (preset?: { mine: string; theirs: string }) => void
-  replaceProfile: (p: Profile) => void
+  openChoose: (preset?: { mine: string; theirs: string; deck?: string }) => void
+  replaceProfile: (p: Profile, decks?: DeckList[]) => void
+  setDecks: (decks: DeckList[]) => void
+  openBuilder: (id: string) => void
 }
 
 function storedSpeed(): number {
@@ -292,6 +298,8 @@ export const useStore = create<UIState>((set, get) => ({
   staleMatch: startup.stale,
   storageOk: true,
   choosePreset: null,
+  decks: loadDecks(),
+  buildingId: null,
   uiKit: false,
   tableArt: false,
 
@@ -301,10 +309,16 @@ export const useStore = create<UIState>((set, get) => ({
     storeMatch(null)
     set({ staleMatch: null })
   },
-  replaceProfile: (profile) => {
-    const ok = saveProfile(profile)
-    set({ profile, storageOk: ok })
+  replaceProfile: (profile, decks) => {
+    let ok = saveProfile(profile)
+    if (decks) ok = saveDecks(decks) && ok
+    set({ profile, storageOk: ok, ...(decks ? { decks } : {}) })
   },
+  setDecks: (decks) => {
+    const ok = saveDecks(decks)
+    set({ decks, storageOk: get().storageOk && ok })
+  },
+  openBuilder: (id) => set({ screen: 'build', buildingId: id, selection: { kind: 'none' }, reviewing: false }),
   setSpeed: (speed) => {
     try {
       localStorage.setItem('bonemoon.speed', String(speed))
@@ -315,14 +329,17 @@ export const useStore = create<UIState>((set, get) => ({
   },
   setReviewing: (reviewing) => set({ reviewing, selection: { kind: 'none' } }),
 
-  startGame: (humanSig, aiSig) => {
+  startGame: (humanSig, aiSig, deckId) => {
+    // The list is snapshotted here; editing the deck later cannot touch this reading.
+    const deck = (deckId ? resolveDeck(get().decks, deckId) : null) ?? starterDeck(humanSig)
+    if (deck.sig !== humanSig || !isLegalDeck(humanSig, deck.cards)) return
     const seed = (Date.now() ^ Math.floor(Math.random() * 1e9)) | 0
-    const g = createGame({ sigs: [humanSig, aiSig], seed, humanPlayer: 0 })
+    const g = createGame({ sigs: [humanSig, aiSig], seed, humanPlayer: 0, decks: [deck.cards.slice(), undefined] })
     const steps = beginGame(g, true)
     const committed = finalState(steps, g)
     const matchId = `${Date.now().toString(36)}-${(seed >>> 0).toString(36)}`
     const seat: 'first' | 'second' = g.active === 0 ? 'first' : 'second'
-    const saved: SavedMatch = { id: matchId, humanSig, aiSig, seat, version: RULES_VERSION, committed, log: [] }
+    const saved: SavedMatch = { id: matchId, humanSig, aiSig, seat, version: RULES_VERSION, deck: { ...stampOf(deck), cards: deck.cards.slice() }, committed, log: [] }
     // A reading left unfinished and replaced is counted as abandoned, and disclosed.
     let profile = get().profile
     let storageOk = get().storageOk

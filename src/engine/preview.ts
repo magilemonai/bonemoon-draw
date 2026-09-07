@@ -3,9 +3,9 @@
 // opens along the way, the result is exact and the interface can say so. Otherwise the
 // plain exchange is reported with the text still to decide.
 
-import { significator } from '../data'
+import { card, significator } from '../data'
 import { effectsOf, finalState, runAction } from './engine'
-import { figAt, figureName, healthOf, previewAttack, refOf, resolveRef, sameRef } from './queries'
+import { figAt, healthOf, previewAttack, refOf, resolveRef, sameRef } from './queries'
 import type { AttackPreview } from './queries'
 import { LANE_NAMES } from './types'
 import type { FigureInstance, GameState, LaneIndex, PlayerId, Step, Trigger } from './types'
@@ -15,6 +15,8 @@ export type Fate = 'stays' | 'moves' | 'returns' | 'falls' | 'rekindles' | 'reki
 
 export interface AttackOutcome extends AttackPreview {
   exact: boolean // the numbers are what will happen, not an estimate
+  attackerName: string
+  defenderName: string // the Significator's short name when the blow lands on them
   attackerFate: Fate
   attackerLane: LaneIndex | null // where the attacker stands afterwards, if on the table
   attackerHp: number | null // the attacker's Health afterwards, if on the table
@@ -32,6 +34,19 @@ function hasText(f: FigureInstance, triggers: Trigger[]): boolean {
 }
 
 const fell = (f: Fate | null) => f === 'falls' || f === 'rekindlesThenFalls'
+
+// "Death: The Man in Black" is "The Man in Black" here; a face name is not used.
+function nameOf(f: FigureInstance): string {
+  const n = card(f.defId).name
+  const i = n.indexOf(': ')
+  return i > 0 ? n.slice(i + 2) : n
+}
+
+const SHORT_SIG: Record<string, string> = { 'sig-daxon': 'Daxon', 'sig-lirielle': 'Lirielle', 'sig-luigi': 'Luigi', 'sig-rorik': 'Rorik', 'sig-masque': 'Masque', 'sig-shazz': 'Shazz' }
+function sigShort(state: GameState, p: PlayerId): string {
+  const id = state.players[p].sigId
+  return SHORT_SIG[id] ?? significator(id).name
+}
 
 // Find a Figure by identity after the dust settles: on the table (moved or not), back in
 // hand, or gone. A rekindle along the way is read from the events.
@@ -56,6 +71,8 @@ export function attackOutcome(state: GameState, lane: LaneIndex, targetLane: Lan
   const estimate: AttackOutcome = {
     ...plain,
     exact: false,
+    attackerName: nameOf(attacker),
+    defenderName: defenderFig ? nameOf(defenderFig) : sigShort(state, plain.defender.kind === 'sig' ? plain.defender.player : p),
     attackerFate: plain.attackerDies ? 'falls' : plain.attackerRekindles ? 'rekindles' : 'stays',
     attackerLane: lane,
     attackerHp: null,
@@ -113,49 +130,41 @@ export function attackOutcome(state: GameState, lane: LaneIndex, targetLane: Lan
   }
 }
 
-// Two or three short lines that say what the blow would do. When the outcome is exact the
-// numbers already count the text; when it is not, the lines say the text decides.
+// Two or three short lines that say what the blow would do, naming who and how much.
+// When the outcome is exact the numbers already count the text; when it is not, the
+// lines say the text decides.
 export function outcomeLines(state: GameState, o: AttackOutcome, onEmptyLane: boolean): string[] {
   const d = o.defender.kind === 'figure' ? resolveRef(state, o.defender) : null
-  const note = !o.exact ? 'Its text decides the rest' : o.attackText ? 'Counting its attack text' : o.defenderRite && d ? `Then ${figureName(d)}'s Last Rite` : o.attackerRite ? 'Then its Last Rite' : ''
+  const note = !o.exact ? 'Its text decides the rest' : o.attackText ? `Counting ${o.attackerName}'s attack text` : o.defenderRite && d ? `Then ${o.defenderName}'s Last Rite` : o.attackerRite ? `Then ${o.attackerName}'s Last Rite` : ''
   const hits = (what: string, n: number, blocked: boolean) => (n === 0 && blocked ? `${what} nothing (blocked)` : blocked ? `${what} ${n} (a hit blocked)` : `${what} ${n}`)
-  const at = (hp: number | null) => (hp === null ? '' : ` at ${hp}`)
-  const yours = !o.exact
-    ? ''
-    : o.attackerFate === 'falls'
-      ? 'Yours falls'
-      : o.attackerFate === 'rekindlesThenFalls'
-        ? 'Yours rekindles, then falls'
-        : o.attackerFate === 'rekindles'
-          ? `Yours rekindles${at(o.attackerHp)}`
-          : o.attackerFate === 'moves'
-            ? `Yours moves to ${LANE_NAMES[o.attackerLane ?? 0]}${at(o.attackerHp)}`
-            : o.attackerFate === 'returns'
-              ? 'Yours returns to hand'
-              : ''
+  const hp = (n: number | null) => (n === null ? '' : ` with ${n} Health`)
+  const fate = (who: string, f: Fate | null, lane: LaneIndex | null, health: number | null): string => {
+    switch (f) {
+      case 'falls':
+        return `${who} falls`
+      case 'rekindlesThenFalls':
+        return `${who} rekindles, then falls`
+      case 'rekindles':
+        return `${who} rekindles Reversed${hp(health)}`
+      case 'moves':
+        return `${who} moves to ${LANE_NAMES[lane ?? 0]}${hp(health)}`
+      case 'returns':
+        return `${who} returns to hand`
+      default:
+        return ''
+    }
+  }
+  const yours = o.exact ? fate(o.attackerName, o.attackerFate, o.attackerLane, o.attackerHp) : ''
 
   if (o.defender.kind === 'sig') {
-    const title = significator(state.players[o.defender.player].sigId).title
-    const first = `${title} takes ${o.deals}${o.exact ? '' : ' before its text'}`
+    const first = `${o.defenderName} takes ${o.deals}${o.exact ? '' : ' before its text'}`
     return [first, o.exact && o.lethal ? 'Lethal' : yours, o.exact && o.lethal ? '' : note].filter(Boolean)
   }
 
   const exchange = `${hits('Deals', o.deals, o.shielded)}, ${hits('takes', o.takes, o.attackerShielded)}${o.exact ? '' : ' before its text'}`
-  const first = onEmptyLane && o.intercepted && d ? `${figureName(d)} steps in` : exchange
-  const its = !o.exact
-    ? ''
-    : o.defenderFate === 'falls'
-      ? 'It falls'
-      : o.defenderFate === 'rekindlesThenFalls'
-        ? 'It rekindles, then falls'
-        : o.defenderFate === 'rekindles'
-          ? `It rekindles${at(o.defenderHp)}`
-          : o.defenderFate === 'moves'
-            ? 'It moves'
-            : o.defenderFate === 'returns'
-              ? 'It returns to hand'
-              : ''
-  const outcome = its === 'It falls' && yours === 'Yours falls' ? 'Both fall' : [its, yours].filter(Boolean).join('. ')
+  const first = onEmptyLane && o.intercepted && d ? `${o.defenderName} steps in` : exchange
+  const its = o.exact ? fate(o.defenderName, o.defenderFate, null, o.defenderHp) : ''
+  const outcome = o.exact && o.defenderFate === 'falls' && o.attackerFate === 'falls' ? 'Both fall' : [its, yours].filter(Boolean).join('. ')
   const second = outcome || (onEmptyLane && o.intercepted ? exchange : '')
   return [first, second, note].filter(Boolean)
 }

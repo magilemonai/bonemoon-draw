@@ -133,4 +133,25 @@ describe('planner', () => {
     s = giveSpark(s, 0, 2)
     expect(chooseAction(s, { seed: 1 })).toEqual({ type: 'endTurn' })
   })
+
+  it('believes about the enemy deck from public play only, never from its list', () => {
+    let s = fresh(['sig-luigi', 'sig-daxon'])
+    s = hand(s, 0, 'gears-8')
+    s = giveSpark(s, 0, 5)
+    const a = structuredClone(s)
+    const b = structuredClone(s)
+    // Two private lists that have shown the same cards: the enemy's unseen composition differs.
+    a.players[1].deck = a.players[1].deck.map((c, i) => (i < 6 ? { ...c, defId: 'suns-king' } : c))
+    b.players[1].deck = b.players[1].deck.map((c, i) => (i < 6 ? { ...c, defId: 'tides-ace' } : c))
+    const wa = determinize(a, 0, 3)
+    const wb = determinize(b, 0, 3)
+    expect(wa.players[1].deck.map((c) => c.defId)).toEqual(wb.players[1].deck.map((c) => c.defId))
+    expect(wa.players[1].hand.map((c) => c.defId)).toEqual(wb.players[1].hand.map((c) => c.defId))
+    expect(wa.players[1].deck.length).toBe(a.players[1].deck.length)
+    expect(chooseAction(a, { seed: 1 })).toEqual(chooseAction(b, { seed: 1 }))
+    // What has been seen is not dealt again: a Figure on the table leaves the belief pool.
+    const c = place(structuredClone(s), 1, 1, 'major-13', 'upright') // Death, a one-of
+    const wc = determinize(c, 0, 3)
+    expect([...wc.players[1].deck, ...wc.players[1].hand].some((x) => x.defId === 'major-13')).toBe(false)
+  })
 })

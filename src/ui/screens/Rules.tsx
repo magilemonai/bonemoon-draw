@@ -85,7 +85,7 @@ export function Rules() {
 
         <h3>The deck</h3>
         <p>
-          Thirty cards. Two copies at most of any Minor Arcana, one copy of any Major Arcana, and never the Major that is your own Significator. Your hand holds eight; extra draws burn. When your deck runs out, every draw costs you Health instead.
+          Thirty cards, built by you in Your decks or taken from a Significator&apos;s starter list. Minor Arcana come only from your Significator&apos;s two suits, two copies at most of any one; one copy of any Major Arcana, and never the Major that is your own Significator. Tokens are summoned, never drawn, and Brog joins Luigi&apos;s hand without taking a slot. Your hand holds eight; extra draws burn. When your deck runs out, every draw costs you Health instead.
         </p>
       </div>
     </div>

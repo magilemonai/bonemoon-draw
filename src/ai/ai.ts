@@ -8,11 +8,11 @@
 // the enemy's hand and deck unless revealed) are dealt again from a seeded shuffle, so no
 // decision can lean on an order nobody has looked at.
 
-import { card, significator } from '../data'
+import { DECK_CARDS, card, significator } from '../data'
 import { finalState, legalActions, runAction } from '../engine/engine'
 import { attackOf, availableSpark, cardCost, figures, hasKw, healthOf, keywords, other, resolveDefender, attackLanes, faceDef, emptyLanes } from '../engine/queries'
 import { shuffleWithSeed } from '../engine/rng'
-import type { Action, CardInstance, FigureInstance, GameState, PlayerId } from '../engine/types'
+import type { Action, CardInstance, FigureInstance, GameState, PlayerId, PlayerState } from '../engine/types'
 
 export interface AiOptions {
   seed?: number
@@ -165,8 +165,34 @@ function canonical(cards: CardInstance[]): CardInstance[] {
   return cards.slice().sort((a, b) => (a.defId < b.defId ? -1 : a.defId > b.defId ? 1 : a.uid - b.uid))
 }
 
-// What the planner may know: its own hand, the table, the graveyards, the counts of the
-// enemy's hand and both decks, and anything revealed. Everything else is dealt again here.
+// What the AI may believe about the enemy's unseen cards, and nothing more: their
+// Significator's legal pool (two suits, every Major but their own), less every card that
+// has been seen in public (the table, Relics on it, the graveyard, a revealed hand). A
+// private list stays private; the belief is the same for any two decks that have shown
+// the same cards.
+function beliefPool(state: GameState, en: PlayerState): string[] {
+  const sig = significator(en.sigId)
+  const pool: string[] = []
+  for (const c of DECK_CARDS) {
+    if (c.suit === 'major') {
+      if (c.id !== sig.cardId) pool.push(c.id)
+    } else if (sig.suits.includes(c.suit)) pool.push(c.id, c.id)
+  }
+  const seen: string[] = [...en.graveyard.map((c) => c.defId)]
+  for (const f of figures(state, en.id)) {
+    seen.push(f.defId)
+    for (const r of f.relics) seen.push(r.defId)
+  }
+  if (en.handRevealed) for (const h of en.hand) seen.push(h.defId)
+  for (const id of seen) {
+    const i = pool.indexOf(id)
+    if (i >= 0) pool.splice(i, 1)
+  }
+  return pool.sort()
+}
+
+// What the planner may know: its own list and hand, the table, the graveyards, the counts
+// of the enemy's hand and deck, and anything revealed. Everything else is dealt again here.
 export function determinize(state: GameState, p: PlayerId, salt: number): GameState {
   const s = structuredClone(state)
   const me = s.players[p]
@@ -175,16 +201,14 @@ export function determinize(state: GameState, p: PlayerId, salt: number): GameSt
   const mine = shuffleWithSeed(canonical(me.deck), seed)
   me.deck = mine.arr
   seed = mine.seed
-  if (en.handRevealed) {
-    const theirs = shuffleWithSeed(canonical(en.deck), seed)
-    en.deck = theirs.arr
-    seed = theirs.seed
-  } else {
-    const pool = shuffleWithSeed(canonical([...en.hand, ...en.deck]), seed)
-    en.hand = pool.arr.slice(0, en.hand.length)
-    en.deck = pool.arr.slice(en.hand.length)
-    seed = pool.seed
-  }
+  // The enemy's unseen cards: a plausible deal from their legal pool, never their list.
+  const unseenHand = en.handRevealed ? 0 : en.hand.length
+  const unseenDeck = en.deck.length
+  const dealt = shuffleWithSeed(beliefPool(state, en), seed)
+  seed = dealt.seed
+  const draw = dealt.arr.slice(0, unseenHand + unseenDeck).map((defId) => ({ uid: s.nextUid++, defId }))
+  if (!en.handRevealed) en.hand = draw.slice(0, unseenHand)
+  en.deck = draw.slice(unseenHand)
   s.seed = seed
   return s
 }

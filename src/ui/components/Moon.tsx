@@ -6,7 +6,7 @@ import { useStore } from '../store'
 const PHASE_LABEL: Record<MoonPhase, string> = {
   new: 'New moon',
   waxing: 'Waxing',
-  full: 'Full moon',
+  full: 'Full Moon',
   waning: 'Waning',
 }
 
@@ -44,16 +44,8 @@ export function MoonDisc({ phase, bone, size = 44 }: { phase: MoonPhase; bone: b
   )
 }
 
-// What the next round holds for the player: the moon, the draws, and any burn.
-function forecastText(state: GameState): string {
-  const f = drawForecast(state, state.humanPlayer)
-  const moon = f.phase === 'full' ? 'a Full Moon' : f.phase === 'new' ? 'a new moon' : `a ${f.phase} moon`
-  let s = `Round ${f.round} is ${moon}: you draw ${f.draws}`
-  if (f.burns > 0) s += `, and ${f.burns} would burn at this hand size`
-  if (f.short > 0) s += `, and the deck is ${f.short} short`
-  return s + '.'
-}
-
+// The turn panel: where the reading stands, what the next draw brings, and the one
+// button that ends the turn.
 export function MoonDial({ state }: { state: GameState }) {
   const dispatch = useStore((s) => s.dispatch)
   const playing = useStore((s) => s.playing)
@@ -65,22 +57,36 @@ export function MoonDial({ state }: { state: GameState }) {
   const busy = playing || queue.length > 0
   const untilBone = state.boneMoonRound - state.round
   const over = state.phase === 'over'
-  const turnLabel = over ? 'The reading is over' : pendingMine ? 'Your choice' : myTurn ? (busy ? 'Resolving' : 'End the turn') : 'Their reading'
+  const who = over ? 'The reading is over' : pendingMine ? 'Your choice' : myTurn ? (busy ? 'Resolving' : 'Your turn') : 'Their turn'
+  const f = drawForecast(state, state.humanPlayer)
+  const nextMoon = f.phase === 'full' ? 'a Full Moon' : PHASE_LABEL[f.phase].toLowerCase()
 
   return (
-    <div className={`moon-dial ${myTurn ? 'is-my-turn' : ''} ${bone ? 'is-bone' : ''}`}>
-      <button type="button" className="moon-btn" disabled={!myTurn || busy} onClick={() => dispatch({ type: 'endTurn' })} aria-label={myTurn ? 'End your turn' : 'Waiting'}>
-        <MoonDisc phase={phase} bone={bone} size={48} />
-        <span className="moon-ring" />
-      </button>
-      <div className="moon-text">
-        <span className="moon-turn">{turnLabel}</span>
-        <span className="moon-phase">
-          Round {state.round}, {PHASE_LABEL[phase].toLowerCase()}
-          {bone ? '. The Bone Moon is up.' : untilBone <= 3 ? `. Bone Moon in ${untilBone}.` : '.'}
+    <div className={`turn-panel ${myTurn ? 'is-my-turn' : ''} ${bone ? 'is-bone' : ''}`}>
+      <div className="turn-line">
+        <span className="turn-round">
+          Round {state.round}, {PHASE_LABEL[phase]}
         </span>
-        {!over && <span className="moon-forecast">{forecastText(state)}</span>}
+        <span className={`turn-who ${myTurn && !busy ? 'is-mine' : ''}`}>{who}</span>
       </div>
+      {!over && (
+        <div className="forecast">
+          <span className="forecast-draw">
+            Next draw: {f.draws} card{f.draws === 1 ? '' : 's'} (round {f.round}, {nextMoon})
+          </span>
+          {f.burns > 0 && (
+            <span className="forecast-warn">
+              Hand full: {f.burns} card{f.burns === 1 ? '' : 's'} would burn
+            </span>
+          )}
+          {f.short > 0 && <span className="forecast-warn">The deck is {f.short} short</span>}
+        </div>
+      )}
+      <button type="button" className="end-turn" disabled={!myTurn || busy} onClick={() => dispatch({ type: 'endTurn' })} aria-label={myTurn ? 'End your turn' : 'Waiting'}>
+        <MoonDisc phase={phase} bone={bone} size={30} />
+        <span>{over ? 'Over' : myTurn ? (busy ? 'Resolving' : 'End turn') : 'Waiting'}</span>
+      </button>
+      <span className="turn-bone">{bone ? 'The Bone Moon is up.' : `Bone Moon in ${untilBone} round${untilBone === 1 ? '' : 's'}`}</span>
     </div>
   )
 }

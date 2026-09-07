@@ -142,7 +142,7 @@ export function FaceChooser({ state }: { state: GameState }) {
       <div className="face-chooser-head">
         <span className="face-chooser-title">{def.name}</span>
         <span className="face-chooser-cost">
-          {cost} Spark{affordable ? '' : ' (not enough)'}
+          {cost} Spark{affordable ? '' : `. Need ${cost - availableSpark(state.players[p])} more`}
         </span>
         <button type="button" className="btn-quiet" onClick={() => select({ kind: 'none' })}>
           Cancel

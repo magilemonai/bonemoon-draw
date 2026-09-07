@@ -83,8 +83,8 @@ export function Battle() {
               Concede
             </button>
           )}
-          <button type="button" className="btn-quiet" onClick={() => goto('title')} title="Leaves the table; the reading is kept to continue later">
-            Leave
+          <button type="button" className="btn-quiet" onClick={() => goto('title')} title="The reading is kept; continue it from the title screen">
+            Pause
           </button>
         </div>
       </div>

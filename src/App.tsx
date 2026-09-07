@@ -4,6 +4,8 @@ import { Choose } from './ui/screens/Choose'
 import { Battle } from './ui/screens/Battle'
 import { Codex } from './ui/screens/Codex'
 import { Rules } from './ui/screens/Rules'
+import { Decks } from './ui/screens/Decks'
+import { Builder } from './ui/screens/Builder'
 
 export default function App() {
   const screen = useStore((s) => s.screen)
@@ -34,6 +36,8 @@ export default function App() {
       {screen === 'battle' && <Battle />}
       {screen === 'codex' && <Codex />}
       {screen === 'rules' && <Rules />}
+      {screen === 'decks' && <Decks />}
+      {screen === 'build' && <Builder />}
     </div>
   )
 }

@@ -96,12 +96,20 @@ function log(c: Ctx, text: string) {
 // Game creation
 // ---------------------------------------------------------------------------
 
-export function createGame(opts: { sigs: [string, string]; seed: number; humanPlayer?: PlayerId; firstPlayer?: PlayerId; deckSeeds?: [number, number] }): GameState {
+export function createGame(opts: {
+  sigs: [string, string]
+  seed: number
+  humanPlayer?: PlayerId
+  firstPlayer?: PlayerId
+  deckSeeds?: [number, number]
+  decks?: [string[] | undefined, string[] | undefined] // a built list per seat; the starter when absent
+}): GameState {
   let seed = opts.seed
   let uid = 1
   const mk = (p: PlayerId): GameState['players'][0] => {
     const sig = significator(opts.sigs[p])
-    const cards: CardInstance[] = sig.deck.filter((id) => id !== sig.cardId).map((defId) => ({ uid: uid++, defId }))
+    const list = opts.decks?.[p] ?? sig.deck
+    const cards: CardInstance[] = list.filter((id) => id !== sig.cardId).map((defId) => ({ uid: uid++, defId }))
     // A per-player deck seed keeps a hero's deck order fixed across a seat swap (used by the sims).
     const sh = shuffleWithSeed(cards, opts.deckSeeds ? opts.deckSeeds[p] : seed)
     if (!opts.deckSeeds) seed = sh.seed

@@ -6,6 +6,7 @@ import { useStore } from '../store'
 import { Card, RulesText } from './Card'
 import { ArtImage } from './ArtImage'
 import { CardInspect, type LiveInfo, type Stats } from './Hero'
+import { shortName } from './Card'
 
 export function Banners() {
   const fx = useStore((s) => s.fx)
@@ -64,7 +65,7 @@ export function ReadChooser({ state }: { state: GameState }) {
                   </span>
                 </div>
                 <button type="button" className="btn btn-primary" onClick={() => dispatch({ type: 'choose', uid: o.uid })}>
-                  Keep
+                  Keep {shortName(def.name)}
                 </button>
               </div>
             )
@@ -89,8 +90,14 @@ function Compare({ a, b }: { a: CompareCol; b: CompareCol }) {
       <span className="compare-label">{c.label}</span>
       {c.stats ? (
         <span className="compare-stats" aria-label={`${c.stats.atk} Attack, ${c.stats.hp} Health`}>
-          <b className="c-atk">{c.stats.atk}</b>
-          <b className="c-hp">{c.stats.hp}</b>
+          <span className="c-stat">
+            <b className="c-atk">{c.stats.atk}</b>
+            <small>Attack</small>
+          </span>
+          <span className="c-stat">
+            <b className="c-hp">{c.stats.hp}</b>
+            <small>Health</small>
+          </span>
         </span>
       ) : (
         <span className="compare-fixed">Fixed</span>

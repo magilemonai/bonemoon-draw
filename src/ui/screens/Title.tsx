@@ -5,7 +5,8 @@ import { useStore } from '../store'
 import { MoonDisc } from '../components/Moon'
 import { ArtImage } from '../components/ArtImage'
 import { RecordModal } from '../components/Record'
-import { completed, favourite, formFor, nextGoal, rankOf, renownOf } from '../profile'
+import { RENOWN, cleared, completed, favourite, formFor, nextGoal, rankOf, renownOf } from '../profile'
+import { shortSigName } from '../names'
 
 // What the player has done, what to do next, and the reading they left unfinished.
 function Standing({ onRecord }: { onRecord: () => void }) {
@@ -27,7 +28,11 @@ function Standing({ onRecord }: { onRecord: () => void }) {
       <div className="standing-rank">
         <span className="standing-title">{rank.name}</span>
         <span className="standing-renown">{renown} Renown</span>
-        {rank.next && <span className="standing-next">{rank.next.at - renown} to {rank.next.name}</span>}
+        {rank.next && (
+          <span className="standing-next">
+            {renown} / {rank.next.at} Renown to {rank.next.name}
+          </span>
+        )}
         {!rank.next && <span className="standing-next">Every opponent beaten with every Significator.</span>}
       </div>
       {saved && (
@@ -48,7 +53,13 @@ function Standing({ onRecord }: { onRecord: () => void }) {
       )}
       {goal && (
         <button type="button" className="btn standing-goal" onClick={() => openChoose({ mine: goal.hero, theirs: goal.opponent })}>
-          {goal.text}
+          <span className="goal-match">
+            {shortSigName(goal.hero)} vs {shortSigName(goal.opponent)}
+          </span>
+          <span className="goal-why">
+            First victory, +{RENOWN.standard} Renown. {cleared(profile, goal.hero).length} of 5 opponents beaten with {shortSigName(goal.hero)}.
+          </span>
+          <span className="goal-go">Play this matchup</span>
         </button>
       )}
       {done.games > 0 && (
@@ -89,6 +100,9 @@ export function Title() {
       <div className="title-actions">
         <button type="button" className={`btn ${saved ? '' : 'btn-primary'}`} onClick={() => goto('choose')}>
           {saved ? 'New reading' : 'Begin a reading'}
+        </button>
+        <button type="button" className="btn" onClick={() => goto('decks')}>
+          Your decks
         </button>
         <button type="button" className="btn" onClick={() => goto('codex')}>
           The Codex

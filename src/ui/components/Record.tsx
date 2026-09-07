@@ -4,7 +4,9 @@ import { motion } from 'motion/react'
 import { significator } from '../../data'
 import { RULES_VERSION } from '../../engine/rules'
 import { useStore } from '../store'
-import { completed, exportProfile, parseProfile, renownOf, type Profile } from '../profile'
+import { completed, parseProfile, renownOf, type Profile } from '../profile'
+import { parseDecks, type DeckList } from '../decks'
+import { shortSigName } from '../names'
 
 function when(ms: number): string {
   try {
@@ -17,12 +19,13 @@ function when(ms: number): string {
 // The record itself: the last readings, and a way to carry the record to another browser.
 export function RecordModal({ onClose }: { onClose: () => void }) {
   const profile = useStore((s) => s.profile)
+  const decks = useStore((s) => s.decks)
   const replace = useStore((s) => s.replaceProfile)
   const [pasted, setPasted] = useState('')
   const [copied, setCopied] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [incoming, setIncoming] = useState<Profile | null>(null)
-  const text = exportProfile(profile)
+  const [incoming, setIncoming] = useState<{ profile: Profile; decks: DeckList[] | null } | null>(null)
+  const text = JSON.stringify({ moonwyld: 1, profile, decks })
   const done = completed(profile)
   const recent = profile.matches.slice(-20).reverse()
 
@@ -39,9 +42,10 @@ export function RecordModal({ onClose }: { onClose: () => void }) {
     setError(null)
     setIncoming(null)
     try {
-      const p = parseProfile(JSON.parse(pasted))
+      const raw = JSON.parse(pasted) as { profile?: unknown; decks?: unknown }
+      const p = raw && typeof raw === 'object' && 'profile' in raw ? parseProfile(raw.profile) : parseProfile(raw)
       if (!p) setError('That is not a Moonwyld record.')
-      else setIncoming(p)
+      else setIncoming({ profile: p, decks: raw && typeof raw === 'object' && 'decks' in raw ? parseDecks({ decks: raw.decks }) : null })
     } catch {
       setError('That is not a Moonwyld record.')
     }
@@ -59,7 +63,7 @@ export function RecordModal({ onClose }: { onClose: () => void }) {
         </div>
         <p className="modal-copy">
           {done.games} reading{done.games === 1 ? '' : 's'} completed, {done.wins} won, {renownOf(profile)} Renown.
-          {profile.abandoned > 0 ? ` ${profile.abandoned} reading${profile.abandoned === 1 ? '' : 's'} left unfinished, not counted.` : ''} Kept in this browser only. The last 200 readings are kept in detail; the totals are for life.
+          {profile.abandoned > 0 ? ` ${profile.abandoned} reading${profile.abandoned === 1 ? '' : 's'} left unfinished, not counted.` : ''} Kept in this browser only, decks included. The last 200 readings are kept in detail; the totals are for life.
         </p>
 
         {recent.length > 0 && (
@@ -69,9 +73,10 @@ export function RecordModal({ onClose }: { onClose: () => void }) {
               <div key={m.id} className={`record-row is-${m.result}`}>
                 <span className="record-when">{when(m.when)}</span>
                 <span className="record-who">
-                  {significator(m.hero).name} against {significator(m.opponent).name}
+                  {shortSigName(m.hero, significator(m.hero).name)} against {shortSigName(m.opponent, significator(m.opponent).name)}
                 </span>
                 <span className="record-meta">
+                  {m.deck ? `${m.deck.name}${m.deck.starter ? '' : ` rev ${m.deck.rev}`}, ` : ''}
                   {m.seat} seat, round {m.rounds}
                   {m.version !== RULES_VERSION ? ', earlier rules' : ''}
                 </span>
@@ -81,7 +86,8 @@ export function RecordModal({ onClose }: { onClose: () => void }) {
           </div>
         )}
 
-        <div className="record-io">
+        <details className="record-io">
+          <summary>Back up or move this record and your decks</summary>
           <label className="record-field">
             Carry it to another browser: copy this text
             <textarea readOnly value={text} rows={3} onFocus={(e) => e.currentTarget.select()} />
@@ -102,13 +108,13 @@ export function RecordModal({ onClose }: { onClose: () => void }) {
             {incoming && (
               <>
                 <span className="record-note">
-                  This replaces {done.games} reading{done.games === 1 ? '' : 's'} and {renownOf(profile)} Renown with {completed(incoming).games} and {renownOf(incoming)}.
+                  This replaces {done.games} reading{done.games === 1 ? '' : 's'}, {renownOf(profile)} Renown, and {decks.length} deck{decks.length === 1 ? '' : 's'} with {completed(incoming.profile).games}, {renownOf(incoming.profile)}, and {incoming.decks ? incoming.decks.length : 0}.
                 </span>
                 <button
                   type="button"
                   className="btn btn-primary"
                   onClick={() => {
-                    replace(incoming)
+                    replace(incoming.profile, incoming.decks ?? [])
                     setIncoming(null)
                     setPasted('')
                   }}
@@ -119,7 +125,7 @@ export function RecordModal({ onClose }: { onClose: () => void }) {
             )}
           </div>
           {error && <p className="record-error">{error}</p>}
-        </div>
+        </details>
       </motion.div>
     </motion.div>,
     document.body,

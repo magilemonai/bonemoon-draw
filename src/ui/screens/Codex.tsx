@@ -6,6 +6,7 @@ import { useStore } from '../store'
 import { Card } from '../components/Card'
 import { InspectModal } from '../components/Overlays'
 import { Sigil } from '../sigils'
+import { CardRow } from './Builder'
 
 const RANK_ORDER = ['ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'page', 'knight', 'queen', 'king']
 
@@ -15,7 +16,7 @@ export function Codex() {
   const sel = useStore((s) => s.selection)
   const [suit, setSuit] = useState<Suit | 'tokens'>('major')
   const [q, setQ] = useState('')
-  const [view, setView] = useState<'paintings' | 'cards'>('paintings')
+  const [view, setView] = useState<'paintings' | 'cards' | 'library'>('library')
 
   const cards = useMemo(() => {
     const pool = suit === 'tokens' ? TOKENS : DECK_CARDS.filter((c) => c.suit === suit)
@@ -35,7 +36,10 @@ export function Codex() {
           Back
         </button>
         <h2>The Codex</h2>
-        <span className="codex-sub">Seventy-eight cards. Tap one to read both faces.</span>
+        <span className="codex-sub">Seventy-eight cards. Tap one to read both faces, or build a deck from them.</span>
+        <button type="button" className="btn" onClick={() => goto('decks')}>
+          Build a deck
+        </button>
       </div>
       <div className="codex-tabs" role="tablist">
         {(['major', 'suns', 'antlers', 'tides', 'gears', 'tokens'] as const).map((s) => (
@@ -45,6 +49,9 @@ export function Codex() {
         ))}
         <input className="codex-search" placeholder="Search names and text" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search the codex" />
         <span className="codex-view" role="group" aria-label="View">
+          <button type="button" className={view === 'library' ? 'is-on' : ''} onClick={() => setView('library')}>
+            Library
+          </button>
           <button type="button" className={view === 'paintings' ? 'is-on' : ''} onClick={() => setView('paintings')}>
             Paintings
           </button>
@@ -53,7 +60,13 @@ export function Codex() {
           </button>
         </span>
       </div>
-      {view === 'cards' ? (
+      {view === 'library' ? (
+        <div className="card-rows codex-rows">
+          {cards.map((c) => (
+            <CardRow key={c.id} def={c} count={0} addWhy={null} readOnly />
+          ))}
+        </div>
+      ) : view === 'cards' ? (
         <div className="codex-grid">
           {cards.map((c) => (
             <Card key={c.id} def={c} face="upright" size="hand" onClick={() => inspect(c.id, 'upright')} />

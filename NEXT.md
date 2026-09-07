@@ -1,5 +1,8 @@
 # NEXT
 
+- [ ] [cody] Build a deck in Your decks, play it, and say what the builder still makes hard
+    Cards, filters on both faces, the curve by printed cost, and Play from the builder or Choose. docs/READABILITY_RESPONSE.md has the round.
+- [ ] [crew] Play focused custom decks against the AI (low curve, control, one-combo) and record how it copes before calling anything Expert
 - [ ] [cody] Play a few readings and see whether Renown, the next goal, and Continue the reading feel right
     Renown is 10 per first Standard win in a matchup, kept in this browser. Rank milestones are provisional. docs/METAGAME_RESPONSE.md has the values and what is parked.
 - [ ] [crew] Display names for the 65 long card names, and a wider-card variant tested with six and eight cards on phone and desktop

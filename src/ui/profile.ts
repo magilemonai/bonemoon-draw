@@ -6,6 +6,7 @@
 import { SIGNIFICATORS, significator } from '../data'
 import { RULES_VERSION } from '../engine/rules'
 import type { GameState } from '../engine/types'
+import type { DeckStamp } from './decks'
 
 export interface MatchRecord {
   id: string // unique per match, so a match is credited once
@@ -18,6 +19,7 @@ export interface MatchRecord {
   health: [number, number] // hero, opponent, at the end
   version: string // the rules the match was started under
   conceded?: boolean
+  deck?: DeckStamp // the list it was played with; absent on records from before decks
 }
 
 // The best result in one directional matchup. Expert and the mastery objective are
@@ -52,6 +54,7 @@ export interface SavedMatch {
   aiSig: string
   seat: 'first' | 'second'
   version: string // the rules it was started under
+  deck?: DeckStamp & { cards: string[] } // the exact list dealt, kept with the reading
   committed: GameState
   log: string[]
 }
@@ -160,6 +163,7 @@ export function settleMatch(p: Profile, saved: SavedMatch, final: GameState, now
     health: [final.players[me].health, final.players[them].health],
     version: saved.version,
     ...(conceded ? { conceded: true } : {}),
+    ...(saved.deck ? { deck: { id: saved.deck.id, name: saved.deck.name, rev: saved.deck.rev, starter: saved.deck.starter } } : {}),
   }
   const r = recordMatch(p, record)
   return { ...r, record }
@@ -219,6 +223,12 @@ export function formFor(p: Profile, hero: string, version = RULES_VERSION): { la
   if (mine.length < 20) return null
   const tally = (ms: MatchRecord[]) => ({ games: ms.length, wins: ms.filter((m) => m.result === 'win').length })
   return { last: tally(mine.slice(-10)), before: tally(mine.slice(-20, -10)) }
+}
+
+// Readings with one list, from the detail kept (the last 200). Sample size is the point.
+export function deckRecord(p: Profile, deckId: string): { games: number; wins: number; latestRev: number } {
+  const mine = p.matches.filter((m) => m.deck?.id === deckId)
+  return { games: mine.length, wins: mine.filter((m) => m.result === 'win').length, latestRev: mine.reduce((r, m) => Math.max(r, m.deck?.rev ?? 0), 0) }
 }
 
 // The Significator with the most readings on the record, if any.
