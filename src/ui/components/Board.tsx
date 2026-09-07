@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { card } from '../../data'
-import { attackLanes, attackOf, canAttack, canMove, healthOf, keywords, maxHealthOf, other, resolveDefender, resolveRef, targetsFor, sameRef, cardCost, playableFaces, previewAttack, figureName } from '../../engine/queries'
+import { attackLanes, attackOf, canAttack, canMove, faceDef, healthOf, keywords, maxHealthOf, other, resolveDefender, resolveRef, targetsFor, sameRef, cardCost, playableFaces, previewAttack, figureName } from '../../engine/queries'
 import type { AttackPreview } from '../../engine/queries'
 import type { FigureInstance, GameState, LaneIndex, PlayerId, TargetRef } from '../../engine/types'
 import { LANE_NAMES } from '../../engine/types'
@@ -90,16 +90,30 @@ function previewFor(state: GameState, sel: Selection, hl: Highlights, ref: Targe
   return previewAttack(state, atk, lane)
 }
 
-// Two short lines that say what the blow would do.
-export function previewLines(state: GameState, pv: AttackPreview, onEmptyLane: boolean): string[] {
+// Text that would fire around the blow and could change it. The preview shows the plain
+// exchange; this names what follows so the line is honest rather than confidently wrong.
+function pendingText(state: GameState, attacker: FigureInstance, pv: AttackPreview): string {
+  const triggers = (f: FigureInstance) => (f.hushed ? [] : (faceDef(card(f.defId), f.face).effects ?? []).map((e) => e.trigger))
+  const mine = triggers(attacker)
+  if (mine.includes('onAttack')) return 'Its attack text fires first'
+  const d = pv.defender.kind === 'figure' ? resolveRef(state, pv.defender) : null
+  if (d && pv.defenderDies && triggers(d).includes('lastRite')) return `Then ${figureName(d)}'s Last Rite`
+  if (pv.attackerDies && mine.includes('lastRite')) return 'Then its Last Rite'
+  if (mine.some((t) => t === 'afterAttack' || t === 'onDamageDealt' || t === 'onKill')) return 'Then its text fires'
+  return ''
+}
+
+// Two or three short lines that say what the blow would do.
+export function previewLines(state: GameState, pv: AttackPreview, onEmptyLane: boolean, attacker?: FigureInstance): string[] {
+  const after = attacker ? pendingText(state, attacker, pv) : ''
   if (pv.defender.kind === 'sig') {
     const title = significator(state.players[pv.defender.player].sigId).title
-    return [`${title} takes ${pv.deals}`, pv.lethal ? 'Lethal' : ''].filter(Boolean)
+    return [`${title} takes ${pv.deals}`, pv.lethal ? 'Lethal' : '', pv.lethal ? '' : after].filter(Boolean)
   }
   const d = resolveRef(state, pv.defender)
   const first = onEmptyLane && pv.intercepted && d ? `${figureName(d)} steps in` : `Deals ${pv.shielded ? 'nothing (Aegis)' : pv.deals}, takes ${pv.attackerShielded ? 'nothing (Aegis)' : pv.takes}`
   const second = pv.defenderDies && pv.attackerDies ? 'Both fall' : pv.defenderDies ? (pv.defenderRekindles ? 'It rekindles' : 'It falls') : pv.attackerDies ? (pv.attackerRekindles ? 'Yours rekindles' : 'Yours falls') : onEmptyLane && pv.intercepted ? `Deals ${pv.deals}, takes ${pv.takes}` : ''
-  return [first, second].filter(Boolean)
+  return [first, second, after].filter(Boolean)
 }
 
 function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: PlayerId; lane: LaneIndex; fig: FigureInstance | null; isMine: boolean }) {
@@ -174,7 +188,8 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
 
   const highlight = isTarget ? 'target' : isLane ? 'lane' : isMove ? 'move' : 'none'
   const ready = !!fig && isMine && myTurn && (canAttack(state, fig) || canMove(state, fig))
-  const lines = preview ? previewLines(state, preview, !fig) : []
+  const attacker = sel.kind === 'figure' ? state.players[p].lanes[sel.lane] ?? undefined : undefined
+  const lines = preview ? previewLines(state, preview, !fig, attacker) : []
 
   return (
     <div

@@ -64,6 +64,12 @@ export function RulesText({ text }: { text: string }) {
   )
 }
 
+// "Death: The Man in Black" is "The Man in Black" on a compact card; the full name is in inspection.
+export function shortName(name: string): string {
+  const i = name.indexOf(': ')
+  return i > 0 ? name.slice(i + 2) : name
+}
+
 function printedStats(def: CardDef, face: Face) {
   if (def.type !== 'figure') return null
   const a = def.attack ?? 0
@@ -78,7 +84,8 @@ function FaceView(props: CardProps & { which: Face }) {
   const active = which === props.face
   const stats = active && props.atk !== undefined ? { atk: props.atk, hp: props.hp ?? 0 } : printedStats(def, which)
   const printed = printedStats(def, which)
-  const name = fd.name ?? def.name
+  const compact = size === 'hand' || size === 'lane' || size === 'mini'
+  const name = compact ? shortName(fd.name ?? def.name) : fd.name ?? def.name
   const kws = active && props.kws ? props.kws : (fd.keywords ?? []).filter((k) => k !== 'entersReversed')
   const showText = size === 'hand' || size === 'full'
   const rel = active ? props.relics ?? [] : []
@@ -115,7 +122,6 @@ function FaceView(props: CardProps & { which: Face }) {
                         {KW_LABEL[k]}
                       </span>
                     ))}
-                    {kws.length === 0 && def.type === 'figure' && fd.effects?.length ? <span className="kw kw-type">Has an effect</span> : null}
                   </div>
                 )}
               </>

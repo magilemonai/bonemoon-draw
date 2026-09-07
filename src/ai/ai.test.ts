@@ -1,7 +1,7 @@
 // The planner should find the lines the design review says a clever player finds.
 import { describe, expect, it } from 'vitest'
 import { beginGame, createGame, finalState, runAction } from '../engine/engine'
-import { chooseAction, planTurn } from './ai'
+import { chooseAction, determinize, planTurn } from './ai'
 import type { Face, GameState, LaneIndex } from '../engine/types'
 
 function fresh(sigs: [string, string], seed = 11): GameState {
@@ -86,5 +86,51 @@ describe('planner', () => {
     s = giveSpark(s, 0, 6)
     const plan = planTurn(s, { seed: 1 })
     expect(plan.some((a) => a.type === 'attack' && a.lane === 0)).toBe(true)
+  })
+
+  it('cannot lean on the order of cards nobody has seen', () => {
+    let s = fresh(['sig-luigi', 'sig-daxon'])
+    s = hand(s, 0, 'gears-8') // Libra Stellae: draw three, so the deck order would matter if it could peek
+    s = giveSpark(s, 0, 5)
+    const a = structuredClone(s)
+    const b = structuredClone(s)
+    // Same cards in the deck, two orders. Only the top two differ.
+    const rest = a.players[0].deck.slice(2)
+    a.players[0].deck = [{ uid: 9001, defId: 'suns-page' }, { uid: 9002, defId: 'major-2' }, ...rest]
+    b.players[0].deck = [{ uid: 9002, defId: 'major-2' }, { uid: 9001, defId: 'suns-page' }, ...rest]
+    const da = determinize(a, 0, 3).players[0].deck.map((c) => c.uid)
+    const db = determinize(b, 0, 3).players[0].deck.map((c) => c.uid)
+    expect(da).toEqual(db)
+    expect(chooseAction(a, { seed: 1 })).toEqual(chooseAction(b, { seed: 1 }))
+    // The enemy's hand is unseen too: the planner's world deals it from the same pool.
+    const world = determinize(a, 0, 3)
+    expect(world.players[1].hand.length).toBe(a.players[1].hand.length)
+    expect(world.players[1].deck.length).toBe(a.players[1].deck.length)
+  })
+
+  it('keeps the Read candidate that wins now over the one that fits the curve', () => {
+    let s = fresh(['sig-daxon', 'sig-rorik'])
+    s = giveSpark(s, 0, 2)
+    s.players[0].maxSpark = 6
+    s.players[1].health = 2
+    const death = s.nextUid++
+    const elira = s.nextUid++
+    s.pending = { kind: 'read', player: 0, options: [{ uid: death, defId: 'major-13' }, { uid: elira, defId: 'suns-page' }] }
+    const a = chooseAction(s, { seed: 1 })
+    expect(a).toEqual({ type: 'choose', uid: elira })
+    let st = s
+    for (let i = 0; i < 4 && st.phase !== 'over'; i++) st = finalState(runAction(st, chooseAction(st, { seed: 1 }), false), st)
+    expect(st.phase).toBe('over')
+    expect(st.winner).toBe(0)
+  })
+
+  it('ends the turn at once when the Bone Moon will finish the enemy', () => {
+    let s = fresh(['sig-shazz', 'sig-daxon'])
+    s.round = 10
+    s.turn = 19
+    s.players[1].health = 1
+    s = hand(s, 0, 'gears-3') // Yvette, playable, and pointless
+    s = giveSpark(s, 0, 2)
+    expect(chooseAction(s, { seed: 1 })).toEqual({ type: 'endTurn' })
   })
 })

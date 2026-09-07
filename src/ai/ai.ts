@@ -3,19 +3,25 @@
 // heuristic that knows about lethal, next-turn threats, dissolving Figures, hand space,
 // and lane congestion. Sequences like "attack, then flip" and "move the Guard, then hit
 // the face" fall out of the two-step search.
+//
+// It plans on what it is allowed to know. Before planning, the unseen cards (its own deck,
+// the enemy's hand and deck unless revealed) are dealt again from a seeded shuffle, so no
+// decision can lean on an order nobody has looked at.
 
 import { card, significator } from '../data'
 import { finalState, legalActions, runAction } from '../engine/engine'
 import { attackOf, availableSpark, cardCost, figures, hasKw, healthOf, keywords, other, resolveDefender, attackLanes, faceDef, emptyLanes } from '../engine/queries'
-import type { Action, FigureInstance, GameState, PlayerId } from '../engine/types'
+import { shuffleWithSeed } from '../engine/rng'
+import type { Action, CardInstance, FigureInstance, GameState, PlayerId } from '../engine/types'
 
 export interface AiOptions {
   seed?: number
   depth?: 1 | 2 // 2 = follow the best few actions one step further
   beam?: number // how many first actions get a second look
+  worlds?: number // how many deals of the unseen cards to average over
 }
 
-const DEFAULTS = { depth: 2 as const, beam: 5 }
+const DEFAULTS = { depth: 2 as const, beam: 5, worlds: 2 }
 
 // Does this Figure dissolve at the end of its controller's turn (Project Lazarus)?
 function diesAtEndOfTurn(f: FigureInstance): boolean {
@@ -154,6 +160,35 @@ export function evaluate(state: GameState, p: PlayerId): number {
   return score
 }
 
+// A fixed order for a set of cards, so a deal depends only on which cards are unseen.
+function canonical(cards: CardInstance[]): CardInstance[] {
+  return cards.slice().sort((a, b) => (a.defId < b.defId ? -1 : a.defId > b.defId ? 1 : a.uid - b.uid))
+}
+
+// What the planner may know: its own hand, the table, the graveyards, the counts of the
+// enemy's hand and both decks, and anything revealed. Everything else is dealt again here.
+export function determinize(state: GameState, p: PlayerId, salt: number): GameState {
+  const s = structuredClone(state)
+  const me = s.players[p]
+  const en = s.players[other(p)]
+  let seed = (state.seed ^ Math.imul(salt | 0, 2246822519)) | 0
+  const mine = shuffleWithSeed(canonical(me.deck), seed)
+  me.deck = mine.arr
+  seed = mine.seed
+  if (en.handRevealed) {
+    const theirs = shuffleWithSeed(canonical(en.deck), seed)
+    en.deck = theirs.arr
+    seed = theirs.seed
+  } else {
+    const pool = shuffleWithSeed(canonical([...en.hand, ...en.deck]), seed)
+    en.hand = pool.arr.slice(0, en.hand.length)
+    en.deck = pool.arr.slice(en.hand.length)
+    seed = pool.seed
+  }
+  s.seed = seed
+  return s
+}
+
 function reseed(state: GameState, salt: number): GameState {
   // Don't let the planner peek at the real random stream.
   return { ...state, seed: (state.seed ^ (salt * 2654435761)) | 0 }
@@ -164,25 +199,6 @@ function simulate(state: GameState, action: Action, salt: number): GameState {
   return finalState(steps, state)
 }
 
-function chooseRead(state: GameState, actions: Action[]): Action {
-  const p = state.active
-  const nextSpark = Math.min(10, state.players[p].maxSpark + 1)
-  let best = actions[0]
-  let bestScore = -Infinity
-  for (const a of actions) {
-    if (a.type !== 'choose') continue
-    const def = card(state.pending!.options.find((o) => o.uid === a.uid)!.defId)
-    const cost = cardCost(state, p, def.id)
-    let sc = -Math.abs(cost - nextSpark) + (def.suit === 'major' ? 1 : 0)
-    if (cost > nextSpark + 2) sc -= 3
-    if (sc > bestScore) {
-      bestScore = sc
-      best = a
-    }
-  }
-  return best
-}
-
 // Small preferences so the AI plays like a person.
 function bias(a: Action): number {
   if (a.type === 'play') return 0.15
@@ -191,34 +207,61 @@ function bias(a: Action): number {
   return 0
 }
 
-export function chooseAction(state: GameState, opts: AiOptions = {}): Action {
-  const depth = opts.depth ?? DEFAULTS.depth
-  const beam = opts.beam ?? DEFAULTS.beam
-  const p = state.active
-  const salt = (opts.seed ?? 7) + state.turn * 31
-  const actions = legalActions(state)
-  if (actions.length === 0) return { type: 'endTurn' }
-  if (state.pending) return chooseRead(state, actions)
+// A Read: keep the card that does the most right now, then the one that fits the curve.
+function chooseRead(world: GameState, actions: Action[], salt: number): Action {
+  const p = world.active
+  const nextSpark = Math.min(10, world.players[p].maxSpark + 1)
+  const base = evaluate(world, p)
+  let best = actions[0]
+  let bestScore = -Infinity
+  actions.forEach((a, i) => {
+    if (a.type !== 'choose') return
+    const def = card(world.pending!.options.find((o) => o.uid === a.uid)!.defId)
+    const cost = cardCost(world, p, def.id)
+    let curve = -Math.abs(cost - nextSpark) + (def.suit === 'major' ? 1 : 0)
+    if (cost > nextSpark + 2) curve -= 3
+    // Keep it, then look at the best single thing it lets you do this turn.
+    const next = simulate(world, a, salt + i + 1)
+    let sc = evaluate(next, p) - base
+    if (next.phase === 'over') sc = next.winner === p ? 10_000 : -10_000
+    else if (next.active === p) {
+      let gain = 0
+      let j = 0
+      for (const b of legalActions(next)) {
+        j++
+        if (b.type === 'endTurn') continue
+        const after = simulate(next, b, salt + 500 + i * 31 + j)
+        const g = evaluate(after, p) - evaluate(next, p) + bias(b)
+        if (g > gain) gain = g
+      }
+      sc += gain * 0.9
+    }
+    sc += curve * 0.6
+    if (sc > bestScore) {
+      bestScore = sc
+      best = a
+    }
+  })
+  return best
+}
 
-  const base = evaluate(state, p)
-  type Cand = { a: Action; next: GameState; score: number }
+// Score every action in one dealt world. Returns a score per action (endTurn gets none).
+function scoreActions(world: GameState, p: PlayerId, actions: Action[], depth: number, beam: number, salt: number): number[] {
+  const base = evaluate(world, p)
+  type Cand = { i: number; a: Action; next: GameState; score: number }
   const cands: Cand[] = []
-  let i = 0
-  for (const a of actions) {
-    i++
-    if (a.type === 'endTurn') continue
-    const next = simulate(state, a, salt + i)
-    cands.push({ a, next, score: evaluate(next, p) - base + bias(a) })
-  }
-  if (cands.length === 0) return { type: 'endTurn' }
-  cands.sort((x, y) => y.score - x.score)
-
+  actions.forEach((a, i) => {
+    if (a.type === 'endTurn') return
+    const next = simulate(world, a, salt + i + 1)
+    cands.push({ i, a, next, score: evaluate(next, p) - base + bias(a) })
+  })
   // Second step: the best few actions get a look at what they enable, plus the best action of
   // each kind, so a losing-looking trade that frees a lane still gets its second look.
-  if (depth >= 2) {
-    const second = new Set<Cand>(cands.slice(0, beam))
+  if (depth >= 2 && cands.length) {
+    const sorted = cands.slice().sort((x, y) => y.score - x.score)
+    const second = new Set<Cand>(sorted.slice(0, beam))
     for (const kind of ['play', 'attack', 'move', 'ability'] as const) {
-      const first = cands.find((c) => c.a.type === kind)
+      const first = sorted.find((c) => c.a.type === kind)
       if (first) second.add(first)
     }
     for (const cnd of second) {
@@ -229,19 +272,52 @@ export function chooseAction(state: GameState, opts: AiOptions = {}): Action {
       for (const b of follow) {
         j++
         if (b.type === 'endTurn') continue
-        const after = simulate(cnd.next, b, salt + 1000 + i * 17 + j)
+        const after = simulate(cnd.next, b, salt + 1000 + cnd.i * 17 + j)
         const gain = evaluate(after, p) - evaluate(cnd.next, p) + bias(b)
         if (gain > bestFollow) bestFollow = gain
       }
       cnd.score += bestFollow * 0.9
     }
-    cands.sort((x, y) => y.score - x.score)
   }
+  const out = actions.map(() => -Infinity)
+  for (const c of cands) out[c.i] = c.score
+  return out
+}
 
-  const best = cands[0]
+export function chooseAction(state: GameState, opts: AiOptions = {}): Action {
+  const depth = opts.depth ?? DEFAULTS.depth
+  const beam = opts.beam ?? DEFAULTS.beam
+  const nWorlds = Math.max(1, opts.worlds ?? DEFAULTS.worlds)
+  const p = state.active
+  const salt = (opts.seed ?? 7) + state.turn * 31
+  const actions = legalActions(state)
+  if (actions.length === 0) return { type: 'endTurn' }
+  const worlds = Array.from({ length: nWorlds }, (_, k) => determinize(state, p, salt + k * 7919))
+  if (state.pending) return chooseRead(worlds[0], actions, salt)
+
+  // Ending the turn is a move too: when that alone wins (a Bone Moon bite, a start-of-turn
+  // death), take it rather than playing anything first.
+  const ended = simulate(worlds[0], { type: 'endTurn' }, salt + 999)
+  if (ended.phase === 'over' && ended.winner === p) return { type: 'endTurn' }
+
+  const totals = actions.map(() => 0)
+  for (const w of worlds) {
+    const sc = scoreActions(w, p, actions, depth, beam, salt)
+    sc.forEach((v, i) => {
+      totals[i] += v / worlds.length
+    })
+  }
+  let bestI = -1
+  let bestScore = -Infinity
+  totals.forEach((v, i) => {
+    if (v > bestScore) {
+      bestScore = v
+      bestI = i
+    }
+  })
   // Only act if it helps.
-  if (best.score <= 0.05) return { type: 'endTurn' }
-  return best.a
+  if (bestI < 0 || bestScore <= 0.05) return { type: 'endTurn' }
+  return actions[bestI]
 }
 
 // A simple mulligan policy for the sim: set aside cards that cost more than the hand can

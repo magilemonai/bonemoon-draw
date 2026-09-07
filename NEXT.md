@@ -1,5 +1,13 @@
 # NEXT
 
+- [ ] [crew] Expert opponent: search a bounded set of the enemy's replies after the AI's turn, same rules and information
+    Standard is the current two-step planner over dealt worlds. Expert should look at what the human can do back before committing. Budget it so the table never stalls.
+- [ ] [crew] Three lessons on fixed positions: first reading, turn the fight, read the moon
+    A lesson loader over real engine states, one prompt per decision, retry, and a test that each lesson's intended line still works after balance changes.
+- [ ] [crew] A three-encounter story chapter with checkpoints, wrapped around ordinary matches
+    Opponent order after matchup testing. Disclose any bespoke rule before the battle. Rewards are lore and card backs, no combat upgrades yet.
+- [ ] [crew] A results screen with decisive events and up to three disclosed stars, no strategy grade
+    Stars: won, optional objective met, Expert win. Validate from engine events, not animation timing.
 - [ ] [cody] Play a game on your phone after the UX round and note anything the prompts still leave unclear
     The attack preview, the flip comparison, the Read chooser, and the phone HUD all changed. docs/UX_RESPONSE.md lists what moved and what was left.
 - [ ] [cody] Read docs/REVIEW_RESPONSE.md and decide the first balance experiment

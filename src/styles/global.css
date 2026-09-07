@@ -2088,8 +2088,9 @@ h3 {
   .hand-card {
     margin-right: -26px;
   }
-  .hand.is-my-turn .hand-card:hover .card {
-    transform: translateY(-14px);
+  .hand.is-my-turn .hand-card:hover {
+    transform: translateY(-34px) scale(1.4) !important;
+    z-index: 80 !important;
   }
   .table-mid {
     flex-direction: row;
@@ -2139,12 +2140,6 @@ h3 {
   }
   .size-hand .card-text {
     font-size: 9.5px;
-  }
-  .size-hand .card-text p {
-    display: block;
-  }
-  .size-hand .card-text .card-kws-hand {
-    display: none;
   }
   .card-name {
     font-size: 12.5px;
@@ -2598,5 +2593,102 @@ h3 {
   }
   .hand {
     min-height: calc(var(--cw-hand) * 1.6 + 20px);
+  }
+}
+
+
+/* ---- Compact cards: art first, numbers clear, the reading in the enlarged views ---- */
+
+.size-hand .card-inner,
+.size-lane .card-inner,
+.size-mini .card-inner {
+  padding: 2px;
+  border-width: 1.5px;
+}
+.size-hand .card-inner::before,
+.size-lane .card-inner::before,
+.size-mini .card-inner::before {
+  display: none;
+}
+/* the table card: no cost, no rank; the art starts at the top */
+.size-lane .card-top,
+.size-mini .card-top {
+  display: none;
+}
+.size-hand .card-top {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  z-index: 3;
+  min-height: 0;
+  padding: 0;
+}
+.size-hand .card-rank {
+  display: none;
+}
+.size-hand .card-art {
+  aspect-ratio: 5 / 5.3;
+  margin: 0;
+}
+.size-lane .card-art {
+  aspect-ratio: 5 / 5.2;
+  margin: 0;
+}
+.size-mini .card-art {
+  aspect-ratio: 5 / 5;
+  margin: 0;
+}
+.size-hand .card-name,
+.size-lane .card-name {
+  font-size: 11px;
+  padding: 3px 2px 1px;
+  min-height: 2.2em;
+}
+.size-hand .card-text,
+.size-lane .card-text {
+  padding: 0 3px 20px;
+}
+.size-hand .card-text p {
+  display: none;
+}
+.size-hand .card-text .card-kws-hand {
+  display: flex;
+}
+/* stat badges as plain pills at compact sizes */
+.size-hand .card-stat,
+.size-lane .card-stat,
+.size-mini .card-stat {
+  clip-path: none;
+  border-radius: 999px;
+  min-width: 19px;
+  height: 19px;
+  font-size: 12.5px;
+  box-shadow: 0 0 0 1px rgba(255, 252, 240, 0.55);
+}
+.size-mini .card-stat {
+  min-width: 14px;
+  height: 14px;
+  font-size: 9.5px;
+}
+.size-hand .card-type,
+.size-lane .card-type {
+  font-size: 9px;
+}
+@media (min-width: 720px) {
+  .size-hand .card-name,
+  .size-lane .card-name {
+    font-size: 12px;
+  }
+}
+
+/* On a phone the enemy's title drops under the name rather than squeezing it. */
+@media (max-width: 719px) {
+  .sig-theirs .sig-nameline {
+    flex-wrap: wrap;
+    row-gap: 0;
+  }
+  .table-tools .btn-quiet {
+    padding-left: 6px;
+    padding-right: 6px;
   }
 }
