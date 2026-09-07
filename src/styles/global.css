@@ -27,7 +27,7 @@
   --moon: #f3efe3;
   --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --font-body: 'Alegreya Sans', 'Gill Sans', 'Trebuchet MS', sans-serif;
-  --cw-lane: min(100px, 12.5vh);
+  --cw-lane: min(118px, 13.5vh);
   --cw-hand: min(92px, 11vh);
   --cw-full: 150px;
   --cw-mini: 58px;
@@ -769,8 +769,11 @@ h3 {
   flex-direction: column;
   gap: 10px;
   align-items: center;
+  justify-content: center;
   padding: 6px 0;
   position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 .board::before {
   /* the reading cloth */
@@ -1295,8 +1298,12 @@ h3 {
   border-color: var(--dusk-3);
 }
 .face-option.is-off {
-  opacity: 0.45;
+  opacity: 0.8;
+  filter: saturate(0.5);
   cursor: default;
+}
+.face-option.is-wait {
+  cursor: progress;
 }
 .face-option-label {
   font-family: var(--font-display);
@@ -2056,13 +2063,13 @@ h3 {
 
 @media (min-width: 720px) {
   :root {
-    --cw-lane: min(128px, 13.5vh);
+    --cw-lane: min(150px, 14.5vh);
     --cw-hand: min(118px, 11.5vh);
     --cw-full: 190px;
   }
   .battle {
     padding: 10px 20px 6px;
-    max-width: 980px;
+    max-width: 1080px;
     margin: 0 auto;
     gap: 6px;
   }
@@ -2166,5 +2173,430 @@ h3 {
   *::after {
     animation-duration: 0.001s !important;
     transition-duration: 0.001s !important;
+  }
+}
+
+
+/* ---- Reading the table (after the hands-on UX review) ------------------------ */
+
+/* An open enemy lane the selected Figure can strike into is a destination too. */
+.slot.hl-attack.is-empty {
+  border-color: var(--blood);
+  border-style: solid;
+  background: rgba(192, 69, 47, 0.12);
+  box-shadow: 0 0 14px rgba(192, 69, 47, 0.45);
+  cursor: pointer;
+  animation: pulse-blood 1.2s ease-in-out infinite;
+}
+@keyframes pulse-blood {
+  50% {
+    box-shadow: 0 0 22px rgba(192, 69, 47, 0.7);
+  }
+}
+.slot.hl-attack .slot-name {
+  color: #ffb9a8;
+}
+
+/* The blow, spelled out before it lands. */
+.slot-preview {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 3px 5px;
+  border-radius: 6px;
+  background: rgba(12, 10, 34, 0.9);
+  border: 1px solid rgba(255, 185, 168, 0.5);
+  color: #ffd9cf;
+  font-size: 10px;
+  line-height: 1.15;
+  text-align: center;
+  z-index: 25;
+  pointer-events: none;
+}
+.slot-preview.on-lane {
+  top: 58%;
+}
+.slot-preview.on-fig {
+  top: 24px;
+}
+.slot-preview span + span {
+  font-weight: 700;
+  color: #fff4ee;
+}
+.sig-preview {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  transform: translate(-50%, 3px);
+  white-space: nowrap;
+  font-size: 10px;
+  line-height: 1.1;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(12, 10, 34, 0.92);
+  border: 1px solid rgba(255, 185, 168, 0.5);
+  color: #ffd9cf;
+  z-index: 30;
+}
+
+/* Wounds ride on the table card, so a flip can be read without opening it. */
+.card-wounds {
+  position: absolute;
+  right: 3px;
+  bottom: 25px;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: rgba(141, 31, 20, 0.92);
+  border: 1px solid rgba(255, 185, 168, 0.6);
+  color: #ffd9cf;
+  white-space: nowrap;
+  z-index: 3;
+}
+
+/* Spark and hand, labelled. */
+.spark-word {
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: rgba(143, 214, 255, 0.75);
+  margin-right: 3px;
+}
+.spark-max {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: rgba(143, 214, 255, 0.6);
+}
+.spark-bonus {
+  font-size: 0.7rem;
+  color: var(--gold-3);
+  margin-left: 4px;
+  white-space: nowrap;
+}
+.sig-counts-mine .hand-count {
+  color: rgba(239, 228, 204, 0.8);
+}
+.sig-counts-mine.is-near .hand-count {
+  color: var(--gold-3);
+}
+.sig-counts-mine.is-full .hand-count {
+  color: #ffb9a8;
+  font-weight: 700;
+}
+
+/* The bottom of the table on a phone: the Significator and the moon share a row, and
+   the clock (round, phase, what next round draws) gets a row of its own. */
+.table-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'sig moon'
+    'text text';
+  column-gap: 8px;
+  row-gap: 2px;
+  align-items: center;
+}
+.table-bottom .sig {
+  grid-area: sig;
+}
+.moon-dial {
+  display: contents;
+}
+.moon-btn {
+  grid-area: moon;
+}
+.moon-text {
+  grid-area: text;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 8px;
+  row-gap: 0;
+  padding: 0 4px;
+}
+.moon-forecast {
+  font-size: 0.74rem;
+  color: rgba(239, 228, 204, 0.6);
+}
+
+/* The hand scrolls sideways on a phone; say when there is more. */
+.hand-wrap {
+  position: relative;
+  margin-top: auto;
+  flex: 0 0 auto;
+  z-index: 2;
+}
+.hand {
+  margin-top: 0;
+  padding-top: 14px;
+  min-height: calc(var(--cw-hand) * 1.6 + 24px);
+}
+.hand-more {
+  position: absolute;
+  right: 8px;
+  bottom: 16px;
+  z-index: 70;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 199, 108, 0.6);
+  background: rgba(12, 10, 34, 0.92);
+  color: var(--gold-3);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Face chooser: the numbers as they would be on your table. */
+.face-option-stats small {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+/* Inspecting: what it is now, what a flip would make it. */
+.inspect-compare {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.compare-col {
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: rgba(12, 10, 34, 0.55);
+  border: 1px solid rgba(232, 199, 108, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: flex-start;
+  min-width: 0;
+}
+.compare-col.for-reversed {
+  border-color: rgba(176, 102, 143, 0.5);
+}
+.compare-col.is-dead {
+  border-color: #ffb9a8;
+  background: rgba(141, 31, 20, 0.25);
+}
+.compare-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: rgba(232, 199, 108, 0.85);
+}
+.compare-stats {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.compare-stats b {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  height: 30px;
+  padding: 0 6px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ivory);
+  border-radius: 7px;
+}
+.compare-stats .c-atk {
+  background: linear-gradient(180deg, #5b4a7a, #2b2140);
+}
+.compare-stats .c-hp {
+  background: linear-gradient(180deg, #b8583f, #7a2f1f);
+}
+.is-dead .compare-stats .c-hp {
+  background: linear-gradient(180deg, #d9483b, #8d1f14);
+}
+.compare-fixed {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--gold-3);
+}
+.compare-sub {
+  font-size: 0.8rem;
+  color: rgba(239, 228, 204, 0.75);
+}
+.is-dead .compare-sub {
+  color: #ffd9cf;
+  font-weight: 700;
+}
+.compare-sep {
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(232, 199, 108, 0.5), transparent);
+}
+.face-panel-printed {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin-right: 4px;
+  align-self: center;
+}
+.face-panel-atk.is-dead,
+.face-panel-hp.is-dead {
+  background: linear-gradient(180deg, #6b6b6b, #2b2b2b);
+  color: #ddd;
+}
+.face-panel-note {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* Reads: both faces in words under each candidate. */
+.read-modal .read-options {
+  align-items: flex-start;
+}
+.read-option {
+  flex: 1 1 140px;
+  max-width: 200px;
+}
+.read-option .btn {
+  width: 100%;
+}
+.read-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  color: rgba(239, 228, 204, 0.85);
+}
+.read-text b {
+  font-family: var(--font-display);
+  color: var(--gold-3);
+}
+.read-text .rt-rev > b {
+  color: var(--dusk-3);
+}
+
+/* After the reading: the table stays, the ways out sit in a strip. */
+.over-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 12px;
+  background: rgba(12, 10, 34, 0.82);
+  border: 1px solid rgba(232, 199, 108, 0.35);
+}
+.over-strip-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--gold-3);
+}
+.btn-quiet.is-on {
+  color: var(--gold-3);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (min-width: 720px) {
+  .table-bottom {
+    display: flex;
+  }
+  .moon-dial {
+    display: flex;
+  }
+  .moon-text {
+    flex-direction: column;
+    padding: 0;
+  }
+  .hand-more {
+    display: none;
+  }
+  .slot-preview {
+    font-size: 11px;
+  }
+  .card-wounds {
+    font-size: 9px;
+    bottom: 27px;
+  }
+}
+
+/* ---- Wide tables: the Significators sit beside the board, the board takes the height. */
+@media (min-width: 1000px) {
+  :root {
+    --cw-lane: min(176px, 20vh);
+    --cw-hand: min(126px, 13vh);
+  }
+  .battle {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      'top board'
+      'reveal board'
+      'mid board'
+      'bottom board'
+      'hand hand';
+    column-gap: 18px;
+    row-gap: 8px;
+    max-width: 1180px;
+    padding: 12px 20px 6px;
+  }
+  .table-top {
+    grid-area: top;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+  .table-tools {
+    justify-content: flex-end;
+  }
+  .revealed {
+    grid-area: reveal;
+  }
+  .table-mid {
+    grid-area: mid;
+    align-items: stretch;
+  }
+  .table-mid:empty {
+    display: none;
+  }
+  .targeting-hint {
+    border-radius: 14px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 8px 8px 8px 12px;
+  }
+  .table-bottom {
+    grid-area: bottom;
+    align-self: end;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .moon-dial {
+    justify-content: flex-start;
+    padding: 0 6px;
+  }
+  .board {
+    grid-area: board;
+    align-self: stretch;
+    padding: 12px 20px;
+  }
+  .lane-row {
+    gap: 18px;
+  }
+  .hand-wrap {
+    grid-area: hand;
+  }
+  .hand {
+    min-height: calc(var(--cw-hand) * 1.6 + 20px);
   }
 }

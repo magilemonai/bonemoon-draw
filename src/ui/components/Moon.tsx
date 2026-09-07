@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { moonPhase } from '../../engine/queries'
+import { drawForecast, moonPhase } from '../../engine/queries'
 import type { GameState, MoonPhase } from '../../engine/types'
 import { useStore } from '../store'
 
@@ -44,15 +44,28 @@ export function MoonDisc({ phase, bone, size = 44 }: { phase: MoonPhase; bone: b
   )
 }
 
+// What the next round holds for the player: the moon, the draws, and any burn.
+function forecastText(state: GameState): string {
+  const f = drawForecast(state, state.humanPlayer)
+  const moon = f.phase === 'full' ? 'a Full Moon' : f.phase === 'new' ? 'a new moon' : `a ${f.phase} moon`
+  let s = `Round ${f.round} is ${moon}: you draw ${f.draws}`
+  if (f.burns > 0) s += `, and ${f.burns} would burn at this hand size`
+  if (f.short > 0) s += `, and the deck is ${f.short} short`
+  return s + '.'
+}
+
 export function MoonDial({ state }: { state: GameState }) {
   const dispatch = useStore((s) => s.dispatch)
   const playing = useStore((s) => s.playing)
   const queue = useStore((s) => s.queue)
   const phase = moonPhase(state.round)
   const bone = state.round >= state.boneMoonRound
+  const pendingMine = !!state.pending && state.pending.player === state.humanPlayer
   const myTurn = state.active === state.humanPlayer && !state.pending && state.phase !== 'over'
   const busy = playing || queue.length > 0
   const untilBone = state.boneMoonRound - state.round
+  const over = state.phase === 'over'
+  const turnLabel = over ? 'The reading is over' : pendingMine ? 'Your choice' : myTurn ? (busy ? 'Resolving' : 'End the turn') : 'Their reading'
 
   return (
     <div className={`moon-dial ${myTurn ? 'is-my-turn' : ''} ${bone ? 'is-bone' : ''}`}>
@@ -61,11 +74,12 @@ export function MoonDial({ state }: { state: GameState }) {
         <span className="moon-ring" />
       </button>
       <div className="moon-text">
-        <span className="moon-turn">{state.phase === 'over' ? 'The reading is over' : myTurn ? (busy ? 'Resolving' : 'End the turn') : 'Their reading'}</span>
+        <span className="moon-turn">{turnLabel}</span>
         <span className="moon-phase">
           Round {state.round}, {PHASE_LABEL[phase].toLowerCase()}
-          {bone ? '. The Bone Moon is up.' : untilBone <= 3 ? `. Bone Moon in ${untilBone}.` : ''}
+          {bone ? '. The Bone Moon is up.' : untilBone <= 3 ? `. Bone Moon in ${untilBone}.` : '.'}
         </span>
+        {!over && <span className="moon-forecast">{forecastText(state)}</span>}
       </div>
     </div>
   )

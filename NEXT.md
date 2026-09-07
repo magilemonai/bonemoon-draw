@@ -1,5 +1,7 @@
 # NEXT
 
+- [ ] [cody] Play a game on your phone after the UX round and note anything the prompts still leave unclear
+    The attack preview, the flip comparison, the Read chooser, and the phone HUD all changed. docs/UX_RESPONSE.md lists what moved and what was left.
 - [ ] [cody] Read docs/REVIEW_RESPONSE.md and decide the first balance experiment
     Recommendation there: ship the rules fixes (done in code), then trial the Spent Sphere for the second seat.
     The seat split is 65/35 in the 600-game baseline; the token takes it to 58/42. Fallback: first player skips the turn-one draw.
@@ -10,7 +12,7 @@
 - [ ] [cody] Second art pass from docs/ART_REVIEW.md: twelve touch-ups, Vraxxis and Cernis first
     The list is at the bottom of the review, one line per file. Same zip format as the first delivery;
     unzip over public/art and the game picks up the new files.
-- [ ] [cody] Send docs/UI_REVIEW_PACKET.md and docs/UI_KIT_PROMPTS.md out for an interface critique and ornament kit
+- [x] [cody] Send docs/UI_REVIEW_PACKET.md and docs/UI_KIT_PROMPTS.md out for an interface critique and ornament kit
     The packet points at the live page and asks nine questions. The kit is 13 transparent PNGs
     (six card frames, a lane mark, a banner ribbon, five emblems); unzip into public/art/ and the game wears them.
 - [x] [cody] Send docs/DESIGN_REVIEW_PACKET.md to an outside designer for a written critique

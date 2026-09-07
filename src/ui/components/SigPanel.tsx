@@ -1,10 +1,12 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { significator } from '../../data'
-import { availableSpark, other, sameRef, targetsFor } from '../../engine/queries'
+import { card, significator } from '../../data'
+import { attackLanes, availableSpark, other, previewAttack, resolveDefender, sameRef, targetsFor } from '../../engine/queries'
 import type { GameState, PlayerId } from '../../engine/types'
 import { useStore } from '../store'
 import { computeHighlights } from './Board'
 import { ArtImage } from './ArtImage'
+
+const HAND_MAX = 8
 
 function Portrait({ sigId, size }: { sigId: string; size: number }) {
   const sig = significator(sigId)
@@ -49,15 +51,35 @@ export function SigPanel({ state, player }: { state: GameState; player: PlayerId
   const hpPct = Math.max(0, Math.min(100, (pl.health / pl.maxHealth) * 100))
   const enemy = state.players[other(player)]
 
-  const onSigClick = () => {
-    if (isTarget) {
-      if (sel.kind === 'hand' && sel.face) dispatch({ type: 'play', uid: sel.uid, face: sel.face, target: ref })
-      else if (sel.kind === 'figure') {
-        const atk = state.players[state.humanPlayer].lanes[sel.lane]
-        if (atk) dispatch({ type: 'attack', lane: sel.lane, targetLane: atk.lane })
-      } else if (sel.kind === 'ability') dispatch({ type: 'ability', target: ref })
+  // What the selected Figure's attack would do to this Significator.
+  let previewText: string | null = null
+  if (isTarget && sel.kind === 'figure') {
+    const atk = state.players[state.humanPlayer].lanes[sel.lane]
+    const tl = atk ? attackLanes(state, atk).find((l) => sameRef(resolveDefender(state, atk, l), ref)) : undefined
+    if (atk && tl !== undefined) {
+      const pv = previewAttack(state, atk, tl)
+      previewText = pv.lethal ? `Takes ${pv.deals}. Lethal.` : `Takes ${pv.deals}.`
     }
   }
+
+  const onSigClick = () => {
+    if (!isTarget) return
+    if (sel.kind === 'hand' && sel.face) {
+      const inst = state.players[state.humanPlayer].hand.find((h) => h.uid === sel.uid)
+      if (inst && card(inst.defId).type === 'figure') {
+        // A Figure's Arrive target: remember it, then ask for the lane.
+        select({ ...sel, target: ref })
+        return
+      }
+      dispatch({ type: 'play', uid: sel.uid, face: sel.face, target: ref })
+    } else if (sel.kind === 'figure') {
+      const atk = state.players[state.humanPlayer].lanes[sel.lane]
+      const tl = atk ? attackLanes(state, atk).find((l) => sameRef(resolveDefender(state, atk, l), ref)) : undefined
+      if (atk) dispatch({ type: 'attack', lane: sel.lane, targetLane: tl ?? atk.lane })
+    } else if (sel.kind === 'ability') dispatch({ type: 'ability', target: ref })
+  }
+
+  const handClass = pl.hand.length >= HAND_MAX ? 'is-full' : pl.hand.length === HAND_MAX - 1 ? 'is-near' : ''
 
   return (
     <div className={`sig ${isMine ? 'sig-mine' : 'sig-theirs'} ${isTarget ? 'is-target' : ''} ${state.active === player ? 'is-active' : ''}`}>
@@ -66,12 +88,17 @@ export function SigPanel({ state, player }: { state: GameState; player: PlayerId
         className="sig-portrait"
         onClick={onSigClick}
         animate={lunge ? { scale: [1, 0.96, 1], x: [0, isMine ? 0 : 0, 0] } : { scale: 1 }}
-        aria-label={`${sig.name}, ${pl.health} health`}
+        aria-label={`${sig.name}, ${pl.health} health${previewText ? `. ${previewText}` : ''}`}
       >
         <Portrait sigId={sig.id} size={isMine ? 52 : 44} />
         <span className="sig-hp" title="Health">
           {pl.health}
         </span>
+        {previewText && (
+          <span className="sig-preview" aria-hidden>
+            {previewText}
+          </span>
+        )}
         <div className="sig-fx">
           <AnimatePresence>
             {sigFx.map((f) => (
@@ -96,11 +123,16 @@ export function SigPanel({ state, player }: { state: GameState; player: PlayerId
         <div className="sig-hpbar" aria-hidden>
           <span style={{ width: `${hpPct}%` }} />
         </div>
-        <div className="sig-spark" title={`${spark} of ${pl.maxSpark} Spark`}>
+        <div className="sig-spark" title={`${spark} of ${pl.maxSpark} Spark${pl.tempSpark > 0 ? `, ${pl.tempSpark} of it only this turn` : ''}`} aria-label={`${spark} of ${pl.maxSpark} Spark`}>
+          <span className="spark-word">Spark</span>
           {Array.from({ length: 10 }, (_, i) => (
             <span key={i} className={`spark-pip ${i < pl.maxSpark ? 'is-max' : ''} ${i < spark ? 'is-lit' : ''} ${i >= pl.maxSpark && i < spark ? 'is-bonus' : ''}`} />
           ))}
-          <span className="spark-count">{spark}</span>
+          <span className="spark-count">
+            {spark}
+            <span className="spark-max">/{pl.maxSpark}</span>
+          </span>
+          {pl.tempSpark > 0 && <span className="spark-bonus">+{pl.tempSpark} this turn</span>}
         </div>
         <div className="sig-meta">
           {isMine ? (
@@ -123,7 +155,14 @@ export function SigPanel({ state, player }: { state: GameState; player: PlayerId
               {enemy && `${pl.hand.length} in hand, ${pl.deck.length} in deck`}
             </span>
           )}
-          {isMine && <span className="sig-counts">{pl.deck.length} in deck</span>}
+          {isMine && (
+            <span className={`sig-counts sig-counts-mine ${handClass}`}>
+              <span className="hand-count">
+                {pl.hand.length} of {HAND_MAX} in hand
+              </span>
+              , {pl.deck.length} in deck
+            </span>
+          )}
         </div>
       </div>
     </div>

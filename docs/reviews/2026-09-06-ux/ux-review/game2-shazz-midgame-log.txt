@@ -1,0 +1,143 @@
+Browser tab: 1, Title: "The Bonemoon Draw", URL: "https://magilemonai.github.io/bonemoon-draw/".
+0 AXWebArea The Bonemoon Draw, URL: magilemonai.github.io/bonemoon-draw/
+	1 container
+		2 button Lord-Provost Elaina Masque, 20 health
+			3 text V
+			4 text 20
+		5 text Lord-Provost Elaina Masque The Hierophant
+		6 text 0
+		7 container 7 cards in hand
+		8 text 7 in hand, 21 in deck
+		9 checkbox Log, Value: 1
+		10 button Leave
+		11 container
+			12 button Past, ID: slot-1-0
+				13 text Past
+			14 button Present, ID: slot-1-1
+				160 text Present
+			16 button Future, ID: slot-1-2
+				17 text Future
+		18 container
+			19 container slot-0-0
+				113 button 2 Two of Antlers Elder Voren Nightbloom 1 2 2 Two of Antlers Reversed Voren, Corrupted 3 1 Inspect Elder Voren Nightbloom
+					114 container
+						115 container
+							116 text 2
+							117 text Two of Antlers
+							118 text Elder Voren Nightbloom 1 2
+						119 container
+							120 text 2
+							121 text Two of Antlers
+							122 container Reversed
+							123 text Voren, Corrupted 3 1
+					124 button Inspect Elder Voren Nightbloom
+			21 button Present, ID: slot-0-1
+				22 text Present
+			23 button Future, ID: slot-0-2
+				24 text Future
+		25 button Imperator Amegmon Shazz, 15 health
+			26 text XV
+			27 text 15
+		28 text Imperator Amegmon Shazz The Devil
+		29 text 4
+		30 button Wear a Face 2, Help: Flip any Figure.
+			31 text Wear a Face
+			161 text 2
+		32 text 19  in deck
+		33 button End your turn
+		34 text End the turn Round  4 ,  waning
+		35 container Your hand
+			36 button 4 Six of Antlers Lake Mirrara Omen 4 Six of Antlers Reversed Lake Mirrara, Filmed Over Omen
+				37 container
+					38 container
+						39 text 4
+						40 text Six of Antlers
+						41 text Lake Mirrara Omen
+					42 container
+						43 text 4
+						44 text Six of Antlers
+						45 container Reversed
+						46 text Lake Mirrara, Filmed Over Omen
+			58 button 2 Three of Gears Yvette Mirthwell Has an effect 2 2 2 Three of Gears Reversed Yvette, Too Close to the Leylines Has an effect 2 2
+				59 container
+					60 container
+						61 text 2
+						62 text Three of Gears
+						63 text Yvette Mirthwell Has an effect 2 2
+					64 container
+						65 text 2
+						66 text Three of Gears
+						67 container Reversed
+						68 text Yvette, Too Close to the Leylines Has an effect 2 2
+			69 button 4 Six of Antlers Lake Mirrara Omen 4 Six of Antlers Reversed Lake Mirrara, Filmed Over Omen
+				70 container
+					71 container
+						72 text 4
+						73 text Six of Antlers
+						74 text Lake Mirrara Omen
+					75 container
+						76 text 4
+						77 text Six of Antlers
+						78 container Reversed
+						79 text Lake Mirrara, Filmed Over Omen
+			80 button 2 Two of Antlers Elder Voren Nightbloom Has an effect 1 3 2 Two of Antlers Reversed Voren, Corrupted Has an effect 3 1
+				81 container
+					82 container
+						83 text 2
+						84 text Two of Antlers
+						85 text Elder Voren Nightbloom Has an effect 1 3
+					86 container
+						87 text 2
+						88 text Two of Antlers
+						89 container Reversed
+						90 text Voren, Corrupted Has an effect 3 1
+			91 button 7 XIII Death: The Man in Black Gale 6 6 7 XIII Reversed Old Midnight, at the Crossroads Has an effect 6 6
+				92 container
+					93 container
+						94 text 7
+						95 text XIII
+						96 text Death: The Man in Black Gale 6 6
+					97 container
+						98 text 7
+						99 text XIII
+						100 container Reversed
+						101 text Old Midnight, at the Crossroads Has an effect 6 6
+			102 button 6 Queen of Gears Archivist Esmerelda Gotch 3 6 6 Queen of Gears Reversed Gotch, Temporal Filing Has an effect 6 3
+				103 container
+					104 container
+						105 text 6
+						106 text Queen of Gears
+						107 text Archivist Esmerelda Gotch 3 6
+					108 container
+						109 text 6
+						110 text Queen of Gears
+						111 container Reversed
+						112 text Gotch, Temporal Filing Has an effect 6 3
+			125 button 4 Knight of Gears Mordeaux, the Clockwork Man Has an effect 3 4 4 Knight of Gears Reversed Mordeaux, Fist of Memory Has an effect 4 3
+				126 container
+					127 container
+						128 text 4
+						129 text Knight of Gears
+						130 text Mordeaux, the Clockwork Man Has an effect 3 4
+					131 container
+						132 text 4
+						133 text Knight of Gears
+						134 container Reversed
+						135 text Mordeaux, Fist of Memory Has an effect 4 3
+			149 button 4 Six of Gears Liquid Mana Omen 4 Six of Gears Reversed Liquid Mana Omen
+				150 container
+					151 container
+						152 text 4
+						153 text Six of Gears
+						154 text Liquid Mana Omen
+					155 container
+						156 text 4
+						157 text Six of Gears
+						158 container Reversed
+						159 text Liquid Mana Omen
+		162 text The reading so far
+		163 button Close
+		164 container
+			165 text Elder Voren Nightbloom takes 1. Imperator Amegmon Shazz uses Wear a Face. Null-Zone Pylon turns reversed. Null-Zone Pylon falls. Round 4: Lord-Provost Elaina Masque reads. Lord-Provost Elaina Masque plays The Sleepless Sentry (reversed). Project Lazarus attacks Imperator Amegmon Shazz. Imperator Amegmon Shazz takes 5. The Sleepless Sentry falls. Round 4: Imperator Amegmon Shazz reads. Shadowling Stalkers burns: Imperator Amegmon Shazz's hand is full. Shadowling Stalkers burns: the hand is full.
+
+The focused UI element is 9 checkbox Log, Value: 1

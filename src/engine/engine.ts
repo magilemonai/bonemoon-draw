@@ -332,7 +332,6 @@ function drawCard(c: Ctx, p: PlayerId) {
     me.graveyard.push(top)
     me.burnsThisGame += 1
     emit(c, { kind: 'burn', player: p, defId: top.defId })
-    log(c, `${card(top.defId).name} burns: the hand is full.`)
     return
   }
   me.hand.push(top)

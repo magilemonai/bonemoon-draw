@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { card } from '../../data'
-import { attackLanes, attackOf, canAttack, canMove, healthOf, keywords, maxHealthOf, other, resolveDefender, targetsFor, sameRef, cardCost, playableFaces } from '../../engine/queries'
+import { attackLanes, attackOf, canAttack, canMove, healthOf, keywords, maxHealthOf, other, resolveDefender, resolveRef, targetsFor, sameRef, cardCost, playableFaces, previewAttack, figureName } from '../../engine/queries'
+import type { AttackPreview } from '../../engine/queries'
 import type { FigureInstance, GameState, LaneIndex, PlayerId, TargetRef } from '../../engine/types'
 import { LANE_NAMES } from '../../engine/types'
 import { useStore, type Selection } from '../store'
@@ -8,46 +9,61 @@ import { Card } from './Card'
 import { significator } from '../../data'
 import { ArtImage } from './ArtImage'
 
+export interface Highlights {
+  targets: TargetRef[] // Figures and Significators that can be chosen
+  lanes: LaneIndex[] // my empty lanes a card can go into
+  moves: LaneIndex[] // my empty lanes the selected Figure can step into
+  attacks: LaneIndex[] // enemy lanes the selected Figure can attack into (empty ones included)
+}
+
+const NONE: Highlights = { targets: [], lanes: [], moves: [], attacks: [] }
+
 // Which slots light up given the current selection?
-export function computeHighlights(state: GameState, sel: Selection): { targets: TargetRef[]; lanes: LaneIndex[]; moves: LaneIndex[] } {
+export function computeHighlights(state: GameState, sel: Selection): Highlights {
   const p = state.humanPlayer
   const me = state.players[p]
-  if (state.active !== p || state.pending) return { targets: [], lanes: [], moves: [] }
+  if (state.active !== p || state.pending) return NONE
   switch (sel.kind) {
     case 'hand': {
-      if (!sel.face) return { targets: [], lanes: [], moves: [] }
+      if (!sel.face) return NONE
       const inst = me.hand.find((h) => h.uid === sel.uid)
-      if (!inst) return { targets: [], lanes: [], moves: [] }
+      if (!inst) return NONE
       const def = card(inst.defId)
       const fd = sel.face === 'upright' ? def.upright : def.reversed
       if (def.type === 'figure') {
         // Figures with an Arrive target: choose the target first, then the lane.
         if (fd.target && fd.target !== 'none' && !sel.target) {
           const targets = targetsFor(state, p, fd.target, { pierceVeil: fd.pierceVeil })
-          if (targets.length) return { targets, lanes: [], moves: [] }
+          if (targets.length) return { ...NONE, targets }
         }
         const lanes = ([0, 1, 2] as LaneIndex[]).filter((l) => me.lanes[l] === null)
-        return { targets: [], lanes, moves: [] }
+        return { ...NONE, lanes }
       }
-      if (def.type === 'relic') return { targets: targetsFor(state, p, 'friendlyFigure'), lanes: [], moves: [] }
-      if (fd.target && fd.target !== 'none') return { targets: targetsFor(state, p, fd.target, { fromOmen: true, pierceVeil: fd.pierceVeil }), lanes: [], moves: [] }
-      return { targets: [], lanes: [], moves: [] }
+      if (def.type === 'relic') return { ...NONE, targets: targetsFor(state, p, 'friendlyFigure') }
+      if (fd.target && fd.target !== 'none') return { ...NONE, targets: targetsFor(state, p, fd.target, { fromOmen: true, pierceVeil: fd.pierceVeil }) }
+      return NONE
     }
     case 'figure': {
       const fig = me.lanes[sel.lane]
-      if (!fig) return { targets: [], lanes: [], moves: [] }
+      if (!fig) return NONE
       const targets: TargetRef[] = []
-      if (canAttack(state, fig)) for (const tl of attackLanes(state, fig)) targets.push(resolveDefender(state, fig, tl))
+      const attacks: LaneIndex[] = []
+      if (canAttack(state, fig)) {
+        for (const tl of attackLanes(state, fig)) {
+          targets.push(resolveDefender(state, fig, tl))
+          attacks.push(tl)
+        }
+      }
       const moves: LaneIndex[] = []
       if (canMove(state, fig)) for (const l of [sel.lane - 1, sel.lane + 1] as LaneIndex[]) if (l >= 0 && l <= 2 && me.lanes[l] === null) moves.push(l)
-      return { targets, lanes: [], moves }
+      return { targets, lanes: [], moves, attacks }
     }
     case 'ability': {
       const sig = significator(me.sigId)
-      return { targets: targetsFor(state, p, sig.abilityTarget, { fromAbility: true }), lanes: [], moves: [] }
+      return { ...NONE, targets: targetsFor(state, p, sig.abilityTarget, { fromAbility: true }) }
     }
     default:
-      return { targets: [], lanes: [], moves: [] }
+      return NONE
   }
 }
 
@@ -58,6 +74,32 @@ export function figureNeedsTarget(state: GameState, defId: string, face: 'uprigh
   const fd = face === 'upright' ? def.upright : def.reversed
   if (def.type !== 'figure' || !fd.target || fd.target === 'none') return false
   return targetsFor(state, state.humanPlayer, fd.target, { pierceVeil: fd.pierceVeil }).length > 0
+}
+
+// The attack a selected Figure would make into this slot, if any.
+function previewFor(state: GameState, sel: Selection, hl: Highlights, ref: TargetRef, lane: LaneIndex, isMine: boolean, hasFig: boolean): AttackPreview | null {
+  if (sel.kind !== 'figure') return null
+  const atk = state.players[state.humanPlayer].lanes[sel.lane]
+  if (!atk) return null
+  if (hasFig) {
+    if (!hl.targets.some((t) => sameRef(t, ref))) return null
+    const tl = attackLanes(state, atk).find((l) => sameRef(resolveDefender(state, atk, l), ref))
+    return tl === undefined ? null : previewAttack(state, atk, tl)
+  }
+  if (isMine || !hl.attacks.includes(lane)) return null
+  return previewAttack(state, atk, lane)
+}
+
+// Two short lines that say what the blow would do.
+export function previewLines(state: GameState, pv: AttackPreview, onEmptyLane: boolean): string[] {
+  if (pv.defender.kind === 'sig') {
+    const title = significator(state.players[pv.defender.player].sigId).title
+    return [`${title} takes ${pv.deals}`, pv.lethal ? 'Lethal' : ''].filter(Boolean)
+  }
+  const d = resolveRef(state, pv.defender)
+  const first = onEmptyLane && pv.intercepted && d ? `${figureName(d)} steps in` : `Deals ${pv.shielded ? 'nothing (Aegis)' : pv.deals}, takes ${pv.attackerShielded ? 'nothing (Aegis)' : pv.takes}`
+  const second = pv.defenderDies && pv.attackerDies ? 'Both fall' : pv.defenderDies ? (pv.defenderRekindles ? 'It rekindles' : 'It falls') : pv.attackerDies ? (pv.attackerRekindles ? 'Yours rekindles' : 'Yours falls') : onEmptyLane && pv.intercepted ? `Deals ${pv.deals}, takes ${pv.takes}` : ''
+  return [first, second].filter(Boolean)
 }
 
 function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: PlayerId; lane: LaneIndex; fig: FigureInstance | null; isMine: boolean }) {
@@ -73,8 +115,10 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
   const isTarget = hl.targets.some((t) => sameRef(t, ref))
   const isLane = isMine && !fig && hl.lanes.includes(lane)
   const isMove = isMine && !fig && hl.moves.includes(lane)
+  const isAttackLane = !isMine && !fig && sel.kind === 'figure' && hl.attacks.includes(lane)
   const myTurn = state.active === state.humanPlayer && !state.pending
   const p = state.humanPlayer
+  const preview = previewFor(state, sel, hl, ref, lane, isMine, !!fig)
 
   const slotFx = fx.filter((f) => f.ref && sameRef(f.ref, ref) && (f.kind === 'damage' || f.kind === 'heal'))
   const lungeFx = fx.find((f) => f.kind === 'lunge' && f.ref && sameRef(f.ref, ref))
@@ -103,6 +147,11 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
       }
       return
     }
+    if (isAttackLane && sel.kind === 'figure') {
+      // An empty enemy lane is an attack destination: the Significator, or a Guard that steps in.
+      dispatch({ type: 'attack', lane: sel.lane, targetLane: lane })
+      return
+    }
     if (isLane && sel.kind === 'hand' && sel.face) {
       dispatch({ type: 'play', uid: sel.uid, face: sel.face, lane, target: sel.target })
       return
@@ -125,9 +174,17 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
 
   const highlight = isTarget ? 'target' : isLane ? 'lane' : isMove ? 'move' : 'none'
   const ready = !!fig && isMine && myTurn && (canAttack(state, fig) || canMove(state, fig))
+  const lines = preview ? previewLines(state, preview, !fig) : []
 
   return (
-    <div className={`slot ${isMine ? 'slot-mine' : 'slot-theirs'} hl-${highlight} ${fig ? 'has-fig' : 'is-empty'}`} id={`slot-${owner}-${lane}`} onClick={fig ? undefined : onClick} role={fig ? undefined : 'button'} tabIndex={fig ? undefined : 0}>
+    <div
+      className={`slot ${isMine ? 'slot-mine' : 'slot-theirs'} hl-${highlight} ${isAttackLane ? 'hl-attack' : ''} ${fig ? 'has-fig' : 'is-empty'}`}
+      id={`slot-${owner}-${lane}`}
+      onClick={fig ? undefined : onClick}
+      role={fig ? undefined : 'button'}
+      tabIndex={fig ? undefined : 0}
+      aria-label={!fig && isAttackLane && lines.length ? `Attack: ${lines.join(', ')}` : undefined}
+    >
       <span className="slot-name">{LANE_NAMES[lane]}</span>
       {!fig && uiKit && <ArtImage id="ui/lane-mark" ext="png" className="slot-mark" />}
       <AnimatePresence mode="popLayout">
@@ -152,6 +209,7 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
               aegis={fig.aegis}
               asleep={fig.asleep}
               relics={fig.relics}
+              wounds={fig.damage}
               selected={sel.kind === 'figure' && isMine && sel.lane === lane}
               highlight={highlight}
               ready={ready}
@@ -163,6 +221,13 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
           </motion.div>
         )}
       </AnimatePresence>
+      {lines.length > 0 && (
+        <span className={`slot-preview ${fig ? 'on-fig' : 'on-lane'}`} aria-hidden>
+          {lines.map((l) => (
+            <span key={l}>{l}</span>
+          ))}
+        </span>
+      )}
       <div className="slot-fx">
         <AnimatePresence>
           {slotFx.map((f) => (

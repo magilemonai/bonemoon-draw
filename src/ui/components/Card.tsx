@@ -20,6 +20,7 @@ export interface CardProps {
   aegis?: boolean
   asleep?: boolean
   relics?: RelicInstance[]
+  wounds?: number // damage carried; shown on table cards so flips can be read at a glance
   cost?: number
   selected?: boolean
   highlight?: 'target' | 'lane' | 'move' | 'none'
@@ -150,6 +151,11 @@ function FaceView(props: CardProps & { which: Face }) {
             <span className={`card-stat card-hp ${props.maxHp !== undefined && stats.hp < props.maxHp ? 'is-hurt' : printed && stats.hp > printed.hp ? 'is-buffed' : ''}`}>
               {stats.hp}
             </span>
+            {active && size === 'lane' && (props.wounds ?? 0) > 0 && (
+              <span className="card-wounds" title={`${props.wounds} wound${props.wounds === 1 ? '' : 's'}: kept through a flip`}>
+                {props.wounds} wound{props.wounds === 1 ? '' : 's'}
+              </span>
+            )}
           </>
         )}
         {def.type !== 'figure' && <span className="card-type">{def.type === 'omen' ? 'Omen' : 'Relic'}</span>}

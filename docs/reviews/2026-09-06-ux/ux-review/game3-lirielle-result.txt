@@ -1,0 +1,99 @@
+Browser tab: 1, Title: "The Bonemoon Draw", URL: "https://magilemonai.github.io/bonemoon-draw/".
+0 AXWebArea The Bonemoon Draw, URL: magilemonai.github.io/bonemoon-draw/
+	1 container
+		2 button Luigi Bonemoon, 14 health
+			3 text IX
+			4 text 14
+		5 text Luigi Bonemoon The Hermit
+		6 text 1
+		7 container 7 cards in hand
+		8 text 7 in hand, 17 in deck
+		9 checkbox Log, Value: 0
+		10 button Leave
+		11 container
+			12 button Past, ID: slot-1-0
+				300 text Past
+			14 button Present, ID: slot-1-1
+				301 text Present
+			16 button Future, ID: slot-1-2
+				299 text Future
+		18 container
+			19 button Past, ID: slot-0-0
+				273 text Past
+			21 button Present, ID: slot-0-1
+				302 text Present
+			23 button Future, ID: slot-0-2
+				248 text Future
+		25 button Lirielle Starwhisper, 0 health
+			26 text XVII
+			27 text 0
+		28 text Lirielle Starwhisper The Star
+		29 text 1
+		30 button (disabled) Read the Stars 2, Help: Read 3: look at the top three cards of your deck, keep one, and put the rest on the bottom.
+			31 text Read the Stars 2
+		32 text 15  in deck
+		33 button (disabled) Waiting
+		34 text The reading is over Round  7 ,  full moon . Bone Moon in 3.
+		35 container Your hand
+			47 button 7 II The High Priestess: Nitriti Veiled 5 7 7 II Reversed Nitriti, Eternal Night Veiled 7 5
+				48 container
+					49 container
+						50 text 7
+						51 text II
+						52 text The High Priestess: Nitriti Veiled 5 7
+					53 container
+						54 text 7
+						55 text II
+						56 container Reversed
+						57 text Nitriti, Eternal Night Veiled 7 5
+			69 button 4 Knight of Gears Mordeaux, the Clockwork Man Has an effect 3 4 4 Knight of Gears Reversed Mordeaux, Fist of Memory Has an effect 4 3
+				70 container
+					71 container
+						72 text 4
+						73 text Knight of Gears
+						74 text Mordeaux, the Clockwork Man Has an effect 3 4
+					75 container
+						76 text 4
+						77 text Knight of Gears
+						78 container Reversed
+						79 text Mordeaux, Fist of Memory Has an effect 4 3
+			80 button 4 VI The Lovers: Althea & Caelum Omen 4 VI Reversed The Lovers, Through the Gate Omen
+				81 container
+					82 container
+						83 text 4
+						84 text VI
+						85 text The Lovers: Althea & Caelum Omen
+					86 container
+						87 text 4
+						88 text VI
+						89 container Reversed
+						90 text The Lovers, Through the Gate Omen
+			91 button 6 Queen of Gears Archivist Esmerelda Gotch 3 6 6 Queen of Gears Reversed Gotch, Temporal Filing Has an effect 6 3
+				92 container
+					93 container
+						94 text 6
+						95 text Queen of Gears
+						96 text Archivist Esmerelda Gotch 3 6
+					97 container
+						98 text 6
+						99 text Queen of Gears
+						100 container Reversed
+						101 text Gotch, Temporal Filing Has an effect 6 3
+			162 button 5 Eight of Gears The Libra Stellae Omen 5 Eight of Gears Reversed The Libra Stellae Is Now Closed Omen
+				163 container
+					164 container
+						165 text 5
+						166 text Eight of Gears
+						167 text The Libra Stellae Omen
+					168 container
+						169 text 5
+						170 text Eight of Gears
+						171 container Reversed
+						172 text The Libra Stellae Is Now Closed Omen
+		303 text The reading goes against you
+		304 text Luigi Bonemoon, The Hermit, holds the table after 7 rounds.
+		305 button Draw again
+		306 button Change Significator
+		307 button Back to the table
+
+The focused UI element is 0 AXWebArea The Bonemoon Draw, URL: magilemonai.github.io/bonemoon-draw/

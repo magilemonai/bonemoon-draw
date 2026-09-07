@@ -1,0 +1,154 @@
+Browser tab: 1, Title: "The Bonemoon Draw", URL: "https://magilemonai.github.io/bonemoon-draw/".
+0 AXWebArea The Bonemoon Draw, URL: magilemonai.github.io/bonemoon-draw/
+	1 container
+		2 button Lord-Provost Elaina Masque, 15 health
+			3 text V
+			4 text 15
+		5 text Lord-Provost Elaina Masque The Hierophant
+		6 text 3
+		7 container 5 cards in hand
+		8 text 5 in hand, 15 in deck
+		9 checkbox Log, Value: 0
+		10 button Leave
+		11 container
+			12 container slot-1-0
+				252 button 6 Queen of Gears Archivist Esmerelda Gotch 3 6 6 Queen of Gears Reversed Gotch, Temporal Filing 8 5 Inspect Archivist Esmerelda Gotch
+					253 container
+						254 container
+							255 text 6
+							256 text Queen of Gears
+							257 text Archivist Esmerelda Gotch 3 6
+						258 container
+							259 text 6
+							260 text Queen of Gears
+							261 container Reversed
+							262 text Gotch, Temporal Filing 8 5
+					263 button Inspect Archivist Esmerelda Gotch
+			14 container slot-1-1
+				373 button 6 Queen of Suns Vel, the Emberlight Veiled 3 3 6 Queen of Suns Reversed Vel, Last Spark 3 3 Inspect Vel, the Emberlight
+					374 container
+						375 container
+							376 text 6
+							377 text Queen of Suns
+							378 text Vel, the Emberlight Veiled 3 3
+						379 container
+							380 text 6
+							381 text Queen of Suns
+							382 container Reversed
+							383 text Vel, Last Spark 3 3
+					384 button Inspect Vel, the Emberlight
+			16 container slot-1-2
+				300 button 7 Ten of Suns Ilzaren, the Resplendent King 5 7 7 Ten of Suns Reversed Ilzaren, Author of the Creed 6 5 Inspect Ilzaren, the Resplendent King
+					301 container
+						302 container
+							303 text 7
+							304 text Ten of Suns
+							305 text Ilzaren, the Resplendent King 5 7
+						306 container
+							307 text 7
+							308 text Ten of Suns
+							309 container Reversed
+							310 text Ilzaren, Author of the Creed 6 5
+					311 button Inspect Ilzaren, the Resplendent King
+		18 container
+			19 button Past, ID: slot-0-0
+				385 text Past
+			21 button Present, ID: slot-0-1
+				386 text Present
+			23 button Future, ID: slot-0-2
+				372 text Future
+		25 button Imperator Amegmon Shazz, 0 health
+			26 text XV
+			27 text 0
+		28 text Imperator Amegmon Shazz The Devil
+		29 text 0
+		30 button (disabled) Wear a Face 2, Help: Flip any Figure.
+			31 text Wear a Face 2
+		32 text 12  in deck
+		33 button (disabled) Waiting
+		34 text The reading is over Round  9 ,  new moon . Bone Moon in 1.
+		35 container Your hand
+			36 button 4 Six of Antlers Lake Mirrara Omen 4 Six of Antlers Reversed Lake Mirrara, Filmed Over Omen
+				37 container
+					38 container
+						39 text 4
+						40 text Six of Antlers
+						41 text Lake Mirrara Omen
+					42 container
+						43 text 4
+						44 text Six of Antlers
+						45 container Reversed
+						46 text Lake Mirrara, Filmed Over Omen
+			58 button 2 Three of Gears Yvette Mirthwell Has an effect 2 2 2 Three of Gears Reversed Yvette, Too Close to the Leylines Has an effect 2 2
+				59 container
+					60 container
+						61 text 2
+						62 text Three of Gears
+						63 text Yvette Mirthwell Has an effect 2 2
+					64 container
+						65 text 2
+						66 text Three of Gears
+						67 container Reversed
+						68 text Yvette, Too Close to the Leylines Has an effect 2 2
+			69 button 4 Six of Antlers Lake Mirrara Omen 4 Six of Antlers Reversed Lake Mirrara, Filmed Over Omen
+				70 container
+					71 container
+						72 text 4
+						73 text Six of Antlers
+						74 text Lake Mirrara Omen
+					75 container
+						76 text 4
+						77 text Six of Antlers
+						78 container Reversed
+						79 text Lake Mirrara, Filmed Over Omen
+			210 button 5 XVIII The Moon: The Bone Moon Omen 5 XVIII Reversed The Bone Moon Rises Omen
+				211 container
+					212 container
+						213 text 5
+						214 text XVIII
+						215 text The Moon: The Bone Moon Omen
+					216 container
+						217 text 5
+						218 text XVIII
+						219 container Reversed
+						220 text The Bone Moon Rises Omen
+			266 button 4 X Wheel of Fortune: The Orrery Omen 4 X Reversed The Orrery, Rings Bent Omen
+				267 container
+					268 container
+						269 text 4
+						270 text X
+						271 text Wheel of Fortune: The Orrery Omen
+					272 container
+						273 text 4
+						274 text X
+						275 container Reversed
+						276 text The Orrery, Rings Bent Omen
+			313 button 3 Four of Gears Null-Zone Pylon Guard 1 4 3 Four of Gears Reversed Null-Zone Pylon Has an effect 4 1
+				314 container
+					315 container
+						316 text 3
+						317 text Four of Gears
+						318 text Null-Zone Pylon Guard 1 4
+					319 container
+						320 text 3
+						321 text Four of Gears
+						322 container Reversed
+						323 text Null-Zone Pylon Has an effect 4 1
+			337 button 6 XVI The Tower: The Fallen Isle Omen 6 XVI Reversed The Fallen Isle, Coming Down Omen
+				338 container
+					339 container
+						340 text 6
+						341 text XVI
+						342 text The Tower: The Fallen Isle Omen
+					343 container
+						344 text 6
+						345 text XVI
+						346 container Reversed
+						347 text The Fallen Isle, Coming Down Omen
+		387 text The reading goes against you
+		388 text Lord-Provost Elaina Masque, The Hierophant, holds the table after 9 rounds.
+		389 button Draw again
+		390 button Change Significator
+		391 button Back to the table
+
+The focused UI element is 0 AXWebArea The Bonemoon Draw, URL: magilemonai.github.io/bonemoon-draw/

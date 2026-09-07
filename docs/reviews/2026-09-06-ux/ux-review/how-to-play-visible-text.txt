@@ -1,0 +1,74 @@
+Browser tab: 1, Title: "The Bonemoon Draw", URL: "https://magilemonai.github.io/bonemoon-draw/".
+0 AXWebArea The Bonemoon Draw, URL: magilemonai.github.io/bonemoon-draw/
+	1 container
+		2 button Back
+		3 heading How to play, Value: 2
+			4 text How to play
+		5 heading The table, Value: 3
+			6 text The table
+		7 text You and one opponent each pick a Significator, the card that stands for you. Each Significator has 20 Health and a 30-card deck built from two suits plus a few Major Arcana. Bring the other Significator to 0 and the reading is yours. Between you sit three lanes: Past, Present, and Future. Each lane holds one Figure per side. Figures attack the Figure across from them. If that lane is empty, they hit the Significator instead.
+		8 heading Two faces, Value: 3
+			9 text Two faces
+		10 text Every card in the deck has an Upright face and a Reversed face, the way a tarot card does. When you play a card you choose which face is up. A Figure's Reversed face swaps its Attack and Health and usually reads differently. Some cards can only enter Reversed. Flipping is a weapon. Many cards flip a Figure to its other face. A wounded Figure keeps its wounds when it turns, so a 1/8 wall with one point of damage becomes an 8/1 with one point of damage, which is to say a dead one. Figures marked Fixed can't be flipped.
+		11 heading A turn, Value: 3
+			12 text A turn
+		13 text At the start of your turn you gain a Spark, up to ten, and refill. You draw a card, two on a Full Moon. Then you may play cards, attack with Figures, move a Figure to an adjacent empty lane, and use your Significator's ability once. End the turn by touching the moon. A Figure gets one action a turn: attack, or move to an adjacent empty lane. It can't attack on the turn it arrives unless it is Windborne. Combat is mutual: both Figures deal their Attack to each other at once.
+		14 heading The moon, Value: 3
+			15 text The moon
+		16 text The moon turns every round: new, waxing, full, waning. On the tenth round the Bone Moon rises, and from then on every Significator loses Health at the start of each turn, more each round. Nobody outlasts the Bone Moon. Some cards bring it early.
+		17 heading Card types, Value: 3
+			18 text Card types
+		19 text Figures  stand in lanes and fight.  Omens  are cast once and resolve immediately.  Relics  attach to one of your Figures and stay with it until it leaves the table.
+		20 heading Keywords, Value: 3
+			21 text Keywords
+		22 definition list
+			23 container Arrive
+				24 text Arrive
+			25 text Happens when the Figure is played (not when it flips).
+			26 container Last Rite
+				27 text Last Rite
+			28 text Happens when the Figure dies.
+			29 container Guard
+				30 text Guard
+			31 text Attacks aimed at your Significator from an adjacent empty lane hit this Figure instead.
+			32 container Windborne
+				33 text Windborne
+			34 text Can attack the turn it arrives.
+			35 container Gale
+				36 text Gale
+			37 text Can attack into any enemy lane.
+			38 container Veiled
+				39 text Veiled
+			40 text Can't be targeted by the enemy's Omens or abilities until it attacks.
+			41 container Fixed
+				42 text Fixed
+			43 text Can't be flipped.
+			44 container Aegis
+				45 text Aegis
+			46 text Absorbs the next damage it would take. Granted Aegis is one shield; Aegis a Figure carries (a Relic, its face, Rorik's aura) recharges at the start of your turn.
+			47 container Rekindle
+				48 text Rekindle
+			49 text The first time this would die, it returns Reversed with 1 Health.
+			50 container Feast
+				51 text Feast
+			52 text Damage this deals also heals your Significator.
+			53 container Whisper
+				54 text Whisper
+			55 text Takes no damage back from Figures it attacks.
+			56 container Dormant
+				57 text Dormant
+			58 text Can't attack.
+			59 container Hush
+				60 text Hush
+			61 text The Figure loses its text and keywords. Relics keep working.
+			62 container Read N
+				63 text Read N
+			64 text Look at the top N cards of your deck. Keep one; the rest go to the bottom.
+		65 heading Fine print, Value: 3
+			66 text Fine print
+		67 text A Figure's text is its current face's text; turn it over and the old face is gone, end-of-turn clauses included. Wounds are checked the moment a face turns, and a Figure that dies from its own flip fires no flip triggers. Effects resolve one at a time and deaths are checked after each. A chosen target is that exact Figure; if it leaves, the effect fizzles. Mordeaux's copy costs nothing, is not a cast, and fizzles with its target. Spark gained this turn can go past your maximum. A Significator at 0 loses at once. The full list is in the rulebook.
+		68 heading The deck, Value: 3
+			69 text The deck
+		70 text Thirty cards. Two copies at most of any Minor Arcana, one copy of any Major Arcana, and never the Major that is your own Significator. Your hand holds eight; extra draws burn. When your deck runs out, every draw costs you Health instead.
+
+The focused UI element is 0 AXWebArea The Bonemoon Draw, URL: magilemonai.github.io/bonemoon-draw/

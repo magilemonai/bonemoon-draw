@@ -330,3 +330,150 @@ export function playableFaces(state: GameState, p: PlayerId, defId: string): Fac
     (def.type === 'figure' && hasAura(state, other(p), 'enemyEntersReversed'))
   return forced ? ['reversed'] : ['upright', 'reversed']
 }
+
+// ---------------------------------------------------------------------------
+// Previews for the interface. These mirror the engine's arithmetic so what a player
+// reads before committing is what resolves. If dealDamage, doAttack, or the draw step
+// in engine.ts changes, change these with it.
+// ---------------------------------------------------------------------------
+
+const MAX_HAND = 8 // mirrors engine.ts
+
+export interface Stats {
+  atk: number
+  hp: number
+}
+
+// A Figure from hand as it would stand on this player's table right now: hero passive,
+// Relics it would not yet have, and auras included. Uses the first empty lane, so an
+// adjacency aura may differ if the player picks another lane.
+export function previewPlay(state: GameState, p: PlayerId, defId: string, face: Face): (Stats & { lane: LaneIndex }) | null {
+  const def = card(defId)
+  if (def.type !== 'figure') return null
+  const lane = emptyLanes(state, p)[0] ?? 1
+  const s = structuredClone(state)
+  const fig: FigureInstance = {
+    uid: -1,
+    defId,
+    owner: p,
+    lane,
+    face,
+    damage: 0,
+    permAtk: 0,
+    permHp: 0,
+    tempAtk: 0,
+    tempHp: 0,
+    grantedKw: [],
+    removedKw: [],
+    hushed: false,
+    aegis: false,
+    rekindled: false,
+    asleep: false,
+    summonedTurn: state.turn,
+    attacksThisTurn: 0,
+    movedThisTurn: false,
+    onceUsed: [],
+    relics: [],
+  }
+  s.players[p].lanes[lane] = fig
+  return { atk: attackOf(s, fig), hp: healthOf(s, fig), lane }
+}
+
+export interface AttackPreview {
+  defender: TargetRef
+  intercepted: boolean // a Guard stepped in front of the Significator
+  deals: number // what the defender takes after Aegis and damage reduction
+  shielded: boolean // the defender's Aegis takes the blow
+  takes: number // what the attacker takes back
+  attackerShielded: boolean
+  defenderDies: boolean
+  defenderRekindles: boolean
+  attackerDies: boolean
+  attackerRekindles: boolean
+  lethal: boolean // the Significator would fall
+}
+
+// The plain exchange of an attack into `lane`, before any onAttack or Last Rite text.
+export function previewAttack(state: GameState, attacker: FigureInstance, lane: LaneIndex): AttackPreview {
+  const defender = resolveDefender(state, attacker, lane)
+  const power = attackOf(state, attacker)
+  const base: AttackPreview = {
+    defender,
+    intercepted: false,
+    deals: power,
+    shielded: false,
+    takes: 0,
+    attackerShielded: false,
+    defenderDies: false,
+    defenderRekindles: false,
+    attackerDies: false,
+    attackerRekindles: false,
+    lethal: false,
+  }
+  if (defender.kind === 'sig') return { ...base, lethal: power >= state.players[defender.player].health }
+  const d = resolveRef(state, defender)
+  if (!d) return base
+  const shielded = d.aegis && power > 0
+  const deals = shielded ? 0 : Math.max(0, power - damageReduction(state, d))
+  const back = hasKw(state, attacker, 'whisper') ? 0 : attackOf(state, d)
+  const attackerShielded = attacker.aegis && back > 0
+  const takes = attackerShielded ? 0 : Math.max(0, back - damageReduction(state, attacker))
+  const defenderDies = deals >= healthOf(state, d)
+  const attackerDies = takes >= healthOf(state, attacker)
+  return {
+    ...base,
+    intercepted: defender.lane !== lane,
+    deals,
+    shielded,
+    takes,
+    attackerShielded,
+    defenderDies,
+    defenderRekindles: defenderDies && hasKw(state, d, 'rekindle') && !d.rekindled,
+    attackerDies,
+    attackerRekindles: attackerDies && hasKw(state, attacker, 'rekindle') && !attacker.rekindled,
+  }
+}
+
+// Why a Figure cannot attack right now, or null if it can.
+export function whyNoAttack(state: GameState, fig: FigureInstance): string | null {
+  if (canAttack(state, fig)) return null
+  if (fig.attacksThisTurn > 0) return 'it has attacked already'
+  if (fig.asleep) return 'it is asleep'
+  const kws = keywords(state, fig)
+  if (kws.includes('dormant')) return 'it is Dormant'
+  if (fig.summonedTurn === state.turn && !kws.includes('windborne')) return 'it arrived this turn'
+  if (fig.movedThisTurn) return 'it moved this turn'
+  if (attackOf(state, fig) <= 0) return 'it has no Attack'
+  return 'it cannot attack now'
+}
+
+// Why a Figure cannot move right now, or null if it can.
+export function whyNoMove(state: GameState, fig: FigureInstance): string | null {
+  if (canMove(state, fig)) return null
+  if (fig.movedThisTurn) return 'it has moved already'
+  if (fig.attacksThisTurn > 0) return 'it attacked this turn'
+  return 'there is no empty lane beside it'
+}
+
+export interface DrawForecast {
+  round: number
+  phase: MoonPhase
+  draws: number
+  burns: number // cards that would burn at the current hand size
+  short: number // draws the deck cannot supply
+}
+
+// The next time this player starts a turn: the round, the moon, how many cards come,
+// and how many would burn if the hand stays this size.
+export function drawForecast(state: GameState, p: PlayerId): DrawForecast {
+  const me = state.players[p]
+  const round = state.active === p || state.turn % 2 === 0 ? state.round + 1 : state.round
+  const phase = moonPhase(round)
+  let draws = 1
+  if (phase === 'full') {
+    draws += 1
+    if (me.sigId === 'sig-lirielle') draws += 1
+  }
+  const fromDeck = Math.min(draws, me.deck.length)
+  return { round, phase, draws, burns: Math.max(0, me.hand.length + fromDeck - MAX_HAND), short: draws - fromDeck }
+}

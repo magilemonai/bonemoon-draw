@@ -1,11 +1,11 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { card, significator } from '../../data'
-import { attackOf, cardCost, healthOf, keywords } from '../../engine/queries'
-import type { GameState } from '../../engine/types'
+import { attackOf, cardCost, faceDef, healthOf, keywords, previewPlay } from '../../engine/queries'
+import type { Face, GameState } from '../../engine/types'
 import { useStore } from '../store'
-import { Card } from './Card'
+import { Card, RulesText } from './Card'
 import { ArtImage } from './ArtImage'
-import { CardInspect } from './Hero'
+import { CardInspect, type LiveInfo, type Stats } from './Hero'
 
 export function Banners() {
   const fx = useStore((s) => s.fx)
@@ -37,22 +37,33 @@ export function Banners() {
   )
 }
 
+// A Read: the player keeps one of the cards shown. Tapping a card inspects it; only the
+// Keep button commits, so nobody keeps a card by accident while reading it.
 export function ReadChooser({ state }: { state: GameState }) {
   const dispatch = useStore((s) => s.dispatch)
+  const inspect = useStore((s) => s.inspect)
   const pend = state.pending
   if (!pend || pend.player !== state.humanPlayer) return null
   return (
     <motion.div className="modal-scrim" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <motion.div className="modal read-modal" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-        <div className="modal-title">Read the cards</div>
-        <p className="modal-copy">Keep one. The rest go to the bottom of your deck.</p>
+        <div className="modal-title">Your choice: keep one</div>
+        <p className="modal-copy">The rest go to the bottom of your deck. Tap a card to read it in full.</p>
         <div className="read-options">
           {pend.options.map((o) => {
             const def = card(o.defId)
             return (
               <div key={o.uid} className="read-option">
-                <Card def={def} face="upright" size="hand" cost={cardCost(state, pend.player, def.id)} onClick={() => dispatch({ type: 'choose', uid: o.uid })} />
-                <button type="button" className="btn" onClick={() => dispatch({ type: 'choose', uid: o.uid })}>
+                <Card def={def} face="upright" size="hand" cost={cardCost(state, pend.player, def.id)} onClick={() => inspect(def.id, 'upright', o.uid)} />
+                <div className="read-text">
+                  <span className="rt-up">
+                    <b>Upright</b> <RulesText text={def.upright.text || 'No text.'} />
+                  </span>
+                  <span className="rt-rev">
+                    <b>Reversed</b> <RulesText text={def.reversed.text || 'No text.'} />
+                  </span>
+                </div>
+                <button type="button" className="btn btn-primary" onClick={() => dispatch({ type: 'choose', uid: o.uid })}>
                   Keep
                 </button>
               </div>
@@ -64,28 +75,88 @@ export function ReadChooser({ state }: { state: GameState }) {
   )
 }
 
+interface CompareCol {
+  label: string
+  face: Face
+  stats: Stats | null // null when the Figure is Fixed
+  sub: string
+  dead?: boolean
+}
+
+function Compare({ a, b }: { a: CompareCol; b: CompareCol }) {
+  const col = (c: CompareCol) => (
+    <div className={`compare-col for-${c.face} ${c.dead ? 'is-dead' : ''}`}>
+      <span className="compare-label">{c.label}</span>
+      {c.stats ? (
+        <span className="compare-stats" aria-label={`${c.stats.atk} Attack, ${c.stats.hp} Health`}>
+          <b className="c-atk">{c.stats.atk}</b>
+          <b className="c-hp">{c.stats.hp}</b>
+        </span>
+      ) : (
+        <span className="compare-fixed">Fixed</span>
+      )}
+      {c.sub && <span className="compare-sub">{c.sub}</span>}
+    </div>
+  )
+  return (
+    <div className="inspect-compare">
+      {col(a)}
+      <span className="compare-sep" aria-hidden />
+      {col(b)}
+    </div>
+  )
+}
+
 export function InspectModal({ state }: { state: GameState | null }) {
   const sel = useStore((s) => s.selection)
   const close = useStore((s) => s.closeInspect)
   if (sel.kind !== 'inspect') return null
   const def = card(sel.defId)
   const cost = state ? cardCost(state, state.humanPlayer, def.id) : def.cost
-  // If this is a Figure on the table, say what it is now and what a flip would do to it.
-  let onTable: string | null = null
-  if (state && sel.uid !== undefined) {
+
+  // A specific copy: on the table, say what it is now and what a flip would do; in the
+  // hand, say what each face would be on the player's table.
+  let live: LiveInfo | undefined
+  let compare: { a: CompareCol; b: CompareCol } | null = null
+  if (state && sel.uid !== undefined && def.type === 'figure') {
     for (const pl of state.players) {
       for (const f of pl.lanes) {
         if (!f || f.uid !== sel.uid) continue
-        const nowA = attackOf(state, f)
-        const nowH = healthOf(state, f)
+        const otherFace: Face = f.face === 'upright' ? 'reversed' : 'upright'
+        const now = { atk: attackOf(state, f), hp: healthOf(state, f) }
+        const flipped = { ...f, face: otherFace }
+        const then = { atk: attackOf(state, flipped), hp: healthOf(state, flipped) }
         const fixed = keywords(state, f).includes('fixed')
-        const flipped = { ...f, face: f.face === 'upright' ? 'reversed' : 'upright' } as typeof f
-        const thenA = attackOf(state, flipped)
-        const thenH = healthOf(state, flipped)
-        onTable = `On the table now: ${nowA}/${nowH}${f.damage ? ` with ${f.damage} wound${f.damage > 1 ? 's' : ''}` : ''}. ` + (fixed ? 'Fixed: it cannot be turned.' : thenH <= 0 ? `Turned over it would be ${thenA}/${thenH}, which is to say dead.` : `Turned over it would be ${thenA}/${thenH}.`)
+        const notes: LiveInfo['notes'] = {}
+        if (faceDef(def, otherFace).effects?.some((e) => e.trigger === 'arrive')) notes[otherFace] = 'Arrive does not fire on a flip.'
+        if (f.hushed) notes[f.face] = 'Hushed: this text is switched off.'
+        else if (faceDef(def, f.face).effects?.some((e) => e.trigger === 'arrive')) notes[f.face] = 'Its Arrive has already happened.'
+        live = { stats: { [f.face]: now, [otherFace]: then }, notes }
+        const wounds = f.damage
+        compare = {
+          a: { label: 'On the table', face: f.face, stats: now, sub: wounds ? `${wounds} wound${wounds === 1 ? '' : 's'}, kept through a flip` : 'unwounded' },
+          b: fixed
+            ? { label: 'Turned over', face: otherFace, stats: null, sub: 'it cannot be turned' }
+            : { label: 'Turned over', face: otherFace, stats: then, sub: then.hp <= 0 ? 'it dies' : 'it lives', dead: then.hp <= 0 },
+        }
+      }
+    }
+    if (!compare) {
+      const inHand = state.players[state.humanPlayer].hand.some((h) => h.uid === sel.uid)
+      if (inHand) {
+        const u = previewPlay(state, state.humanPlayer, def.id, 'upright')
+        const r = previewPlay(state, state.humanPlayer, def.id, 'reversed')
+        if (u && r) {
+          live = { stats: { upright: u, reversed: r } }
+          compare = {
+            a: { label: 'Upright, on your table', face: 'upright', stats: u, sub: '' },
+            b: { label: 'Reversed, on your table', face: 'reversed', stats: r, sub: '' },
+          }
+        }
       }
     }
   }
+
   return (
     <motion.div className="modal-scrim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onClick={close}>
       <motion.div className="modal inspect-modal" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onClick={(e) => e.stopPropagation()}>
@@ -95,8 +166,8 @@ export function InspectModal({ state }: { state: GameState | null }) {
             Close
           </button>
         </div>
-        {onTable && <p className="modal-copy inspect-now">{onTable}</p>}
-        <CardInspect key={`${def.id}-${sel.face}`} def={def} initialFace={sel.face} cost={cost} />
+        {compare && <Compare a={compare.a} b={compare.b} />}
+        <CardInspect key={`${def.id}-${sel.face}`} def={def} initialFace={sel.face} cost={cost} live={live} />
       </motion.div>
     </motion.div>
   )
@@ -117,35 +188,65 @@ export function RevealedHand({ state }: { state: GameState }) {
   )
 }
 
+function resultLine(state: GameState): string {
+  const who = state.winner === 'draw' ? null : significator(state.players[state.winner!].sigId)
+  return who ? `${who.name}, ${who.title}, holds the table after ${state.round} rounds.` : `Both Significators fell in round ${state.round}.`
+}
+
 export function GameOver({ state }: { state: GameState }) {
   const goto = useStore((s) => s.goto)
   const startGame = useStore((s) => s.startGame)
   const humanSig = useStore((s) => s.humanSig)
   const aiSig = useStore((s) => s.aiSig)
   const queue = useStore((s) => s.queue)
-  if (state.phase !== 'over' || queue.length > 0) return null
+  const reviewing = useStore((s) => s.reviewing)
+  const setReviewing = useStore((s) => s.setReviewing)
+  if (state.phase !== 'over' || queue.length > 0 || reviewing) return null
   const win = state.winner === state.humanPlayer
-  const who = state.winner === 'draw' ? null : significator(state.players[state.winner!].sigId)
   return (
     <motion.div className="modal-scrim" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}>
       <motion.div className="modal gameover" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.3 }}>
         <div className="modal-title">{state.winner === 'draw' ? 'Both readings end together' : win ? 'The reading is yours' : 'The reading goes against you'}</div>
-        <p className="modal-copy">
-          {who ? `${who.name}, ${who.title}, holds the table after ${state.round} rounds.` : `Both Significators fell in round ${state.round}.`}
-        </p>
+        <p className="modal-copy">{resultLine(state)}</p>
         <div className="modal-actions">
           <button type="button" className="btn btn-primary" onClick={() => startGame(humanSig, aiSig)}>
             Draw again
+          </button>
+          <button type="button" className="btn" onClick={() => setReviewing(true)}>
+            Review the final turn
           </button>
           <button type="button" className="btn" onClick={() => goto('choose')}>
             Change Significator
           </button>
           <button type="button" className="btn-quiet" onClick={() => goto('title')}>
-            Back to the table
+            Title screen
           </button>
         </div>
       </motion.div>
     </motion.div>
+  )
+}
+
+// After "Review the final turn": the table stays as it ended, the log is open, and the
+// ways out sit in a strip instead of a modal.
+export function OverStrip({ state }: { state: GameState }) {
+  const goto = useStore((s) => s.goto)
+  const startGame = useStore((s) => s.startGame)
+  const humanSig = useStore((s) => s.humanSig)
+  const aiSig = useStore((s) => s.aiSig)
+  return (
+    <div className="over-strip" role="status">
+      <span className="over-strip-text">{resultLine(state)} Tap any card to inspect it.</span>
+      <button type="button" className="btn btn-primary" onClick={() => startGame(humanSig, aiSig)}>
+        Draw again
+      </button>
+      <button type="button" className="btn-quiet" onClick={() => goto('choose')}>
+        Change Significator
+      </button>
+      <button type="button" className="btn-quiet" onClick={() => goto('title')}>
+        Title screen
+      </button>
+    </div>
   )
 }
 

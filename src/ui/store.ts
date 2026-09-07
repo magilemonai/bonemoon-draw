@@ -45,7 +45,8 @@ interface UIState {
   aiSig: string
   humanSig: string
   reduceMotion: boolean
-  speed: number // 1 = normal
+  speed: number // 1 = normal, 2.2 = quick
+  reviewing: boolean // the reading is over and the player is looking at the final table
   uiKit: boolean // public/art/ui/* is present (probed once)
   tableArt: boolean // public/art/table.jpg is present
 
@@ -57,6 +58,16 @@ interface UIState {
   closeInspect: () => void
   tick: () => void
   setSpeed: (n: number) => void
+  setReviewing: (v: boolean) => void
+}
+
+function storedSpeed(): number {
+  try {
+    const v = typeof localStorage !== 'undefined' ? localStorage.getItem('bonemoon.speed') : null
+    return v ? Number(v) || 1 : 1
+  } catch {
+    return 1
+  }
 }
 
 let fxId = 1
@@ -224,12 +235,21 @@ export const useStore = create<UIState>((set, get) => ({
   aiSig: 'sig-shazz',
   humanSig: 'sig-daxon',
   reduceMotion: typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches,
-  speed: 1,
+  speed: storedSpeed(),
+  reviewing: false,
   uiKit: false,
   tableArt: false,
 
-  goto: (screen) => set({ screen, selection: { kind: 'none' } }),
-  setSpeed: (speed) => set({ speed }),
+  goto: (screen) => set({ screen, selection: { kind: 'none' }, reviewing: false }),
+  setSpeed: (speed) => {
+    try {
+      localStorage.setItem('bonemoon.speed', String(speed))
+    } catch {
+      // storage is optional
+    }
+    set({ speed })
+  },
+  setReviewing: (reviewing) => set({ reviewing, selection: { kind: 'none' } }),
 
   startGame: (humanSig, aiSig) => {
     const seed = (Date.now() ^ Math.floor(Math.random() * 1e9)) | 0
@@ -243,6 +263,7 @@ export const useStore = create<UIState>((set, get) => ({
       fx: [],
       log: [],
       selection: { kind: 'none' },
+      reviewing: false,
       humanSig,
       aiSig,
       screen: 'battle',
