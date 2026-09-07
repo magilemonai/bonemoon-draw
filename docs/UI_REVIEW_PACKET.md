@@ -1,8 +1,8 @@
-# The Bonemoon Draw: interface review packet
+# Moonwyld: interface review packet
 
 For a designer looking at the game's interface and feel. The game is live and public, so look at the real thing first, on a phone and on a laptop:
 
-https://magilemonai.github.io/bonemoon-draw/
+https://magilemonai.github.io/moonwyld/
 
 Play at least two full readings against the AI before writing anything. Screenshots of the current build are in `docs/screenshots/`. The mechanics have their own packet (`docs/DESIGN_REVIEW_PACKET.md`); this one is about how the game looks, moves, and feels in the hand.
 

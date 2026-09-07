@@ -174,3 +174,78 @@ describe('attack outcome', () => {
     }
   })
 })
+
+// Three more cases from the verification round, as expectations for the corrected display.
+import { outcomeLines } from './preview'
+
+describe('attack outcome, verified cases', () => {
+  const armored = (s: GameState): GameState => {
+    const f = s.players[0].lanes[1]!
+    f.relics.push({ uid: s.nextUid++, defId: 'suns-8', face: 'upright' }) // Aurium Plate: +2/+3 and Aegis
+    f.aegis = true
+    return s
+  }
+
+  it('a Figure that moves after attacking is reported as moving, with its Health', () => {
+    let s = fresh(['sig-luigi', 'sig-daxon']) // Daxon, so no passive changes the Guard Post's Health
+    s = place(s, 0, 1, 'tides-page', 'upright') // Kaipo 2/2: after it attacks, it moves to an adjacent empty lane
+    s = place(s, 1, 1, 'suns-2', 'upright') // Guard Post 1/3
+    const o = attackOutcome(s, 1, 1)
+    expect(o.exact).toBe(true)
+    expect([o.deals, o.takes]).toEqual([2, 1])
+    expect(o.attackerFate).toBe('moves')
+    expect(o.attackerLane).toBe(0)
+    expect(o.attackerHp).toBe(1)
+    expect(o.attackerDies).toBe(false)
+    expect(o.defenderFate).toBe('stays')
+    expect(o.defenderHp).toBe(1)
+    const lines = outcomeLines(s, o, false)
+    expect(lines[0]).toBe('Deals 2, takes 1')
+    expect(lines[1]).toBe('Yours moves to Past at 1')
+    const after = run(s, { type: 'attack', lane: 1, targetLane: 1 })
+    expect(figAt(after, 0, 0)?.defId).toBe('tides-page')
+    expect(healthOf(after, figAt(after, 0, 0)!)).toBe(1)
+  })
+
+  it('a blocked hit does not hide the damage a Last Rite deals afterwards', () => {
+    let s = fresh(['sig-luigi', 'sig-masque'])
+    s = place(s, 0, 1, 'tides-knight', 'upright') // Merrick 4/2, and with the Plate 6/5 behind Aegis
+    s = armored(s)
+    s = place(s, 1, 1, 'tides-3', 'reversed') // the Fisherman 2/2, Last Rite: 2 damage to the Figure opposite
+    const o = attackOutcome(s, 1, 1)
+    expect(o.exact).toBe(true)
+    expect(o.deals).toBe(6)
+    expect(o.takes).toBe(2)
+    expect(o.attackerShielded).toBe(true)
+    expect(o.defenderFate).toBe('falls')
+    expect(o.defenderRite).toBe(true)
+    expect(o.attackerFate).toBe('stays')
+    expect(o.attackerHp).toBe(3)
+    const lines = outcomeLines(s, o, false)
+    expect(lines[0]).toBe('Deals 6, takes 2 (a hit blocked)')
+    expect(lines[1]).toBe('It falls')
+    const after = run(s, { type: 'attack', lane: 1, targetLane: 1 })
+    expect(healthOf(after, figAt(after, 0, 1)!)).toBe(3)
+  })
+
+  it('a Rekindle is reported whether or not anyone dies', () => {
+    let s = fresh(['sig-luigi', 'sig-masque'])
+    s = place(s, 0, 1, 'tides-knight', 'upright')
+    s = armored(s)
+    s = place(s, 1, 1, 'suns-page', 'upright') // Elira 2/2, Rekindle
+    const o = attackOutcome(s, 1, 1)
+    expect(o.exact).toBe(true)
+    expect(o.defenderFate).toBe('rekindles')
+    expect(o.defenderHp).toBe(1)
+    expect(o.defenderDies).toBe(false)
+    expect(o.takes).toBe(0)
+    expect(o.attackerShielded).toBe(true)
+    const lines = outcomeLines(s, o, false)
+    expect(lines[0]).toBe('Deals 6, takes nothing (blocked)')
+    expect(lines[1]).toBe('It rekindles at 1')
+    const after = run(s, { type: 'attack', lane: 1, targetLane: 1 })
+    const elira = figAt(after, 1, 1)!
+    expect(elira.rekindled).toBe(true)
+    expect(healthOf(after, elira)).toBe(1)
+  })
+})

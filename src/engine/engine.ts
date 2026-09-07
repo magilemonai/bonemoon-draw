@@ -1,4 +1,4 @@
-// The Bonemoon Draw: rules engine.
+// Moonwyld: rules engine.
 // Pure functions over GameState. runAction() returns a list of steps, each one an
 // event plus a snapshot of the state right after it, so the UI can animate in order.
 

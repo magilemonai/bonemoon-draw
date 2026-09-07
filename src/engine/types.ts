@@ -1,4 +1,4 @@
-// Core types for The Bonemoon Draw.
+// Core types for Moonwyld.
 // Every card has two faces. Upright is the Spark reading; Reversed is the Dusk reading.
 
 export type Suit = 'suns' | 'antlers' | 'tides' | 'gears' | 'major'

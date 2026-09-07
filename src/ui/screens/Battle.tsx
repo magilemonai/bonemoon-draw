@@ -48,7 +48,9 @@ export function Battle() {
   const speed = useStore((s) => s.speed)
   const setSpeed = useStore((s) => s.setSpeed)
   const reviewing = useStore((s) => s.reviewing)
+  const concede = useStore((s) => s.concede)
   const [showLog, setShowLog] = useState(false)
+  const [conceding, setConceding] = useState(false)
   // Reviewing the final turn opens the log so the last events are in view.
   useEffect(() => {
     if (reviewing) setShowLog(true)
@@ -76,7 +78,12 @@ export function Battle() {
           <button type="button" className="btn-quiet" onClick={() => setShowLog((v) => !v)} aria-pressed={showLog}>
             Log
           </button>
-          <button type="button" className="btn-quiet" onClick={() => goto('title')}>
+          {display.phase !== 'over' && (
+            <button type="button" className="btn-quiet" onClick={() => setConceding(true)} aria-pressed={conceding}>
+              Concede
+            </button>
+          )}
+          <button type="button" className="btn-quiet" onClick={() => goto('title')} title="Leaves the table; the reading is kept to continue later">
             Leave
           </button>
         </div>
@@ -89,6 +96,24 @@ export function Battle() {
             {prompt}
             <button type="button" className="btn-quiet" onClick={() => select({ kind: 'none' })}>
               Cancel
+            </button>
+          </div>
+        )}
+        {conceding && display.phase !== 'over' && (
+          <div className="targeting-hint concede-strip" role="alertdialog">
+            Concede the reading? It goes on the record as a loss. Renown never falls.
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => {
+                setConceding(false)
+                concede()
+              }}
+            >
+              Concede
+            </button>
+            <button type="button" className="btn-quiet" onClick={() => setConceding(false)}>
+              Keep playing
             </button>
           </div>
         )}

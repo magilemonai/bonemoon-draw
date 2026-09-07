@@ -1,4 +1,4 @@
-# The Bonemoon Draw: interface art kit
+# Moonwyld: interface art kit
 
 A second, smaller art job. The card paintings are done; this is the ornament the interface itself wears: card frames, lane markers, a banner ribbon, and suit emblems. Every piece is a transparent PNG that the game lays over its own drawn interface, so transparency is the whole point. The game already knows where each file goes and ignores any file that is missing, so the kit can arrive in pieces.
 

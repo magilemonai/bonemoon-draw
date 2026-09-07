@@ -50,7 +50,7 @@ const rows = [...plays.entries()].filter(([, n]) => n >= 8).map(([id, n]) => ({ 
 const L: string[] = []
 const push = (...s: string[]) => L.push(...s)
 
-push('# The Bonemoon Draw: design review packet')
+push('# Moonwyld: design review packet')
 push('')
 push('A read-only snapshot of the game for an outside designer. It has the full rules, every card, the six playable Significators and their decks, and numbers from an AI-versus-AI simulation. The questions at the end are what we most want an opinion on. Nothing here needs to be edited; a written critique is the deliverable.')
 push('')

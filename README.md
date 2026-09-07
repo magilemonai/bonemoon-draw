@@ -1,8 +1,8 @@
-# The Bonemoon Draw
+# Moonwyld
 
 A tarot-flavored card battler set in Valisar. Two players, three lanes, seventy-eight cards, and every card has two faces.
 
-Play it: https://magilemonai.github.io/bonemoon-draw/
+Play it: https://magilemonai.github.io/moonwyld/
 
 ## Run it
 

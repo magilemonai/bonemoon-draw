@@ -8,8 +8,10 @@ export function Choose() {
   const goto = useStore((s) => s.goto)
   const startGame = useStore((s) => s.startGame)
   const profile = useStore((s) => s.profile)
-  const [mine, setMine] = useState<string>('sig-daxon')
-  const [theirs, setTheirs] = useState<string>('random')
+  const preset = useStore((s) => s.choosePreset)
+  const saved = useStore((s) => s.savedMatch)
+  const [mine, setMine] = useState<string>(preset?.mine ?? 'sig-daxon')
+  const [theirs, setTheirs] = useState<string>(preset?.theirs ?? 'random')
   const my = SIGNIFICATORS.find((s) => s.id === mine)!
 
   const begin = () => {
@@ -72,6 +74,7 @@ export function Choose() {
         </label>
         <button type="button" className="btn btn-primary" onClick={begin}>
           Sit down as {my.name}
+          {saved ? <small className="btn-note">This replaces the unfinished reading</small> : null}
         </button>
       </div>
     </div>

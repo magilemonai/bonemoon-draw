@@ -29,3 +29,16 @@ Five tests cover the crediting rules, the rank ladder, the next goal, and the fo
 ## Two judgments
 
 The proposal's rule that Renown must not be awarded for attendance, and that remaining Health and speed are not skill, is followed: the only source of Renown is a first win in a matchup. And its warning that a first clear can be luck is taken at face value on the screen: the strip says it records what you have done at the table, and makes no claim of skill.
+
+## Verification round (same day)
+
+The review (`docs/reviews/2026-09-06-metagame/BONEMOON_METAGAME_REVIEW.md`) reran the tests, wrote three diagnostics against the record, and confirmed the name: the game is Moonwyld. It found six things. All six are addressed.
+
+1. **A saved reading carried its result under the wrong rules.** True: the saved match had no version, and the result was stamped with the version of the day. Now the rules version is stamped when the reading starts, travels with the save, and is what the record uses at the end. A saved reading from other rules does not continue; the title says so, keeps the record, and offers to set it aside. Tests cover the settle path with an older version and the resume check.
+2. **Saving was silent.** The standing now says "Saved in this browser only", and if a write fails it says the session is not being kept, on the title and on the result line. "Your record" opens the last twenty readings and a copy-and-paste export and import. Import checks the text is a Moonwyld record, migrates the first shape, and says what it replaces before it does.
+3. **Lifetime counts were computed from the last 200.** True: a Shazz win vanished from Shazz's record after 200 Daxon games. Totals per Significator are now kept for life, outside the list, and credited match ids are kept separately so an evicted match cannot be credited again. An existing record migrates with totals built from what its list still holds, which the record screen says.
+4. **The next goal was a paragraph.** It is a button that opens Choose with both Significators selected. When a reading is saved, Continue comes first and the new-reading button is secondary and says it replaces the unfinished one.
+5. **Recent form pooled everything.** It now compares one Significator under one rules version, the last ten against the ten before, only once there are twenty such readings. Otherwise it shows completed readings and wins as counts, with abandoned readings disclosed beside them.
+6. **Abandonment was invisible.** Leaving the table still pauses. A Concede action, with one confirmation, records a loss without touching Renown and says so on the result screen. Replacing a saved reading counts it as abandoned, disclosed in the counts.
+
+Its judgment on what comes next matches the board: a tested Expert opponent, then one authored, replayable Reading with a disclosed objective and a personal best. Neither is started.

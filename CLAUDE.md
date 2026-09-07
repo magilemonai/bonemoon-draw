@@ -1,4 +1,4 @@
-# The Bonemoon Draw: standing contract
+# Moonwyld: standing contract
 
 A Valisar tarot battler. Vite + React + TypeScript, pure TS engine, Motion for animation, Zustand for the store, Vitest for the engine.
 

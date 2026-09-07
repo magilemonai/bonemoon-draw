@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { card } from '../../data'
-import { attackLanes, attackOf, canAttack, canMove, healthOf, keywords, maxHealthOf, other, resolveDefender, resolveRef, targetsFor, sameRef, cardCost, playableFaces, figureName } from '../../engine/queries'
-import { attackOutcome, type AttackOutcome } from '../../engine/preview'
+import { attackLanes, attackOf, canAttack, canMove, healthOf, keywords, maxHealthOf, other, resolveDefender, targetsFor, sameRef, cardCost, playableFaces } from '../../engine/queries'
+import { attackOutcome, outcomeLines, type AttackOutcome } from '../../engine/preview'
 import type { FigureInstance, GameState, LaneIndex, PlayerId, TargetRef } from '../../engine/types'
 import { LANE_NAMES } from '../../engine/types'
 import { useStore, type Selection } from '../store'
@@ -90,22 +90,6 @@ function previewFor(state: GameState, sel: Selection, hl: Highlights, ref: Targe
   return attackOutcome(state, sel.lane, lane)
 }
 
-// Two or three short lines that say what the blow would do. When the outcome is exact the
-// numbers already count the text; when it is not, the lines say the text decides.
-export function previewLines(state: GameState, pv: AttackOutcome, onEmptyLane: boolean): string[] {
-  const d = pv.defender.kind === 'figure' ? resolveRef(state, pv.defender) : null
-  const note = !pv.exact ? 'Its text decides the rest' : pv.attackText ? 'Counting its attack text' : pv.defenderRite && d ? `Then ${figureName(d)}'s Last Rite` : pv.attackerRite ? 'Then its Last Rite' : ''
-  if (pv.defender.kind === 'sig') {
-    const title = significator(state.players[pv.defender.player].sigId).title
-    return [`${title} takes ${pv.deals}${pv.exact ? '' : ' before its text'}`, pv.exact && pv.lethal ? 'Lethal' : '', pv.exact && pv.lethal ? '' : note].filter(Boolean)
-  }
-  const exchange = `Deals ${pv.shielded ? 'nothing (Aegis)' : pv.deals}, takes ${pv.attackerShielded ? 'nothing (Aegis)' : pv.takes}${pv.exact ? '' : ' before its text'}`
-  const first = onEmptyLane && pv.intercepted && d ? `${figureName(d)} steps in` : exchange
-  const outcome = !pv.exact ? '' : pv.defenderDies && pv.attackerDies ? 'Both fall' : pv.defenderDies ? (pv.defenderRekindles ? 'It rekindles' : 'It falls') : pv.attackerDies ? (pv.attackerRekindles ? 'Yours rekindles' : 'Yours falls') : ''
-  const second = outcome || (onEmptyLane && pv.intercepted ? exchange : '')
-  return [first, second, note].filter(Boolean)
-}
-
 function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: PlayerId; lane: LaneIndex; fig: FigureInstance | null; isMine: boolean }) {
   const sel = useStore((s) => s.selection)
   const fx = useStore((s) => s.fx)
@@ -178,7 +162,7 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
 
   const highlight = isTarget ? 'target' : isLane ? 'lane' : isMove ? 'move' : 'none'
   const ready = !!fig && isMine && myTurn && (canAttack(state, fig) || canMove(state, fig))
-  const lines = preview ? previewLines(state, preview, !fig) : []
+  const lines = preview ? outcomeLines(state, preview, !fig) : []
 
   return (
     <div

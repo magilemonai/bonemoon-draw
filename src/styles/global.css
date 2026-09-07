@@ -1,4 +1,4 @@
-/* The Bonemoon Draw. Mobile-first. Base styles are the phone; breakpoints add the desk. */
+/* Moonwyld. Mobile-first. Base styles are the phone; breakpoints add the desk. */
 
 :root {
   --night: #17143a;
@@ -2758,4 +2758,128 @@ h3 {
   margin: 0;
   flex-basis: 100%;
   text-align: center;
+}
+
+
+/* ---- Standing, continued: goal as an action, the record, and concession -------- */
+
+.standing-goal {
+  width: 100%;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.3;
+}
+.standing-stale {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #ffd9cf;
+}
+.standing-store {
+  margin: 0;
+  font-size: 0.78rem;
+  color: rgba(239, 228, 204, 0.6);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 2px 6px;
+}
+.btn-note {
+  display: block;
+  font-weight: 400;
+  font-size: 0.78rem;
+  opacity: 0.85;
+}
+.modal.record-modal {
+  max-width: 640px;
+}
+.record-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 12px;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+.record-head {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--gold-2);
+  margin-bottom: 2px;
+}
+.record-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'when who result'
+    'when meta result';
+  column-gap: 10px;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: rgba(12, 10, 34, 0.5);
+  font-size: 0.85rem;
+}
+.record-when {
+  grid-area: when;
+  color: rgba(239, 228, 204, 0.6);
+  font-size: 0.78rem;
+  min-width: 3.5em;
+}
+.record-who {
+  grid-area: who;
+  color: var(--ivory);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.record-meta {
+  grid-area: meta;
+  color: rgba(239, 228, 204, 0.6);
+  font-size: 0.75rem;
+}
+.record-result {
+  grid-area: result;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: rgba(239, 228, 204, 0.8);
+}
+.record-row.is-win .record-result {
+  color: var(--gold-3);
+}
+.record-io {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.record-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: rgba(239, 228, 204, 0.8);
+}
+.record-field textarea {
+  font: inherit;
+  font-size: 0.72rem;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: var(--night-deep);
+  color: var(--ivory);
+  border: 1px solid rgba(232, 199, 108, 0.35);
+  resize: vertical;
+  word-break: break-all;
+}
+.record-note {
+  font-size: 0.82rem;
+  color: #ffd9cf;
+}
+.record-error {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #ffb9a8;
+}
+.concede-strip {
+  border-color: rgba(255, 185, 168, 0.5);
+  color: #ffd9cf;
 }

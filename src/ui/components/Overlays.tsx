@@ -198,19 +198,23 @@ function AwardLine({ state }: { state: GameState }) {
   const award = useStore((s) => s.award)
   const humanSig = useStore((s) => s.humanSig)
   const aiSig = useStore((s) => s.aiSig)
+  const storageOk = useStore((s) => s.storageOk)
   if (!award || !award.counted) return null
   const win = state.winner === state.humanPlayer
   const opp = significator(aiSig).name
   const hero = significator(humanSig).name
+  const kept = storageOk ? '' : ' Saving failed in this browser, so this will not be kept.'
+  if (award.conceded) return <p className="award">Conceded. A loss on the record. Renown never falls.{kept}</p>
   if (award.firstClear) {
     return (
       <p className="award">
-        <b>+{award.gained} Renown.</b> First win over {opp} as {hero}.
+        <b>+{award.gained} Renown.</b> First win over {opp} as {hero}.{kept}
       </p>
     )
   }
-  if (win) return <p className="award">Already on the record: {hero} over {opp}. Renown unchanged.</p>
-  return <p className="award">Recorded. Renown never falls.</p>
+  if (win && !award.eligible) return <p className="award">Won under earlier rules: on the record, no Renown.{kept}</p>
+  if (win) return <p className="award">Already on the record: {hero} over {opp}. Renown unchanged.{kept}</p>
+  return <p className="award">Recorded. Renown never falls.{kept}</p>
 }
 
 export function GameOver({ state }: { state: GameState }) {

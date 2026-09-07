@@ -12,7 +12,7 @@ import type { CardDef, Suit } from '../src/engine/types'
 // repeated in compressed form inside every prompt so each image stands alone.
 // ---------------------------------------------------------------------------
 
-const HOUSE_STYLE_LONG = `You are painting the seventy-eight cards of a tarot deck from the world of Valisar, for a card game called The Bonemoon Draw. Read this whole brief before the first image, and hold to it for every image after.
+const HOUSE_STYLE_LONG = `You are painting the seventy-eight cards of a tarot deck from the world of Valisar, for a card game called Moonwyld. Read this whole brief before the first image, and hold to it for every image after.
 
 **The world.** Valisar is high fantasy in the spirit of the Zelda games and Studio Ghibli films (Spirited Away, Princess Mononoke, Howl's Moving Castle), with a thread of FromSoftware melancholy underneath. Magic comes from a lost cosmic source called the Eldspyre. A false sun-king has ruled for a thousand years under seven names. Spirits are old and real, and they mostly ignore people. Ancient machines called Eldertech (brass gears, glowing blue crystal, runes) sit in ruins. The moon is too big, and one day it will be made of bone.
 
@@ -194,7 +194,7 @@ for (const c of ALL_CARDS.filter((c) => c.token)) {
 const L: string[] = []
 const push = (...s: string[]) => L.push(...s)
 
-push('# The Bonemoon Draw: art production brief')
+push('# Moonwyld: art production brief')
 push('')
 push(`A complete job for an image-generating agent: ${items.length} images for a tarot card game set in the fantasy world of Valisar. Read the Brief, then produce every item in the Manifest in order, checking each one against the quality list before saving it. Nobody will be answering questions between images; every decision needed is written here.`)
 push('')

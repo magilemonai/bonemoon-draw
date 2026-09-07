@@ -1,4 +1,4 @@
-# The Bonemoon Draw: the rulebook
+# Moonwyld: the rulebook
 
 A two-player tarot battler set in Valisar. One deck of seventy-eight cards, four suits and twenty-two trumps, every card with two faces. This is the long version of the rules. The short version lives in the game under How to play.
 
