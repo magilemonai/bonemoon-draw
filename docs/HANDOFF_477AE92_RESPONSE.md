@@ -8,7 +8,7 @@ The handoff (`docs/reviews/2026-09-07-477ae92/MOONWYLD_477AE92_HANDOFF.md`, with
 
 **2. Type floor.** Compact card names are 13px on phones and 14px on wider screens; keywords 10 and 11; stat numerals 14. On a phone the play sheet stacks the two cards, each at 76 percent of the width, with rules at 16px once the card's zoom is counted, and both play actions pinned at the foot of the sheet while it scrolls.
 
-**3. Draw again.** A finished reading remembers the exact list it was played with. Draw again plays that list, and says which: "Draw again, Lantern Engine II, revision 19". It is the same list, not the deck's latest revision. A list that the rules no longer allow disables the button with the reason; nothing is ever swapped for a starter. The deck in play is also named under the Significator's title during the match.
+**3. Draw again.** A finished reading remembers the exact list it was played with. Draw again plays that list, and says which: "Draw again, Lantern Engine II, revision 19". It is the same list even when the deck has been edited since. A list that the rules no longer allow disables the button with the reason; nothing is ever swapped for a starter. The deck in play is also named under the Significator's title during the match.
 
 **4. Lights that follow the table.** Hints can now be computed from the state. Lesson 1's attack step lights the lane the Guard Post actually went to; its draw step lights the lanes that are actually empty; lesson 3's "make room" steps light the cards in hand that can actually be paid for. Lesson 2 no longer lights the Veiled Wisplight during the ability step; the text says the ability will not offer it, and lights the Oondray instead.
 
@@ -22,7 +22,7 @@ The handoff (`docs/reviews/2026-09-07-477ae92/MOONWYLD_477AE92_HANDOFF.md`, with
 
 ## The other P2s
 
-**7. Motion policy.** Reveals now scale with Quick like everything else in the queue. The app is wrapped in the motion library's `MotionConfig reducedMotion="user"`, so the OS preference governs every transform animation, not only the CSS ones. A cast is opaque, and a hand card cannot grow under it while it is up.
+**7. Motion policy.** Reveals now scale with Quick like everything else in the queue. The app is wrapped in the motion library's `MotionConfig reducedMotion="user"`, so the OS preference governs the transform animations as well as the CSS ones. A cast is opaque, and a hand card cannot grow under it while it is up.
 
 **9. Visual language, first pass.** One primary action per screen in gold; the title's other four destinations are quiet text links, which also stops the wrap the review saw. Secondary buttons are rectangles with a brass edge; filter chips are rectangles with a brass underline when chosen; the result screen has a moon over a brass rule, dusk for a loss. The builder's rows and the record screen are the next pass, on the board.
 
