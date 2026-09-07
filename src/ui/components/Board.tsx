@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { card } from '../../data'
-import { attackLanes, attackOf, canAttack, canMove, faceDef, healthOf, keywords, maxHealthOf, other, resolveDefender, resolveRef, targetsFor, sameRef, cardCost, playableFaces, previewAttack, figureName } from '../../engine/queries'
-import type { AttackPreview } from '../../engine/queries'
+import { attackLanes, attackOf, canAttack, canMove, healthOf, keywords, maxHealthOf, other, resolveDefender, resolveRef, targetsFor, sameRef, cardCost, playableFaces, figureName } from '../../engine/queries'
+import { attackOutcome, type AttackOutcome } from '../../engine/preview'
 import type { FigureInstance, GameState, LaneIndex, PlayerId, TargetRef } from '../../engine/types'
 import { LANE_NAMES } from '../../engine/types'
 import { useStore, type Selection } from '../store'
@@ -76,44 +76,34 @@ export function figureNeedsTarget(state: GameState, defId: string, face: 'uprigh
   return targetsFor(state, state.humanPlayer, fd.target, { pierceVeil: fd.pierceVeil }).length > 0
 }
 
-// The attack a selected Figure would make into this slot, if any.
-function previewFor(state: GameState, sel: Selection, hl: Highlights, ref: TargetRef, lane: LaneIndex, isMine: boolean, hasFig: boolean): AttackPreview | null {
+// The attack a selected Figure would make into this slot, if any: the engine's own answer.
+function previewFor(state: GameState, sel: Selection, hl: Highlights, ref: TargetRef, lane: LaneIndex, isMine: boolean, hasFig: boolean): AttackOutcome | null {
   if (sel.kind !== 'figure') return null
   const atk = state.players[state.humanPlayer].lanes[sel.lane]
   if (!atk) return null
   if (hasFig) {
     if (!hl.targets.some((t) => sameRef(t, ref))) return null
     const tl = attackLanes(state, atk).find((l) => sameRef(resolveDefender(state, atk, l), ref))
-    return tl === undefined ? null : previewAttack(state, atk, tl)
+    return tl === undefined ? null : attackOutcome(state, sel.lane, tl)
   }
   if (isMine || !hl.attacks.includes(lane)) return null
-  return previewAttack(state, atk, lane)
+  return attackOutcome(state, sel.lane, lane)
 }
 
-// Text that would fire around the blow and could change it. The preview shows the plain
-// exchange; this names what follows so the line is honest rather than confidently wrong.
-function pendingText(state: GameState, attacker: FigureInstance, pv: AttackPreview): string {
-  const triggers = (f: FigureInstance) => (f.hushed ? [] : (faceDef(card(f.defId), f.face).effects ?? []).map((e) => e.trigger))
-  const mine = triggers(attacker)
-  if (mine.includes('onAttack')) return 'Its attack text fires first'
+// Two or three short lines that say what the blow would do. When the outcome is exact the
+// numbers already count the text; when it is not, the lines say the text decides.
+export function previewLines(state: GameState, pv: AttackOutcome, onEmptyLane: boolean): string[] {
   const d = pv.defender.kind === 'figure' ? resolveRef(state, pv.defender) : null
-  if (d && pv.defenderDies && triggers(d).includes('lastRite')) return `Then ${figureName(d)}'s Last Rite`
-  if (pv.attackerDies && mine.includes('lastRite')) return 'Then its Last Rite'
-  if (mine.some((t) => t === 'afterAttack' || t === 'onDamageDealt' || t === 'onKill')) return 'Then its text fires'
-  return ''
-}
-
-// Two or three short lines that say what the blow would do.
-export function previewLines(state: GameState, pv: AttackPreview, onEmptyLane: boolean, attacker?: FigureInstance): string[] {
-  const after = attacker ? pendingText(state, attacker, pv) : ''
+  const note = !pv.exact ? 'Its text decides the rest' : pv.attackText ? 'Counting its attack text' : pv.defenderRite && d ? `Then ${figureName(d)}'s Last Rite` : pv.attackerRite ? 'Then its Last Rite' : ''
   if (pv.defender.kind === 'sig') {
     const title = significator(state.players[pv.defender.player].sigId).title
-    return [`${title} takes ${pv.deals}`, pv.lethal ? 'Lethal' : '', pv.lethal ? '' : after].filter(Boolean)
+    return [`${title} takes ${pv.deals}${pv.exact ? '' : ' before its text'}`, pv.exact && pv.lethal ? 'Lethal' : '', pv.exact && pv.lethal ? '' : note].filter(Boolean)
   }
-  const d = resolveRef(state, pv.defender)
-  const first = onEmptyLane && pv.intercepted && d ? `${figureName(d)} steps in` : `Deals ${pv.shielded ? 'nothing (Aegis)' : pv.deals}, takes ${pv.attackerShielded ? 'nothing (Aegis)' : pv.takes}`
-  const second = pv.defenderDies && pv.attackerDies ? 'Both fall' : pv.defenderDies ? (pv.defenderRekindles ? 'It rekindles' : 'It falls') : pv.attackerDies ? (pv.attackerRekindles ? 'Yours rekindles' : 'Yours falls') : onEmptyLane && pv.intercepted ? `Deals ${pv.deals}, takes ${pv.takes}` : ''
-  return [first, second, after].filter(Boolean)
+  const exchange = `Deals ${pv.shielded ? 'nothing (Aegis)' : pv.deals}, takes ${pv.attackerShielded ? 'nothing (Aegis)' : pv.takes}${pv.exact ? '' : ' before its text'}`
+  const first = onEmptyLane && pv.intercepted && d ? `${figureName(d)} steps in` : exchange
+  const outcome = !pv.exact ? '' : pv.defenderDies && pv.attackerDies ? 'Both fall' : pv.defenderDies ? (pv.defenderRekindles ? 'It rekindles' : 'It falls') : pv.attackerDies ? (pv.attackerRekindles ? 'Yours rekindles' : 'Yours falls') : ''
+  const second = outcome || (onEmptyLane && pv.intercepted ? exchange : '')
+  return [first, second, note].filter(Boolean)
 }
 
 function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: PlayerId; lane: LaneIndex; fig: FigureInstance | null; isMine: boolean }) {
@@ -188,8 +178,7 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
 
   const highlight = isTarget ? 'target' : isLane ? 'lane' : isMove ? 'move' : 'none'
   const ready = !!fig && isMine && myTurn && (canAttack(state, fig) || canMove(state, fig))
-  const attacker = sel.kind === 'figure' ? state.players[p].lanes[sel.lane] ?? undefined : undefined
-  const lines = preview ? previewLines(state, preview, !fig, attacker) : []
+  const lines = preview ? previewLines(state, preview, !fig) : []
 
   return (
     <div

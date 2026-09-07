@@ -109,3 +109,68 @@ describe('previews agree with resolution', () => {
     expect(burnLogs.length).toBe(0)
   })
 })
+
+// The engine-run outcome: what the interface shows once text and Relics are counted.
+import { attackOutcome } from './preview'
+import { card } from '../data'
+
+describe('attack outcome', () => {
+  it('counts a Relic that turns the defender before the blow (Tidecaller on Merrick)', () => {
+    let s = fresh(['sig-luigi', 'sig-masque'])
+    s = place(s, 0, 1, 'tides-knight', 'upright') // Merrick 4/2
+    s.players[0].lanes[1]!.relics.push({ uid: s.nextUid++, defId: 'tides-8', face: 'upright' }) // +2/+2, attack turns the defender Upright
+    s = place(s, 1, 1, 'gears-7', 'reversed') // Sentry Reversed 5/2; Upright it is 2/5
+    const o = attackOutcome(s, 1, 1)
+    expect(o.exact).toBe(true)
+    expect(o.attackText).toBe(true)
+    expect(o.deals).toBe(6)
+    expect(o.takes).toBe(2)
+    expect(o.defenderDies).toBe(true)
+    expect(o.attackerDies).toBe(false)
+    expect(o.attackerHp).toBe(2)
+    const after = run(s, { type: 'attack', lane: 1, targetLane: 1 })
+    expect(figAt(after, 1, 1)).toBeNull()
+    expect(healthOf(after, figAt(after, 0, 1)!)).toBe(2)
+  })
+
+  it('matches the plain exchange when no text is involved', () => {
+    let s = fresh(['sig-daxon', 'sig-rorik'])
+    s = place(s, 0, 1, 'tides-knight', 'upright') // Merrick 4/2
+    s = place(s, 1, 1, 'suns-2', 'upright') // Guard Post 1/3
+    const o = attackOutcome(s, 1, 1)
+    const pv = previewAttack(s, figAt(s, 0, 1)!, 1)
+    expect(o.exact).toBe(true)
+    expect([o.deals, o.takes, o.defenderDies, o.attackerDies]).toEqual([pv.deals, pv.takes, pv.defenderDies, pv.attackerDies])
+    expect(o.attackerHp).toBe(1)
+  })
+
+  it('names a Last Rite and calls lethal on the Significator', () => {
+    let s = fresh(['sig-daxon', 'sig-rorik'])
+    s = place(s, 0, 2, 'tides-knight', 'upright') // Merrick 4/2
+    s = place(s, 1, 2, 'antlers-ace', 'upright') // Wisplight 1/1, Last Rite: draw
+    expect(attackOutcome(s, 2, 2).defenderRite).toBe(true)
+    s.players[1].lanes[2] = null
+    s.players[1].health = 4
+    const o = attackOutcome(s, 2, 2)
+    expect(o.defender.kind).toBe('sig')
+    expect(o.lethal).toBe(true)
+  })
+
+  it('stops short of a claim when the attack text rolls dice', () => {
+    const def = card('tides-8')
+    const saved = structuredClone(def.relic!.upright.effects)
+    def.relic!.upright.effects = [{ trigger: 'onAttack', ops: [{ op: 'flip', to: 'randomEnemyFigure' }] }]
+    try {
+      let s = fresh(['sig-luigi', 'sig-masque'])
+      s = place(s, 0, 1, 'tides-knight', 'upright')
+      s.players[0].lanes[1]!.relics.push({ uid: s.nextUid++, defId: 'tides-8', face: 'upright' })
+      s = place(s, 1, 1, 'gears-7', 'reversed')
+      s = place(s, 1, 0, 'suns-2', 'upright')
+      const o = attackOutcome(s, 1, 1)
+      expect(o.exact).toBe(false)
+      expect(o.attackText).toBe(true)
+    } finally {
+      def.relic!.upright.effects = saved
+    }
+  })
+})

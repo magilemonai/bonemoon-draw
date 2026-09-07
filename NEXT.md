@@ -2,6 +2,8 @@
 
 - [ ] [cody] Play a few readings and see whether Renown, the next goal, and Continue the reading feel right
     Renown is 10 per first Standard win in a matchup, kept in this browser. Rank milestones are provisional. docs/METAGAME_RESPONSE.md has the values and what is parked.
+- [ ] [crew] Display names for the 65 long card names, and a wider-card variant tested with six and eight cards on phone and desktop
+    Full names stay in inspection. Judge board space and hand scrolling together.
 - [ ] [crew] Export and import of the local profile, since browser storage is device-bound and can be cleared
 - [ ] [crew] A first curated Reading: fixed Significator, deck, opponents, and seeds, with a personal best kept per version
     Only after a validated pool exists; label a returning Reading as such.

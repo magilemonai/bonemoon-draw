@@ -47,3 +47,11 @@ All three are on the board as proposals, in the report's order and with its smal
 ## Tests
 
 Three planner tests added (57 in all): the unseen-order regression, the winning Read, and the end-turn win. Browser checks of the compact cards at 390 by 756 and 1512 by 756.
+
+## Verification round (same day)
+
+The verification (`docs/reviews/2026-09-06-polish/BONEMOON_POLISH_VERIFICATION.md`) reran the tests and the three planner fixtures and confirmed all three repairs. It found one remaining preview defect and reproduced it: Upright Merrick carrying Tidecaller: Low Tide attacks a Reversed Sleepless Sentry. The preview said "Deals 6, takes 5. Both fall." The Relic turns the Sentry Upright before the blow, so the Sentry dies and Merrick lives with 2. The trigger check only read the attacker's face and ignored Relics.
+
+Changed: the preview now runs the real engine on a copy of the table (`src/engine/preview.ts`). If nothing random happens along the way and no Read opens, the numbers are exact, the outcome is the engine's own, and the lines say what was counted ("Counting its attack text", "Then Voren's Last Rite"). If a random choice or a Read is involved, the lines show the plain exchange and say "before its text" and "Its text decides the rest", with no death or lethal claim. The Significator's preview follows the same rule. Four tests cover the Tidecaller case against the real resolution, the plain case, a Last Rite and lethal, and a dice-rolling attack text that must not claim an outcome (66 tests in all).
+
+Two notes on the rest of it. The portrait numeral removal it describes reached this tree while the record commit was being made and went out inside that commit; the diff is reviewed now and is sound (numerals stay in the text beside titles and in card captions). And the hand width and display-name study is on the board: the short-name helper only strips a prefix before a colon, and sixty-five card names are longer than a compact card can show.

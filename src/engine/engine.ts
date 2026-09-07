@@ -877,7 +877,7 @@ function fireTrigger(c: Ctx, trigger: Trigger, p: PlayerId) {
   c.owner = saveOwner
 }
 
-function effectsOf(fig: FigureInstance, trigger: Trigger): EffectDef[] {
+export function effectsOf(fig: FigureInstance, trigger: Trigger): EffectDef[] {
   const def = card(fig.defId)
   const out: EffectDef[] = []
   if (!fig.hushed) {

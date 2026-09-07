@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { card, significator } from '../../data'
-import { attackLanes, availableSpark, other, previewAttack, resolveDefender, sameRef, targetsFor } from '../../engine/queries'
+import { attackLanes, availableSpark, other, resolveDefender, sameRef, targetsFor } from '../../engine/queries'
+import { attackOutcome } from '../../engine/preview'
 import type { GameState, PlayerId } from '../../engine/types'
 import { useStore } from '../store'
 import { computeHighlights } from './Board'
@@ -56,8 +57,8 @@ export function SigPanel({ state, player }: { state: GameState; player: PlayerId
     const atk = state.players[state.humanPlayer].lanes[sel.lane]
     const tl = atk ? attackLanes(state, atk).find((l) => sameRef(resolveDefender(state, atk, l), ref)) : undefined
     if (atk && tl !== undefined) {
-      const pv = previewAttack(state, atk, tl)
-      previewText = pv.lethal ? `Takes ${pv.deals}. Lethal.` : `Takes ${pv.deals}.`
+      const o = attackOutcome(state, sel.lane, tl)
+      previewText = !o.exact ? `Takes ${o.deals} before its text.` : o.lethal ? `Takes ${o.deals}. Lethal.` : `Takes ${o.deals}.`
     }
   }
 
