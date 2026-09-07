@@ -7,6 +7,7 @@ import { useStore } from '../store'
 import { computeHighlights } from './Board'
 import { ArtImage } from './ArtImage'
 import { shortSigName } from '../names'
+import { useLessonHints } from '../lessonHints'
 
 const HAND_MAX = 8
 
@@ -29,6 +30,9 @@ export function SigPanel({ state, player }: { state: GameState; player: PlayerId
   const fx = useStore((s) => s.fx)
   const playing = useStore((s) => s.playing)
   const ref = { kind: 'sig' as const, player }
+  const hints = useLessonHints()
+  const litSig = hints.some((h) => h.kind === 'sig' && h.player === player)
+  const litAbility = isMine && hints.some((h) => h.kind === 'ability')
   const hl = computeHighlights(state, sel)
   const isTarget = hl.targets.some((t) => sameRef(t, ref))
   const myTurn = state.active === state.humanPlayer && !state.pending && state.phase !== 'over'
@@ -74,7 +78,7 @@ export function SigPanel({ state, player }: { state: GameState; player: PlayerId
       <div className="sig-top">
         <motion.button
           type="button"
-          className="sig-portrait"
+          className={`sig-portrait ${litSig ? 'is-lesson' : ''}`}
           onClick={onSigClick}
           animate={lunge ? { scale: [1, 0.96, 1] } : { scale: 1 }}
           aria-label={`${sig.name}, ${health} Health${previewText ? `. ${previewText}` : ''}`}
@@ -139,7 +143,7 @@ export function SigPanel({ state, player }: { state: GameState; player: PlayerId
       {isMine && (
         <button
           type="button"
-          className={`ability ${sel.kind === 'ability' ? 'is-armed' : ''}`}
+          className={`ability ${sel.kind === 'ability' ? 'is-armed' : ''} ${litAbility ? 'is-lesson' : ''}`}
           disabled={!canAbility || playing}
           title={sig.abilityText}
           onClick={() => {

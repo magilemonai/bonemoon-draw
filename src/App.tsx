@@ -6,6 +6,7 @@ import { Codex } from './ui/screens/Codex'
 import { Rules } from './ui/screens/Rules'
 import { Decks } from './ui/screens/Decks'
 import { Builder } from './ui/screens/Builder'
+import { Lessons } from './ui/screens/Lessons'
 
 export default function App() {
   const screen = useStore((s) => s.screen)
@@ -38,6 +39,7 @@ export default function App() {
       {screen === 'rules' && <Rules />}
       {screen === 'decks' && <Decks />}
       {screen === 'build' && <Builder />}
+      {screen === 'lessons' && <Lessons />}
     </div>
   )
 }

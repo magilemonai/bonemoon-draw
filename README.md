@@ -23,6 +23,7 @@ pnpm build:single # one-file build to dist-single/ (for sharing)
 
 - `src/data/` the cards. One file per suit, one for the Majors, tokens, Significators and their decks. Rules text and effects live side by side on each card.
 - `src/engine/` the rules. `engine.ts` runs actions and emits one state snapshot per event. `queries.ts` is read-only helpers (stats, costs, targeting). `types.ts` is the effect language.
+- `src/tutorial/` the three lessons: fixed positions, one instruction per step, a closing exercise, and a test that each intended line still works.
 - `src/ai/` the opponent. A two-step planner over the real engine with a heuristic that knows lethal, threats, and deferred text.
 - `src/engine/rules.ts` switches for controlled experiments; the game itself never flips them.
 - `src/ui/` React + Motion. `store.ts` holds truth, display, and the animation queue.

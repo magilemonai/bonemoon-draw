@@ -1,5 +1,7 @@
 # NEXT
 
+- [ ] [cody] Play the three lessons once on your phone and say where the words ran ahead of the table
+    Learn to play is on the title and on the character screen. Each lesson ends with an exercise you solve without the lights.
 - [ ] [cody] Build a deck in Your decks, play it, and say what the builder still makes hard
     Cards, filters on both faces, the curve by printed cost, and Play from the builder or Choose. docs/READABILITY_RESPONSE.md has the round.
 - [ ] [crew] Play focused custom decks against the AI (low curve, control, one-combo) and record how it copes before calling anything Expert
@@ -12,7 +14,7 @@
     Only after a validated pool exists; label a returning Reading as such.
 - [ ] [crew] Expert opponent: search a bounded set of the enemy's replies after the AI's turn, same rules and information
     Standard is the current two-step planner over dealt worlds. Expert should look at what the human can do back before committing. Budget it so the table never stalls.
-- [ ] [crew] Three lessons on fixed positions: first reading, turn the fight, read the moon
+- [x] [crew] Three lessons on fixed positions: first reading, turn the fight, read the moon
     A lesson loader over real engine states, one prompt per decision, retry, and a test that each lesson's intended line still works after balance changes.
 - [ ] [crew] A three-encounter story chapter with checkpoints, wrapped around ordinary matches
     Opponent order after matchup testing. Disclose any bespoke rule before the battle. Rewards are lore and card backs, no combat upgrades yet.

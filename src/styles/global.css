@@ -4024,3 +4024,365 @@ h3 {
     max-width: 36vw;
   }
 }
+
+/* ==== Lessons ==================================================================== */
+
+.is-lesson {
+  outline: 3px solid var(--spark) !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 22px rgba(143, 214, 255, 0.75) !important;
+  animation: pulse-spark 1.2s ease-in-out infinite;
+}
+.is-lesson-inspect .card-inspect {
+  outline: 3px solid var(--spark);
+  box-shadow: 0 0 18px rgba(143, 214, 255, 0.9);
+  animation: pulse-spark 1.2s ease-in-out infinite;
+  transform: scale(1.25);
+}
+@keyframes pulse-spark {
+  50% {
+    box-shadow: 0 0 34px rgba(143, 214, 255, 1);
+  }
+}
+.lesson-panel {
+  position: fixed;
+  left: 8px;
+  right: 8px;
+  top: max(8px, env(safe-area-inset-top));
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(12, 10, 34, 0.94);
+  border: 1px solid rgba(143, 214, 255, 0.5);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+}
+.lesson-panel-head {
+  font-size: 0.9rem;
+  color: var(--spark);
+}
+.lesson-panel-say {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: var(--ivory);
+}
+.lesson-panel.is-free .lesson-panel-say {
+  color: var(--gold-3);
+}
+.lesson-panel-nudge {
+  margin: 0;
+  font-size: 1rem;
+  color: #ffd9cf;
+}
+.lesson-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+.lesson-panel.is-complete {
+  border-color: var(--gold-2);
+}
+@media (min-width: 1000px) {
+  .lesson-panel {
+    position: static;
+    grid-area: mid;
+    margin: 0;
+  }
+}
+.lessons {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  padding: max(10px, env(safe-area-inset-top)) 12px 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.lesson-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.lesson-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(12, 10, 34, 0.55);
+  border: 1px solid rgba(232, 199, 108, 0.25);
+}
+.lesson-card.is-done {
+  border-color: rgba(143, 214, 255, 0.45);
+}
+.lesson-card-body {
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.lesson-card-n {
+  font-size: 0.95rem;
+  color: var(--spark);
+}
+.lesson-card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--gold-3);
+}
+.lesson-card-blurb {
+  font-size: 1.05rem;
+  color: var(--ivory);
+}
+.lesson-card-meta {
+  font-size: 0.95rem;
+  color: rgba(239, 228, 204, 0.7);
+}
+.lessons-foot {
+  margin: 16px 0 0;
+  font-size: 1rem;
+  color: rgba(239, 228, 204, 0.75);
+}
+.choose-learn {
+  align-self: flex-start;
+  margin-top: 4px;
+}
+
+/* The play-time sheet shows the whole card: the painting large, its rank and flavor,
+   and each face with full-size numbers. */
+.face-chooser {
+  max-height: 88dvh;
+  overflow-y: auto;
+}
+.face-chooser-body {
+  flex-direction: column;
+  gap: 12px;
+}
+.face-chooser-hero {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.fc-art {
+  position: relative;
+  width: min(100%, 44vh, 360px);
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid var(--suit, var(--gold));
+  box-shadow: inset 0 0 0 1px rgba(255, 252, 240, 0.5), 0 20px 40px -18px rgba(0, 0, 0, 0.9);
+  background: var(--night-mid);
+}
+.fc-art .sigil-img,
+.fc-art .sigil-svg {
+  object-fit: cover;
+}
+.fc-rank {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: rgba(232, 199, 108, 0.85);
+}
+.fc-flavor {
+  margin: 0;
+  max-width: 44ch;
+  text-align: center;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: rgba(239, 228, 204, 0.9);
+}
+.face-option-stats {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.face-option-stats b {
+  display: inline-grid;
+  place-items: center;
+  min-width: 36px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 7px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.45rem;
+  color: var(--ivory);
+}
+.face-option-stats .fo-atk {
+  background: linear-gradient(180deg, #5b4a7a, #2b2140);
+}
+.face-option-stats .fo-hp {
+  background: linear-gradient(180deg, #b8583f, #7a2f1f);
+}
+.face-option-stats small {
+  display: inline;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.face-option-kws {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.face-option-name {
+  font-size: 1.15rem;
+}
+@media (min-width: 720px) {
+  .face-chooser {
+    width: min(1000px, calc(100vw - 24px));
+    left: max(12px, calc(50% - 500px));
+  }
+  .face-chooser-body {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .face-chooser-hero {
+    flex: 0 0 300px;
+  }
+  .fc-art {
+    width: 300px;
+  }
+  .face-chooser-faces {
+    flex: 1 1 auto;
+  }
+}
+.lesson-panel-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.lesson-panel-toggle {
+  min-height: 0;
+  padding: 0 6px;
+  font-size: 0.9rem;
+}
+.lesson-panel.is-shut {
+  padding: 6px 12px;
+}
+@media (min-width: 1000px) {
+  /* Wide: the panel floats over the empty sky at the right of the board; the lanes keep left. */
+  .lesson-panel {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    left: auto;
+    width: 300px;
+    grid-area: auto;
+  }
+  .is-lesson .board {
+    align-items: flex-start;
+  }
+  .is-lesson .lane-row {
+    justify-content: flex-start;
+  }
+}
+
+/* The play sheet is the card itself, twice: one face to a hand. */
+.face-chooser-rank {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: rgba(232, 199, 108, 0.8);
+}
+.face-chooser-cards {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+}
+.face-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 0;
+  padding: 6px;
+  border-radius: 14px;
+  cursor: pointer;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.face-card:not(:disabled):hover .card {
+  transform: translateY(-4px);
+}
+.face-card .card {
+  --cw: min(44vw, 190px);
+  zoom: 1.05;
+  transition: transform 0.15s;
+}
+.face-card.is-off .card {
+  opacity: 0.55;
+  filter: saturate(0.6);
+}
+.face-card-label {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 199, 108, 0.4);
+  color: rgba(239, 228, 204, 0.7);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.face-card-label.is-on {
+  background: linear-gradient(180deg, var(--gold-2), var(--gold));
+  color: #2b2140;
+  border-color: rgba(232, 199, 108, 0.7);
+}
+.face-card-reversed .face-card-label.is-on {
+  background: linear-gradient(180deg, #c98bb0, var(--dusk-2));
+  color: #fff4f9;
+  border-color: rgba(176, 102, 143, 0.8);
+}
+.face-card-why {
+  font-size: 0.9rem;
+  color: rgba(239, 228, 204, 0.75);
+  max-width: 24ch;
+  text-align: center;
+}
+.face-card.is-off .face-card-why {
+  color: #ffd9cf;
+}
+@media (min-width: 720px) {
+  .face-card .card {
+    --cw: 220px;
+    zoom: 1.2;
+  }
+  .face-chooser-cards {
+    gap: 28px;
+  }
+}
+@media (min-width: 1000px) {
+  .face-card .card {
+    --cw: 240px;
+    zoom: 1.25;
+  }
+}
+/* The two cards fit the viewport with their labels showing. */
+.face-card .card {
+  --cw: min(44vw, 30vh, 190px);
+}
+@media (min-width: 720px) {
+  .face-card .card {
+    --cw: min(220px, 26vh);
+    zoom: 1.2;
+  }
+}
+@media (min-width: 1000px) {
+  .face-card .card {
+    --cw: min(240px, 27vh);
+    zoom: 1.2;
+  }
+}

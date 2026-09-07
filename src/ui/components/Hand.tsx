@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { card } from '../../data'
+import { card, rankLine } from '../../data'
 import { availableSpark, cardCost, playableFaces, previewPlay, targetsFor } from '../../engine/queries'
 import type { Face, GameState } from '../../engine/types'
 import { useStore } from '../store'
-import { Card, RulesText } from './Card'
-import { Sigil } from '../sigils'
+import { Card } from './Card'
+import { useLessonHints } from '../lessonHints'
 
 export function Hand({ state }: { state: GameState }) {
   const p = state.humanPlayer
@@ -17,6 +17,7 @@ export function Hand({ state }: { state: GameState }) {
   const spark = availableSpark(me)
   const strip = useRef<HTMLDivElement>(null)
   const [more, setMore] = useState(0)
+  const hints = useLessonHints()
 
   // On a phone the hand scrolls sideways. Count the cards past the right edge so the
   // player knows there are more.
@@ -56,10 +57,11 @@ export function Hand({ state }: { state: GameState }) {
             const n = me.hand.length
             const mid = (n - 1) / 2
             const tilt = n > 1 ? ((i - mid) / mid) * 6 : 0
+            const lit = !selected && hints.some((x) => x.kind === 'hand' && x.defId === def.id)
             return (
               <motion.div
                 key={h.uid}
-                className={`hand-card ${selected ? 'is-selected' : ''} ${!affordable ? 'is-poor' : ''}`}
+                className={`hand-card ${selected ? 'is-selected' : ''} ${!affordable ? 'is-poor' : ''} ${lit ? 'is-lesson' : ''}`}
                 layout
                 initial={{ opacity: 0, y: -80, x: 120, rotate: 20 }}
                 animate={{ opacity: 1, y: selected ? -22 : 0, x: 0, rotate: selected ? 0 : tilt }}
@@ -109,6 +111,7 @@ export function FaceChooser({ state }: { state: GameState }) {
   const select = useStore((s) => s.select)
   const dispatch = useStore((s) => s.dispatch)
   const busy = useStore((s) => s.playing || s.queue.length > 0)
+  const hints = useLessonHints()
   const p = state.humanPlayer
   if (sel.kind !== 'hand' || sel.face) return null
   const inst = state.players[p].hand.find((h) => h.uid === sel.uid)
@@ -141,6 +144,7 @@ export function FaceChooser({ state }: { state: GameState }) {
     <motion.div className="face-chooser" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 30 }}>
       <div className="face-chooser-head">
         <span className="face-chooser-title">{def.name}</span>
+        <span className="face-chooser-rank">{rankLine(def)}</span>
         <span className="face-chooser-cost">
           {cost} Spark{affordable ? '' : `. Need ${cost - availableSpark(state.players[p])} more`}
         </span>
@@ -148,36 +152,21 @@ export function FaceChooser({ state }: { state: GameState }) {
           Cancel
         </button>
       </div>
-      <div className="face-chooser-body">
-        <div className={`face-chooser-hero suit-${def.suit}`}>
-          <Sigil def={def} face="upright" />
-        </div>
-        <div className="face-chooser-faces">
-          {(['upright', 'reversed'] as Face[]).map((face) => {
-            const fd = face === 'upright' ? def.upright : def.reversed
-            const legal = faces.includes(face) && affordable
-            const ok = legal && !busy
-            const printed = def.type === 'figure' ? { atk: face === 'upright' ? def.attack ?? 0 : def.health ?? 0, hp: face === 'upright' ? def.health ?? 0 : def.attack ?? 0 } : null
-            const pv = def.type === 'figure' ? previewPlay(state, p, def.id, face) : null
-            const differs = pv && printed && (pv.atk !== printed.atk || pv.hp !== printed.hp)
-            return (
-              <button key={face} type="button" className={`face-option face-option-${face} ${legal ? '' : 'is-off'} ${legal && busy ? 'is-wait' : ''}`} disabled={!ok} onClick={() => choose(face)}>
-                <span className="face-option-label">{face === 'upright' ? 'Upright' : 'Reversed'}</span>
-                <span className="face-option-name">{fd.name ?? def.name}</span>
-                {printed && (
-                  <span className="face-option-stats">
-                    {pv ? `${pv.atk} / ${pv.hp}` : `${printed.atk} / ${printed.hp}`}
-                    {differs && <small> on your table (printed {printed.atk}/{printed.hp})</small>}
-                  </span>
-                )}
-                <span className="face-option-text">
-                  <RulesText text={fd.text || '—'} />
-                </span>
-                <span className="face-option-hint">{ok ? hint(face) : legal ? 'The table is still settling.' : faces.includes(face) ? '' : 'This card only enters Reversed.'}</span>
-              </button>
-            )
-          })}
-        </div>
+      <div className="face-chooser-cards">
+        {(['upright', 'reversed'] as Face[]).map((face) => {
+          const legal = faces.includes(face) && affordable
+          const ok = legal && !busy
+          const pv = def.type === 'figure' ? previewPlay(state, p, def.id, face) : null
+          const lit = hints.some((x) => x.kind === 'face' && x.face === face)
+          const why = !faces.includes(face) ? 'This card only enters Reversed.' : !affordable ? `Need ${cost - availableSpark(state.players[p])} more Spark.` : busy ? 'The table is still settling.' : hint(face)
+          return (
+            <button key={face} type="button" className={`face-card face-card-${face} ${legal ? '' : 'is-off'} ${lit ? 'is-lesson' : ''}`} disabled={!ok} onClick={() => choose(face)} aria-label={`Play ${def.name} ${face}`}>
+              <Card def={def} face={face} size="full" cost={cost} atk={pv?.atk} hp={pv?.hp} />
+              <span className={`face-card-label ${ok ? 'is-on' : ''}`}>{face === 'upright' ? 'Play Upright' : 'Play Reversed'}</span>
+              <span className="face-card-why">{why}</span>
+            </button>
+          )
+        })}
       </div>
     </motion.div>
   )

@@ -45,6 +45,7 @@ export interface Profile {
   totals: Record<string, HeroTotals> // lifetime, per Significator, never trimmed
   ids: string[] // credited match ids, so an evicted match cannot be credited again
   abandoned: number // readings replaced before they finished
+  lessons?: Record<string, number> // lesson id to when it was completed
 }
 
 // An unfinished reading, kept so leaving the page does not throw it away.
@@ -140,6 +141,11 @@ export function recordMatch(p: Profile, rec: MatchRecord): { profile: Profile; a
     }
   }
   return { profile: { ...p, v: 2, matches, ids, totals, best }, award: { ...none, gained, firstClear, counted: true } }
+}
+
+// A lesson finished. Lessons are their own record, apart from matches and Renown.
+export function completeLesson(p: Profile, id: string, now: number): Profile {
+  return { ...p, lessons: { ...(p.lessons ?? {}), [id]: p.lessons?.[id] ?? now } }
 }
 
 // A saved reading replaced before it finished. Not a loss; counted, and disclosed.
@@ -258,7 +264,16 @@ export function parseProfile(raw: unknown): Profile | null {
   const matches = (p.matches as unknown[]).filter(isRecord)
   const best = p.best as Record<string, MatchupBest>
   if (p.v === 2 && p.totals && typeof p.totals === 'object' && Array.isArray(p.ids)) {
-    return { v: 2, matches: matches.slice(-MAX_MATCHES), best, totals: p.totals as Record<string, HeroTotals>, ids: (p.ids as unknown[]).filter((x): x is string => typeof x === 'string').slice(-MAX_IDS), abandoned: typeof p.abandoned === 'number' ? p.abandoned : 0 }
+    const lessons = (p as { lessons?: unknown }).lessons
+    return {
+      v: 2,
+      matches: matches.slice(-MAX_MATCHES),
+      best,
+      totals: p.totals as Record<string, HeroTotals>,
+      ids: (p.ids as unknown[]).filter((x): x is string => typeof x === 'string').slice(-MAX_IDS),
+      abandoned: typeof p.abandoned === 'number' ? p.abandoned : 0,
+      ...(lessons && typeof lessons === 'object' ? { lessons: lessons as Record<string, number> } : {}),
+    }
   }
   if (p.v === 1) {
     // The first shape kept only the list. Its totals start from what the list still holds.

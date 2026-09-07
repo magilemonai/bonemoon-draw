@@ -13,8 +13,10 @@ import { artSrc } from './art'
 import { abandon, checkSaved, loadProfile, saveProfile, settleMatch, type Award, type Profile, type SavedMatch } from './profile'
 import { isLegalDeck } from '../engine/deck'
 import { loadDecks, resolveDeck, saveDecks, stampOf, starterDeck, type DeckList } from './decks'
+import { afterAction, afterInspect, allowed, currentStep, lessonById, type InspectTarget, type LessonProgress } from '../tutorial/lessons'
+import { completeLesson } from './profile'
 
-export type Screen = 'title' | 'choose' | 'battle' | 'codex' | 'rules' | 'decks' | 'build'
+export type Screen = 'title' | 'choose' | 'battle' | 'codex' | 'rules' | 'decks' | 'build' | 'lessons'
 
 export interface Fx {
   id: number
@@ -95,6 +97,7 @@ interface UIState {
   choosePreset: { mine: string; theirs: string; deck?: string } | null // what the choose screen should open with
   decks: DeckList[] // built decks, kept in this browser
   buildingId: string | null // the deck open in the builder
+  lesson: { id: string; progress: LessonProgress; stepStart: GameState; nudge: string | null } | null // a lesson in play
   uiKit: boolean // public/art/ui/* is present (probed once)
   tableArt: boolean // public/art/table.jpg is present
 
@@ -114,6 +117,10 @@ interface UIState {
   replaceProfile: (p: Profile, decks?: DeckList[]) => void
   setDecks: (decks: DeckList[]) => void
   openBuilder: (id: string) => void
+  startLesson: (id: string) => void
+  retryStep: () => void
+  leaveLesson: () => void
+  clearNudge: () => void
 }
 
 function storedSpeed(): number {
@@ -300,10 +307,11 @@ export const useStore = create<UIState>((set, get) => ({
   choosePreset: null,
   decks: loadDecks(),
   buildingId: null,
+  lesson: null,
   uiKit: false,
   tableArt: false,
 
-  goto: (screen) => set({ screen, selection: { kind: 'none' }, reviewing: false, choosePreset: null }),
+  goto: (screen) => set({ screen, selection: { kind: 'none' }, reviewing: false, choosePreset: null, lesson: null }),
   openChoose: (preset) => set({ screen: 'choose', selection: { kind: 'none' }, reviewing: false, choosePreset: preset ?? null }),
   dismissStale: () => {
     storeMatch(null)
@@ -319,6 +327,40 @@ export const useStore = create<UIState>((set, get) => ({
     set({ decks, storageOk: get().storageOk && ok })
   },
   openBuilder: (id) => set({ screen: 'build', buildingId: id, selection: { kind: 'none' }, reviewing: false }),
+
+  // A lesson: a fixed position, a sleeping opponent, nothing on the record. The saved
+  // reading, if any, is left where it is.
+  startLesson: (id) => {
+    const lesson = lessonById(id)
+    if (!lesson) return
+    const s = lesson.setup()
+    set({
+      committed: s,
+      display: s,
+      queue: [],
+      playing: false,
+      fx: [],
+      log: [],
+      selection: { kind: 'none' },
+      reviewing: false,
+      award: null,
+      humanSig: lesson.sigs[0],
+      aiSig: lesson.sigs[1],
+      lesson: { id, progress: { step: 0, complete: false }, stepStart: s, nudge: null },
+      screen: 'battle',
+    })
+    get().tick()
+  },
+  retryStep: () => {
+    const l = get().lesson
+    if (!l) return
+    set({ committed: l.stepStart, display: l.stepStart, queue: [], playing: false, fx: [], selection: { kind: 'none' }, lesson: { ...l, nudge: null } })
+  },
+  leaveLesson: () => set({ lesson: null, screen: 'lessons', selection: { kind: 'none' } }),
+  clearNudge: () => {
+    const l = get().lesson
+    if (l && l.nudge) set({ lesson: { ...l, nudge: null } })
+  },
   setSpeed: (speed) => {
     try {
       localStorage.setItem('bonemoon.speed', String(speed))
@@ -407,8 +449,27 @@ export const useStore = create<UIState>((set, get) => ({
   },
 
   dispatch: (a) => {
-    const { committed, queue, savedMatch, profile, log } = get()
+    const { committed, queue, savedMatch, profile, log, lesson } = get()
     if (!committed || committed.phase === 'over') return
+    if (lesson) {
+      const def = lessonById(lesson.id)!
+      if (committed.active === committed.humanPlayer && !allowed(def, lesson.progress, a, committed)) {
+        set({ lesson: { ...lesson, nudge: currentStep(def, lesson.progress)?.nudge ?? currentStep(def, lesson.progress)?.say ?? null }, selection: { kind: 'none' } })
+        return
+      }
+      const steps = runAction(committed, a, true)
+      const next = finalState(steps, committed)
+      const progress = afterAction(def, lesson.progress, committed, next, a)
+      const moved = progress.step !== lesson.progress.step || progress.complete !== lesson.progress.complete
+      let prof = profile
+      if (progress.complete && !lesson.progress.complete) {
+        prof = completeLesson(profile, lesson.id, Date.now())
+        saveProfile(prof)
+      }
+      set({ committed: next, queue: [...queue, ...steps], selection: { kind: 'none' }, profile: prof, lesson: { ...lesson, progress, stepStart: moved ? next : lesson.stepStart, nudge: null } })
+      get().tick()
+      return
+    }
     const steps = runAction(committed, a, true)
     const next = finalState(steps, committed)
     set({ committed: next, queue: [...queue, ...steps], selection: { kind: 'none' } })
@@ -431,7 +492,22 @@ export const useStore = create<UIState>((set, get) => ({
   },
 
   select: (selection) => set({ selection }),
-  inspect: (defId, face, uid) => set({ selection: { kind: 'inspect', defId, face, uid } }),
+  inspect: (defId, face, uid) => {
+    set({ selection: { kind: 'inspect', defId, face, uid } })
+    const { lesson, committed } = get()
+    if (!lesson || !committed || uid === undefined) return
+    let target: InspectTarget = 'hand'
+    if (committed.pending?.options.some((o) => o.uid === uid)) target = 'read'
+    else {
+      for (const pl of committed.players) {
+        const lane = pl.lanes.findIndex((f) => f?.uid === uid)
+        if (lane >= 0) target = { player: pl.id, lane: lane as LaneIndex }
+      }
+    }
+    const def = lessonById(lesson.id)!
+    const progress = afterInspect(def, lesson.progress, target)
+    if (progress.step !== lesson.progress.step) set({ lesson: { ...lesson, progress, stepStart: committed, nudge: null } })
+  },
   closeInspect: () => set({ selection: { kind: 'none' } }),
 
   // The animation pump. Plays one step, schedules the next, and wakes the AI when it's their turn.
@@ -443,7 +519,7 @@ export const useStore = create<UIState>((set, get) => ({
       // Queue drained. Is it the AI's turn?
       const c = st.committed
       if (c && c.phase !== 'over' && c.active !== c.humanPlayer && st.screen === 'battle') {
-        const a = chooseAction(c, { seed: c.seed })
+        const a: Action = st.lesson ? { type: 'endTurn' } : chooseAction(c, { seed: c.seed })
         // Small human-like pause before the opponent acts.
         set({ playing: true })
         setTimeout(() => {

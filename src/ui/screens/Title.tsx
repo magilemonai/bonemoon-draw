@@ -120,6 +120,9 @@ export function Title() {
         <button type="button" className="btn" onClick={() => goto('codex')}>
           The Codex
         </button>
+        <button type="button" className="btn" onClick={() => goto('lessons')}>
+          Learn to play
+        </button>
         <button type="button" className="btn" onClick={() => goto('rules')}>
           How to play
         </button>

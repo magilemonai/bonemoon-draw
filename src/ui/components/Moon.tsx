@@ -2,6 +2,7 @@ import { motion } from 'motion/react'
 import { drawForecast, moonPhase } from '../../engine/queries'
 import type { GameState, MoonPhase } from '../../engine/types'
 import { useStore } from '../store'
+import { useLessonHints } from '../lessonHints'
 
 const PHASE_LABEL: Record<MoonPhase, string> = {
   new: 'New moon',
@@ -58,6 +59,7 @@ export function MoonDial({ state }: { state: GameState }) {
   const untilBone = state.boneMoonRound - state.round
   const over = state.phase === 'over'
   const who = over ? 'The reading is over' : pendingMine ? 'Your choice' : myTurn ? (busy ? 'Resolving' : 'Your turn') : 'Their turn'
+  const lit = useLessonHints().some((h) => h.kind === 'endTurn')
   const f = drawForecast(state, state.humanPlayer)
   const nextMoon = f.phase === 'full' ? 'a Full Moon' : PHASE_LABEL[f.phase].toLowerCase()
 
@@ -82,7 +84,7 @@ export function MoonDial({ state }: { state: GameState }) {
           {f.short > 0 && <span className="forecast-warn">The deck is {f.short} short</span>}
         </div>
       )}
-      <button type="button" className="end-turn" disabled={!myTurn || busy} onClick={() => dispatch({ type: 'endTurn' })} aria-label={myTurn ? 'End your turn' : 'Waiting'}>
+      <button type="button" className={`end-turn ${lit ? 'is-lesson' : ''}`} disabled={!myTurn || busy} onClick={() => dispatch({ type: 'endTurn' })} aria-label={myTurn ? 'End your turn' : 'Waiting'}>
         <MoonDisc phase={phase} bone={bone} size={30} />
         <span>{over ? 'Over' : myTurn ? (busy ? 'Resolving' : 'End turn') : 'Waiting'}</span>
       </button>

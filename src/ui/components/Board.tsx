@@ -8,6 +8,7 @@ import { useStore, type Selection } from '../store'
 import { Card } from './Card'
 import { significator } from '../../data'
 import { ArtImage } from './ArtImage'
+import { useLessonHints } from '../lessonHints'
 
 export interface Highlights {
   targets: TargetRef[] // Figures and Significators that can be chosen
@@ -99,6 +100,9 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
   const playing = useStore((s) => s.playing)
   const uiKit = useStore((s) => s.uiKit)
   const hl = computeHighlights(state, sel)
+  const hints = useLessonHints()
+  const lit = hints.some((h) => h.kind === 'slot' && h.player === owner && h.lane === lane)
+  const litInspect = hints.some((h) => h.kind === 'inspect' && h.player === owner && h.lane === lane)
   const ref: TargetRef = { kind: 'figure', player: owner, lane }
   const isTarget = hl.targets.some((t) => sameRef(t, ref))
   const isLane = isMine && !fig && hl.lanes.includes(lane)
@@ -166,7 +170,7 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
 
   return (
     <div
-      className={`slot ${isMine ? 'slot-mine' : 'slot-theirs'} hl-${highlight} ${isAttackLane ? 'hl-attack' : ''} ${fig ? 'has-fig' : 'is-empty'}`}
+      className={`slot ${isMine ? 'slot-mine' : 'slot-theirs'} hl-${highlight} ${isAttackLane ? 'hl-attack' : ''} ${fig ? 'has-fig' : 'is-empty'} ${lit ? 'is-lesson' : ''} ${litInspect ? 'is-lesson-inspect' : ''}`}
       id={`slot-${owner}-${lane}`}
       onClick={fig ? undefined : onClick}
       role={fig ? undefined : 'button'}

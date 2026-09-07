@@ -9,6 +9,7 @@ import { FaceChooser, Hand } from '../components/Hand'
 import { SigPanel } from '../components/SigPanel'
 import { MoonDial } from '../components/Moon'
 import { Banners, GameOver, InspectModal, Log, OverStrip, ReadChooser, RevealedHand } from '../components/Overlays'
+import { LessonPanel } from '../components/LessonPanel'
 
 // The one line that says what the player is being asked to do right now.
 function promptFor(state: GameState, sel: Selection): string | null {
@@ -49,6 +50,8 @@ export function Battle() {
   const setSpeed = useStore((s) => s.setSpeed)
   const reviewing = useStore((s) => s.reviewing)
   const concede = useStore((s) => s.concede)
+  const lesson = useStore((s) => s.lesson)
+  const leaveLesson = useStore((s) => s.leaveLesson)
   const [showLog, setShowLog] = useState(false)
   const [conceding, setConceding] = useState(false)
   // Reviewing the final turn opens the log so the last events are in view.
@@ -63,7 +66,7 @@ export function Battle() {
 
   return (
     <div
-      className={`battle ${display.round >= display.boneMoonRound ? 'is-bone' : ''} ${reviewing ? 'is-reviewing' : ''}`}
+      className={`battle ${display.round >= display.boneMoonRound ? 'is-bone' : ''} ${reviewing ? 'is-reviewing' : ''} ${lesson ? 'is-lesson' : ''}`}
       onClick={(e) => {
         // Tapping the felt clears a selection.
         if ((e.target as HTMLElement).classList.contains('battle') || (e.target as HTMLElement).classList.contains('board')) select({ kind: 'none' })
@@ -78,14 +81,20 @@ export function Battle() {
           <button type="button" className="btn-quiet" onClick={() => setShowLog((v) => !v)} aria-pressed={showLog}>
             Log
           </button>
-          {display.phase !== 'over' && (
+          {display.phase !== 'over' && !lesson && (
             <button type="button" className="btn-quiet" onClick={() => setConceding(true)} aria-pressed={conceding}>
               Concede
             </button>
           )}
-          <button type="button" className="btn-quiet" onClick={() => goto('title')} title="The reading is kept; continue it from the title screen">
-            Pause
-          </button>
+          {lesson ? (
+            <button type="button" className="btn-quiet" onClick={leaveLesson}>
+              Leave the lesson
+            </button>
+          ) : (
+            <button type="button" className="btn-quiet" onClick={() => goto('title')} title="The reading is kept; continue it from the title screen">
+              Pause
+            </button>
+          )}
         </div>
       </div>
       <AnimatePresence>{display.players[them].handRevealed && <RevealedHand state={display} />}</AnimatePresence>
@@ -99,26 +108,32 @@ export function Battle() {
             </button>
           </div>
         )}
-        {conceding && display.phase !== 'over' && (
-          <div className="targeting-hint concede-strip" role="alertdialog">
-            Concede the reading? It goes on the record as a loss. Renown never falls.
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={() => {
-                setConceding(false)
-                concede()
-              }}
-            >
-              Concede
-            </button>
-            <button type="button" className="btn-quiet" onClick={() => setConceding(false)}>
-              Keep playing
-            </button>
-          </div>
-        )}
         {reviewing && display.phase === 'over' && <OverStrip state={display} />}
       </div>
+      {lesson && <LessonPanel />}
+      {conceding && display.phase !== 'over' && (
+        <div className="modal-scrim" onClick={() => setConceding(false)}>
+          <div className="modal concede-modal" role="alertdialog" aria-label="Concede the reading" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-title">Concede the reading?</div>
+            <p className="modal-copy">It goes on the record as a loss. Renown never falls.</p>
+            <div className="modal-actions">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => {
+                  setConceding(false)
+                  concede()
+                }}
+              >
+                Concede
+              </button>
+              <button type="button" className="btn" onClick={() => setConceding(false)}>
+                Keep playing
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="table-bottom">
         <SigPanel state={display} player={me} />
         <MoonDial state={display} />
