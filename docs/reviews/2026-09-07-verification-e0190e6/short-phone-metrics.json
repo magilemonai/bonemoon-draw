@@ -1,0 +1,368 @@
+{
+  "items": [
+    {
+      "class": "lesson-panel    ",
+      "font": "16px",
+      "rect": {
+        "bottom": 60.5546875,
+        "height": 54.5546875,
+        "left": 8,
+        "right": 382,
+        "top": 6,
+        "width": 374,
+        "x": 8,
+        "y": 6
+      },
+      "text": "Lesson 2 of 3. Step 1 of 6\nMore\nRetry\nHide\n\nAttack the Null-Zone Pylon with Elder Voren."
+    },
+    {
+      "class": "sig sig-theirs  ",
+      "font": "16px",
+      "rect": {
+        "bottom": 122.515625,
+        "height": 58.9609375,
+        "left": 8,
+        "right": 382,
+        "top": 63.5546875,
+        "width": 374,
+        "x": 8,
+        "y": 63.5546875
+      },
+      "text": "Daxon\n20\nHealth\nSpark\n0 / 0\nHand\n0 / 8\nDeck\n25"
+    },
+    {
+      "class": "card size-lane suit-suns  hl-none   ",
+      "font": "16px",
+      "rect": {
+        "bottom": 270.75,
+        "height": 139.1953125,
+        "left": 56.5,
+        "right": 143.5,
+        "top": 131.5546875,
+        "width": 87,
+        "x": 56.5,
+        "y": 131.5546875
+      },
+      "text": "1 wound\nThe Guard Post\nGuard\n1\n2\nThe Guard Post\nWindborne\n3\n1\ni"
+    },
+    {
+      "class": "card-name",
+      "font": "14px",
+      "rect": {
+        "bottom": 221.25,
+        "height": 35.359375,
+        "left": 60,
+        "right": 140,
+        "top": 185.890625,
+        "width": 80,
+        "x": 60,
+        "y": 185.890625
+      },
+      "text": "The Guard Post"
+    },
+    {
+      "class": "kw kw-guard",
+      "font": "12px",
+      "rect": {
+        "bottom": 237.25,
+        "height": 16,
+        "left": 80.28125,
+        "right": 119.71875,
+        "top": 221.25,
+        "width": 39.4375,
+        "x": 80.28125,
+        "y": 221.25
+      },
+      "text": "Guard"
+    },
+    {
+      "class": "card-name",
+      "font": "14px",
+      "rect": {
+        "bottom": 221.25,
+        "height": 35.359375,
+        "left": 60,
+        "right": 140,
+        "top": 185.890625,
+        "width": 80,
+        "x": 60,
+        "y": 185.890625
+      },
+      "text": "The Guard Post"
+    },
+    {
+      "class": "kw kw-windborne",
+      "font": "12px",
+      "rect": {
+        "bottom": 237.25,
+        "height": 16,
+        "left": 67.5234375,
+        "right": 132.4765625,
+        "top": 221.25,
+        "width": 64.953125,
+        "x": 67.5234375,
+        "y": 221.25
+      },
+      "text": "Windborne"
+    },
+    {
+      "class": "card size-lane suit-gears  hl-none   ",
+      "font": "16px",
+      "rect": {
+        "bottom": 270.75,
+        "height": 139.1953125,
+        "left": 151.5,
+        "right": 238.5,
+        "top": 131.5546875,
+        "width": 87,
+        "x": 151.5,
+        "y": 131.5546875
+      },
+      "text": "Null-Zone Pylon\nGuard\n1\n4\nNull-Zone Pylon\n4\n1\ni"
+    },
+    {
+      "class": "card-name",
+      "font": "14px",
+      "rect": {
+        "bottom": 221.25,
+        "height": 35.359375,
+        "left": 155,
+        "right": 235,
+        "top": 185.890625,
+        "width": 80,
+        "x": 155,
+        "y": 185.890625
+      },
+      "text": "Null-Zone Pylon"
+    },
+    {
+      "class": "kw kw-guard",
+      "font": "12px",
+      "rect": {
+        "bottom": 237.25,
+        "height": 16,
+        "left": 175.28125,
+        "right": 214.71875,
+        "top": 221.25,
+        "width": 39.4375,
+        "x": 175.28125,
+        "y": 221.25
+      },
+      "text": "Guard"
+    },
+    {
+      "class": "card-name",
+      "font": "14px",
+      "rect": {
+        "bottom": 237.25,
+        "height": 35.359375,
+        "left": 155,
+        "right": 235,
+        "top": 201.890625,
+        "width": 80,
+        "x": 155,
+        "y": 201.890625
+      },
+      "text": "Null-Zone Pylon"
+    },
+    {
+      "class": "card size-lane suit-antlers  hl-none   ",
+      "font": "16px",
+      "rect": {
+        "bottom": 270.75,
+        "height": 139.1953125,
+        "left": 246.5,
+        "right": 333.5,
+        "top": 131.5546875,
+        "width": 87,
+        "x": 246.5,
+        "y": 131.5546875
+      },
+      "text": "Wisplight\n1\n1\nWisplight\nWindborne\nVeiled\n1\n1\ni"
+    },
+    {
+      "class": "card-name",
+      "font": "14px",
+      "rect": {
+        "bottom": 237.25,
+        "height": 19.6796875,
+        "left": 250,
+        "right": 330,
+        "top": 217.5703125,
+        "width": 80,
+        "x": 250,
+        "y": 217.5703125
+      },
+      "text": "Wisplight"
+    },
+    {
+      "class": "card-name",
+      "font": "14px",
+      "rect": {
+        "bottom": 202.25,
+        "height": 19.6796875,
+        "left": 250,
+        "right": 330,
+        "top": 182.5703125,
+        "width": 80,
+        "x": 250,
+        "y": 182.5703125
+      },
+      "text": "Wisplight"
+    },
+    {
+      "class": "kw kw-windborne",
+      "font": "12px",
+      "rect": {
+        "bottom": 218.25,
+        "height": 16,
+        "left": 257.5234375,
+        "right": 322.4765625,
+        "top": 202.25,
+        "width": 64.953125,
+        "x": 257.5234375,
+        "y": 202.25
+      },
+      "text": "Windborne"
+    },
+    {
+      "class": "kw kw-veiled",
+      "font": "12px",
+      "rect": {
+        "bottom": 237.25,
+        "height": 16,
+        "left": 269.7890625,
+        "right": 310.203125,
+        "top": 221.25,
+        "width": 40.4140625,
+        "x": 269.7890625,
+        "y": 221.25
+      },
+      "text": "Veiled"
+    },
+    {
+      "class": "card size-lane suit-antlers  hl-none  is-ready ",
+      "font": "16px",
+      "rect": {
+        "bottom": 415.9453125,
+        "height": 139.1953125,
+        "left": 151.5,
+        "right": 238.5,
+        "top": 276.75,
+        "width": 87,
+        "x": 151.5,
+        "y": 276.75
+      },
+      "text": "Elder Voren Nightbloom\n1\n3\nVoren, Corrupted\n3\n1\ni"
+    },
+    {
+      "class": "card-name",
+      "font": "14px",
+      "rect": {
+        "bottom": 382.4453125,
+        "height": 35.359375,
+        "left": 155,
+        "right": 235,
+        "top": 347.0859375,
+        "width": 80,
+        "x": 155,
+        "y": 347.0859375
+      },
+      "text": "Elder Voren Nightbloom"
+    },
+    {
+      "class": "card-name",
+      "font": "14px",
+      "rect": {
+        "bottom": 382.4453125,
+        "height": 35.359375,
+        "left": 155,
+        "right": 235,
+        "top": 347.0859375,
+        "width": 80,
+        "x": 155,
+        "y": 347.0859375
+      },
+      "text": "Voren, Corrupted"
+    },
+    {
+      "class": "card size-lane suit-antlers  hl-none  is-ready ",
+      "font": "16px",
+      "rect": {
+        "bottom": 415.9453125,
+        "height": 139.1953125,
+        "left": 246.5,
+        "right": 333.5,
+        "top": 276.75,
+        "width": 87,
+        "x": 246.5,
+        "y": 276.75
+      },
+      "text": "The Oondray\n2\n3\nThe Oondray\nWindborne\n3\n2\ni"
+    },
+    {
+      "class": "card-name",
+      "font": "14px",
+      "rect": {
+        "bottom": 382.4453125,
+        "height": 19.6796875,
+        "left": 250,
+        "right": 330,
+        "top": 362.765625,
+        "width": 80,
+        "x": 250,
+        "y": 362.765625
+      },
+      "text": "The Oondray"
+    },
+    {
+      "class": "card-name",
+      "font": "14px",
+      "rect": {
+        "bottom": 366.4453125,
+        "height": 19.6796875,
+        "left": 250,
+        "right": 330,
+        "top": 346.765625,
+        "width": 80,
+        "x": 250,
+        "y": 346.765625
+      },
+      "text": "The Oondray"
+    },
+    {
+      "class": "kw kw-windborne",
+      "font": "12px",
+      "rect": {
+        "bottom": 382.4453125,
+        "height": 16,
+        "left": 257.5234375,
+        "right": 322.4765625,
+        "top": 366.4453125,
+        "width": 64.953125,
+        "x": 257.5234375,
+        "y": 366.4453125
+      },
+      "text": "Windborne"
+    },
+    {
+      "class": "hand-wrap is-tucked ",
+      "font": "16px",
+      "rect": {
+        "bottom": 660,
+        "height": 50,
+        "left": 8,
+        "right": 382,
+        "top": 610,
+        "width": 374,
+        "x": 8,
+        "y": 610
+      },
+      "text": "2\nHand 1 of 8\n1 to play\nShow"
+    }
+  ],
+  "viewport": [
+    390,
+    664
+  ]
+}

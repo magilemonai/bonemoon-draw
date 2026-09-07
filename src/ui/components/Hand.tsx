@@ -9,7 +9,7 @@ import { Card } from './Card'
 import { FlipIn } from './CardBack'
 import { Sigil } from '../sigils'
 import { useLessonHints } from '../lessonHints'
-import { currentStep, lessonById } from '../../tutorial/lessons'
+import { allowed, currentStep, lessonById } from '../../tutorial/lessons'
 
 // The hand. On a phone too short to hold the fan under two readable rows of lanes, it is
 // tucked: a strip at the foot of the table with every card in miniature, the count, and
@@ -26,6 +26,7 @@ export function Hand({ state, tucked = false }: { state: GameState; tucked?: boo
   const [more, setMore] = useState(0)
   const [open, setOpen] = useState(false)
   const hints = useLessonHints()
+  const lesson = useStore((s) => s.lesson)
   const placing = sel.kind === 'hand' && !!sel.face
 
   // On a phone the hand scrolls sideways. Count the cards past the right edge so the
@@ -63,9 +64,13 @@ export function Hand({ state, tucked = false }: { state: GameState; tucked?: boo
     setOpen(false)
   }, [me.hand.length])
 
-  const playable = myTurn ? me.hand.filter((h) => spark >= cardCost(state, p, h.defId) && playableFaces(state, p, h.defId).length > 0).length : 0
+  // "To play" counts what the table and the lesson would both accept, so the strip never
+  // invites a play the step is about to refuse.
+  const lessonDef = lesson ? lessonById(lesson.id) : undefined
+  const affordable = myTurn ? me.hand.filter((h) => spark >= cardCost(state, p, h.defId) && playableFaces(state, p, h.defId).length > 0) : []
+  const playable = affordable.filter((h) => !lessonDef || playableFaces(state, p, h.defId).some((face) => allowed(lessonDef, lesson!.progress, { type: 'play', uid: h.uid, face }, state))).length
   const forecast = drawForecast(state, p)
-  const note = forecast.burns > 0 ? `${forecast.burns} would burn on the next draw` : myTurn ? (playable === 0 ? 'Nothing to play' : `${playable} to play`) : 'Tap to look'
+  const note = forecast.burns > 0 ? `${forecast.burns} would burn on the next draw` : myTurn ? (playable > 0 ? `${playable} to play` : affordable.length > 0 ? 'Not for this step' : 'Nothing to play') : 'Tap to look'
 
   return (
     <div className={`hand-wrap ${tucked ? 'is-tucked' : ''} ${tucked && open ? 'is-open' : ''}`}>

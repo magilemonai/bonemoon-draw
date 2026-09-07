@@ -5,6 +5,7 @@
     The follow-up round moved the coach into the column, tucks the hand into a strip on short phones, and gave compact cards a footer. docs/FOLLOWUP_RESPONSE.md has it.
 - [ ] [crew] A loss recap on the result screen: the decisive public sequence and the deck revision, from the log
 - [ ] [crew] The visual language, second pass: the builder's filter rows and the record screen on the brass, ink, and vellum tokens
+    Astra's verification of e0190e6 adds the compact card to this pass: a deliberate minimum for the painting, keywords at 14px or as marks with a legend, judged on the populated table, the hand drawer, and the two-face sheet together. Needs the short display names decided first.
 - [ ] [cody] Play the three lessons once on your phone and say where the words ran ahead of the table
     The tutorial is on the title and on the character screen. Each lesson ends with an exercise you solve without the lights.
 - [ ] [cody] Build a deck in Your decks, play it, and say what the builder still makes hard
