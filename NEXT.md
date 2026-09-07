@@ -2,6 +2,7 @@
 
 - [ ] [cody] Play a reading on your phone after the 477ae92 round and say whether the table finally keeps its regions
     The lanes now size themselves to the space the panels leave; the coach folds to two lines; the review strip floats. docs/HANDOFF_477AE92_RESPONSE.md has the round.
+    The follow-up round moved the coach into the column, tucks the hand into a strip on short phones, and gave compact cards a footer. docs/FOLLOWUP_RESPONSE.md has it.
 - [ ] [crew] A loss recap on the result screen: the decisive public sequence and the deck revision, from the log
 - [ ] [crew] The visual language, second pass: the builder's filter rows and the record screen on the brass, ink, and vellum tokens
 - [ ] [cody] Play the three lessons once on your phone and say where the words ran ahead of the table

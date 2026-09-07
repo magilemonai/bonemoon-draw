@@ -1,0 +1,31 @@
+{
+  "cancel": [
+    {
+      "rect": {
+        "bottom": 122.1015625,
+        "height": 28.6953125,
+        "left": 325.8125,
+        "right": 380,
+        "top": 93.40625,
+        "width": 54.1875,
+        "x": 325.8125,
+        "y": 93.40625
+      },
+      "topAtCenter": "lesson-panel   "
+    }
+  ],
+  "coach": {
+    "bottom": 120.9921875,
+    "height": 112.9921875,
+    "left": 8,
+    "right": 382,
+    "top": 8,
+    "width": 374,
+    "x": 8,
+    "y": 8
+  },
+  "viewport": [
+    390,
+    844
+  ]
+}

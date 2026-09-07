@@ -197,3 +197,17 @@ describe('lessons', () => {
     expect(hintsFor(t.lesson, t.progress(), t.state())).toEqual([])
   })
 })
+
+// A phone's coach shows the action alone. Every step has one, and it is short enough to
+// read in two lines at 390 wide.
+describe('the phone line', () => {
+  it('every step has a do line under 92 characters that ends in a full stop', () => {
+    for (const lesson of LESSONS) {
+      for (const step of lesson.steps) {
+        expect(step.do, `${lesson.id}/${step.id} has a do line`).toBeTruthy()
+        expect(step.do!.length, `${lesson.id}/${step.id} do line length`).toBeLessThanOrEqual(92)
+        expect(step.do!.endsWith('.'), `${lesson.id}/${step.id} ends with a full stop`).toBe(true)
+      }
+    }
+  })
+})

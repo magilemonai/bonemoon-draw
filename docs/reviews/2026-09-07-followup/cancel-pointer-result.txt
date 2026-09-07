@@ -1,0 +1,1 @@
+390x844, lesson 2 step 1, Mr. Boscoe play sheet: Cancel center is covered by .lesson-panel. A normal locator click returned without dismissing the sheet; subsequent AX tree unchanged and Cancel button count remained 1. No force click used.

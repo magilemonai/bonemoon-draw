@@ -106,6 +106,11 @@ function FaceView(props: CardProps & { which: Face }) {
           {props.hushed && active && <span className="card-state card-state-hushed">Hushed</span>}
           {props.asleep && active && <span className="card-state card-state-asleep">Asleep</span>}
           {props.aegis && active && <span className="card-aegis" title="Aegis" />}
+          {active && size === 'lane' && (props.wounds ?? 0) > 0 && (
+            <span className="card-wounds" title={`${props.wounds} wound${props.wounds === 1 ? '' : 's'}: kept through a flip`}>
+              {props.wounds} wound{props.wounds === 1 ? '' : 's'}
+            </span>
+          )}
         </div>
         <div className="card-name">{name}</div>
         {size !== 'mini' && (
@@ -157,11 +162,6 @@ function FaceView(props: CardProps & { which: Face }) {
             <span className={`card-stat card-hp ${props.maxHp !== undefined && stats.hp < props.maxHp ? 'is-hurt' : printed && stats.hp > printed.hp ? 'is-buffed' : ''}`}>
               {stats.hp}
             </span>
-            {active && size === 'lane' && (props.wounds ?? 0) > 0 && (
-              <span className="card-wounds" title={`${props.wounds} wound${props.wounds === 1 ? '' : 's'}: kept through a flip`}>
-                {props.wounds} wound{props.wounds === 1 ? '' : 's'}
-              </span>
-            )}
           </>
         )}
         {def.type !== 'figure' && <span className="card-type">{def.type === 'omen' ? 'Omen' : 'Relic'}</span>}

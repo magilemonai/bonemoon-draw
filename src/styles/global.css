@@ -5169,3 +5169,476 @@ h3 {
     zoom: 1.15;
   }
 }
+
+/* ==== After the follow-up verification: the coach in the column, a hand that tucks,
+   and a compact card whose footer is its own ===================================== */
+
+/* 1. The coach. On a phone it is the first thing in the column, an action line long,
+   with the whole instruction behind More and Retry in its head. It never covers the
+   opponent, and every sheet sits above it. */
+.lesson-panel-tools {
+  display: flex;
+  gap: 2px;
+  flex: 0 0 auto;
+  align-items: baseline;
+}
+.lesson-panel-tools .btn-quiet {
+  min-height: 0;
+  padding: 0 6px;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  align-self: auto;
+}
+.lesson-panel-say.is-nudge {
+  color: #ffd9cf;
+}
+@media (max-width: 999px) {
+  .lesson-panel {
+    position: static;
+    order: -1;
+    z-index: auto;
+    flex: 0 0 auto;
+    gap: 2px;
+    padding: 6px 10px 7px;
+    border-radius: 10px;
+    box-shadow: none;
+    background: rgba(12, 10, 34, 0.72);
+  }
+  .lesson-panel.is-shut {
+    padding: 4px 10px;
+  }
+  .lesson-panel-head {
+    font-size: 0.82rem;
+    line-height: 1.25;
+  }
+  .lesson-panel-title {
+    display: none;
+  }
+  .lesson-panel-say {
+    font-size: 14.5px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    cursor: auto;
+  }
+  .lesson-panel.is-expanded .lesson-panel-say {
+    display: block;
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+  .lesson-panel-full {
+    display: none;
+  }
+  .lesson-panel.is-expanded .lesson-panel-full {
+    display: inline;
+  }
+  .lesson-panel.is-expanded .lesson-panel-do {
+    display: none;
+  }
+  .lesson-panel-nudge {
+    font-size: 15px;
+    line-height: 1.3;
+  }
+  .lesson-panel-actions {
+    display: none;
+  }
+  .lesson-panel.is-trouble .lesson-panel-actions,
+  .lesson-panel.is-complete .lesson-panel-actions {
+    display: flex;
+  }
+  .battle.is-lesson .table-top {
+    padding-top: 0;
+  }
+}
+@media (min-width: 1000px) {
+  .lesson-panel {
+    z-index: 30;
+  }
+  .lesson-panel-do,
+  .lesson-panel-more,
+  .lesson-panel-retry {
+    display: none;
+  }
+  .lesson-panel-full {
+    display: inline;
+  }
+  .lesson-panel-actions {
+    display: flex !important;
+  }
+}
+/* The step about the card in hand speaks inside the play sheet as well. */
+.face-chooser-coach {
+  margin: 0 0 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(143, 214, 255, 0.5);
+  background: rgba(12, 10, 34, 0.6);
+  color: var(--ivory);
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+/* 2. The phone column: the ask of the moment lives in the turn panel, the opponent's
+   block holds the tools, and the deck's name waits for a wider screen. */
+@media (max-width: 999px) {
+  .table-mid {
+    display: none;
+  }
+  /* The prompt takes the panel's lines and Cancel takes the button's place, so the
+     panel keeps its height and the lanes keep their size. */
+  .turn-prompt {
+    display: contents;
+  }
+  .turn-prompt > span {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    align-self: center;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    color: var(--gold-3);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .turn-prompt > .btn-quiet {
+    grid-area: end;
+    min-height: 44px;
+    padding: 6px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(232, 199, 108, 0.6);
+    background: rgba(38, 32, 86, 0.9);
+    color: var(--gold-3);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    opacity: 1;
+  }
+  .turn-panel.has-prompt .end-turn {
+    display: none;
+  }
+  .turn-panel {
+    min-height: 72px;
+    grid-template-areas:
+      'line line'
+      'text end';
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  /* The forecast and the moon flow as one short paragraph beside the button. */
+  .turn-text {
+    grid-area: text;
+    font-size: 0.88rem;
+    line-height: 1.3;
+    color: var(--ivory);
+    align-self: center;
+  }
+  .turn-text .forecast,
+  .turn-text .forecast-draw,
+  .turn-text .forecast-warn,
+  .turn-text .turn-bone {
+    display: inline;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  .turn-text .forecast-warn,
+  .turn-text .turn-bone {
+    margin-left: 0.3em;
+  }
+  .turn-long {
+    display: none;
+  }
+  .turn-prompt > span {
+    grid-row: 1 / 3;
+  }
+  /* The player's block, tighter: the ability stacks its cost so the numbers never wrap. */
+  .sig-mine .ability {
+    flex-direction: column;
+    gap: 1px;
+    padding: 3px 10px;
+    min-height: 40px;
+  }
+  .sig-mine .ability-name {
+    font-size: 0.92rem;
+  }
+  .sig-mine .ability-cost {
+    font-size: 0.72rem;
+    padding: 0 6px;
+  }
+  .sig-mine .portrait {
+    width: 40px !important;
+    height: 40px !important;
+  }
+  .sig-theirs .portrait {
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .sig-theirs .sig-top {
+    padding-right: 200px;
+  }
+  .sig-mine .sig-deck {
+    display: none;
+  }
+  .table-top {
+    position: relative;
+    gap: 0;
+  }
+  .table-tools {
+    position: absolute;
+    top: 3px;
+    right: 10px;
+    z-index: 2;
+    gap: 2px;
+  }
+  .table-tools .btn-quiet {
+    min-height: 26px;
+    padding: 0 6px;
+    font-size: 0.88rem;
+  }
+  .sig-theirs {
+    position: relative;
+  }
+  .sig-theirs .sig-health {
+    position: absolute;
+    right: 10px;
+    bottom: 3px;
+  }
+  .sig-theirs .sig-numbers {
+    padding-right: 96px;
+  }
+}
+@media (min-width: 1000px) {
+  .turn-prompt,
+  .turn-short {
+    display: none;
+  }
+  .turn-text {
+    display: contents;
+  }
+}
+@media (min-width: 720px) and (max-width: 999px) {
+  .turn-short {
+    display: none;
+  }
+  .turn-long {
+    display: inline;
+  }
+}
+
+/* 3. A compact card keeps a footer. The painting takes what is left above the name; the
+   name, the keywords and the two numbers each have their own room and never share it. */
+.size-lane .card-art,
+.size-hand .card-art {
+  aspect-ratio: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.size-lane .card-name,
+.size-hand .card-name {
+  flex: 0 0 auto;
+  font-size: 14px;
+  line-height: 1.12;
+  min-height: 0;
+  padding: 2px 2px;
+}
+.size-lane .card-text,
+.size-hand .card-text {
+  flex: 0 0 auto;
+  min-height: 27px;
+  padding: 0 2px 27px;
+  overflow: visible;
+}
+.size-lane .card-kws,
+.size-hand .card-text .card-kws-hand {
+  padding: 0 0 3px;
+  gap: 3px;
+}
+.kw {
+  font-size: 12px;
+  padding: 2px 5px;
+  line-height: 1;
+}
+.size-lane .card-stat,
+.size-hand .card-stat {
+  min-width: 22px;
+  height: 22px;
+  font-size: 14px;
+  bottom: 3px;
+}
+/* Wounds sit on the painting's lower edge, out of the footer. */
+.card-wounds {
+  left: 50%;
+  right: auto;
+  bottom: 3px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  padding: 2px 5px;
+  z-index: 2;
+}
+@media (min-width: 720px) {
+  .card-wounds {
+    font-size: 11px;
+    bottom: 3px;
+  }
+}
+
+/* 4. The tucked hand: a strip with every card in miniature, the count, and the burn
+   warning. Show raises the fan as a sheet under the play sheet. */
+.hand-sheet {
+  display: contents;
+}
+.hand-wrap.is-tucked {
+  margin-top: auto;
+  flex: 0 0 auto;
+  height: 50px;
+}
+.hand-wrap.is-tucked .hand-sheet {
+  display: none;
+}
+.hand-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 50px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(232, 199, 108, 0.4);
+  background: rgba(12, 10, 34, 0.72);
+  color: var(--ivory);
+  text-align: left;
+  cursor: pointer;
+}
+.hand-strip-thumbs {
+  display: flex;
+  flex: 0 0 auto;
+  padding-right: 6px;
+}
+.hand-thumb {
+  position: relative;
+  width: 24px;
+  height: 36px;
+  margin-right: -7px;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--suit) 70%, #fff);
+  background: var(--night-mid);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+.hand-thumb.is-poor {
+  filter: saturate(0.4) brightness(0.7);
+}
+.hand-thumb-cost {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  min-width: 12px;
+  height: 12px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 9px;
+  line-height: 12px;
+  text-align: center;
+  color: var(--ivory);
+  background: rgba(38, 32, 86, 0.95);
+  border-bottom-right-radius: 3px;
+}
+.hand-strip-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  font-size: 13px;
+}
+.hand-strip-text b {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--gold-3);
+}
+.hand-strip-note.is-warn {
+  color: #ffb9a8;
+}
+.hand-strip-cta {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--gold-3);
+}
+.hand-wrap.is-tucked.is-open .hand-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 38;
+  max-height: 72dvh;
+  overflow-y: auto;
+  padding: 8px 10px calc(10px + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(12, 10, 34, 0.96), rgba(23, 20, 58, 0.98));
+  border-top: 1px solid rgba(232, 199, 108, 0.35);
+  box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.5);
+}
+.hand-sheet-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--gold-3);
+}
+.hand-wrap.is-open .hand {
+  --cw-hand: 104px;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: visible;
+  min-height: 0;
+  padding: 16px 8px 6px;
+  row-gap: 12px;
+}
+.hand-wrap.is-open .hand-card,
+.hand-wrap.is-open .hand-card:first-child,
+.hand-wrap.is-open .hand-card:last-child {
+  margin-left: 0;
+  margin-right: -14px;
+}
+
+/* 5. A wide screen that is short (a laptop with the browser's chrome): the left column
+   gives up its extras before the panels can overlap. */
+@media (min-width: 1000px) and (max-height: 720px) {
+  .battle {
+    padding: 8px 20px 4px;
+    row-gap: 6px;
+  }
+  .sig-deck,
+  .turn-long {
+    display: none;
+  }
+  .turn-short {
+    display: inline;
+  }
+  .sig-mine .portrait {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .sig-mine .sig-name {
+    font-size: 1.25rem;
+  }
+  .turn-panel {
+    padding: 6px 10px;
+    row-gap: 3px;
+  }
+  .end-turn {
+    min-height: 40px;
+  }
+  .table-tools .btn-quiet {
+    min-height: 28px;
+  }
+  .table-top {
+    gap: 2px;
+  }
+}

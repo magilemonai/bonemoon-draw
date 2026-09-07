@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'motion/react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { card, significator } from '../../data'
 import { faceDef, figureName, other, whyNoAttack, whyNoMove } from '../../engine/queries'
 import type { GameState } from '../../engine/types'
@@ -41,6 +41,13 @@ function promptFor(state: GameState, sel: Selection): string | null {
   return null
 }
 
+const MIN_LANE = 84 // narrower than this and the hand tucks, so the lanes keep their size
+const FLOOR_LANE = 72 // tucked and still short: the lanes give way before anything overlaps
+const MAX_LANE = 112
+const STRIP_H = 50 // the tucked hand
+const CARD_RATIO = 1.6
+const LANE_GAPS = 16 // the board's padding and the gap between its two rows on a phone
+
 export function Battle() {
   const display = useStore((s) => s.display)
   const goto = useStore((s) => s.goto)
@@ -56,32 +63,61 @@ export function Battle() {
   const [showLog, setShowLog] = useState(false)
   const [conceding, setConceding] = useState(false)
   const root = useRef<HTMLDivElement>(null)
-  // On a phone the board takes what the panels and the hand leave, so nothing overlaps:
-  // the lane width follows the free height. Wide screens size the lanes by height already.
+  const [tucked, setTucked] = useState(false)
+  const tuckedRef = useRef(false)
+  const fullHand = useRef(0)
+  const fitRef = useRef<() => void>(() => {})
+  // On a phone the board takes what the column leaves and the lanes are sized to it. A
+  // lane never goes under the width where a card's name, keywords and numbers still read;
+  // when the fan would push it there, the hand tucks into a strip instead and the lanes
+  // keep their size. Wide screens size the lanes by height already.
   useEffect(() => {
     const el = root.current
     if (!el) return
     const fit = () => {
       if (window.innerWidth >= 1000) {
         el.style.removeProperty('--cw-lane')
+        if (tuckedRef.current) {
+          tuckedRef.current = false
+          setTucked(false)
+        }
         return
       }
-      const h = (sel: string) => el.querySelector(sel)?.getBoundingClientRect().height ?? 0
-      const used = h('.table-top') + h('.table-mid') + h('.table-bottom') + h('.hand-wrap') + 30
-      const free = el.clientHeight - used
-      const w = Math.max(60, Math.min(112, Math.floor((free - 14) / 2 / 1.62)))
+      const board = el.querySelector('.board')
+      const wrap = el.querySelector('.hand-wrap')
+      if (!board || !wrap) return
+      const boardH = board.getBoundingClientRect().height
+      const wrapH = wrap.getBoundingClientRect().height
+      if (!tuckedRef.current) fullHand.current = wrapH
+      const lane = (h: number) => Math.floor((h - LANE_GAPS) / 2 / CARD_RATIO)
+      const withFan = lane(boardH + wrapH - fullHand.current)
+      let tuck = false
+      let w = Math.min(MAX_LANE, withFan)
+      if (withFan < MIN_LANE) {
+        tuck = true
+        w = Math.max(FLOOR_LANE, Math.min(MAX_LANE, lane(boardH + wrapH - (tuckedRef.current ? wrapH : STRIP_H))))
+      }
       el.style.setProperty('--cw-lane', `${w}px`)
+      if (tuck !== tuckedRef.current) {
+        tuckedRef.current = tuck
+        setTucked(tuck)
+      }
     }
+    fitRef.current = fit
     fit()
     const ro = new ResizeObserver(fit)
     ro.observe(el)
-    el.querySelectorAll('.table-top, .table-mid, .table-bottom, .hand-wrap').forEach((n) => ro.observe(n))
+    el.querySelectorAll('.board, .hand-wrap').forEach((n) => ro.observe(n))
     window.addEventListener('resize', fit)
     return () => {
       ro.disconnect()
       window.removeEventListener('resize', fit)
     }
   }, [display?.phase, !!lesson, reviewing])
+  // The strip and the fan are different heights: size the lanes again once the hand has changed shape.
+  useLayoutEffect(() => {
+    fitRef.current()
+  }, [tucked])
   // Reviewing the final turn opens the log so the last events are in view.
   useEffect(() => {
     if (reviewing) setShowLog(true)
@@ -101,6 +137,7 @@ export function Battle() {
         if ((e.target as HTMLElement).classList.contains('battle') || (e.target as HTMLElement).classList.contains('board')) select({ kind: 'none' })
       }}
     >
+      {lesson && <LessonPanel />}
       <div className="table-top">
         <SigPanel state={display} player={them} />
         <div className="table-tools">
@@ -139,7 +176,6 @@ export function Battle() {
         )}
       </div>
       {reviewing && display.phase === 'over' && <OverStrip state={display} />}
-      {lesson && <LessonPanel />}
       {conceding && display.phase !== 'over' && (
         <div className="modal-scrim" onClick={() => setConceding(false)}>
           <div className="modal concede-modal" role="alertdialog" aria-label="Concede the reading" onClick={(e) => e.stopPropagation()}>
@@ -165,9 +201,9 @@ export function Battle() {
       )}
       <div className="table-bottom">
         <SigPanel state={display} player={me} />
-        <MoonDial state={display} />
+        <MoonDial state={display} prompt={prompt} onCancel={() => select({ kind: 'none' })} />
       </div>
-      <Hand state={display} />
+      <Hand state={display} tucked={tucked} />
       <AnimatePresence>{sel.kind === 'hand' && !sel.face && <FaceChooser key="fc" state={display} />}</AnimatePresence>
       {showLog && (
         <div className="log-drawer">

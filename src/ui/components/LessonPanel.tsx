@@ -3,6 +3,8 @@ import { useStore } from '../store'
 import { LESSONS, currentStep, lessonById } from '../../tutorial/lessons'
 
 // The lesson's voice at the table: which step, what to do, and the ways out.
+// On a phone it is the first thing in the column, one action line long, with the
+// whole instruction behind More. On a wide screen it floats over the sky and says it all.
 export function LessonPanel() {
   const lesson = useStore((s) => s.lesson)
   const retryStep = useStore((s) => s.retryStep)
@@ -19,7 +21,7 @@ export function LessonPanel() {
     const t = window.setTimeout(clearNudge, 2600)
     return () => window.clearTimeout(t)
   }, [nudge, clearNudge])
-  // A new step opens the panel again, folded to its first lines.
+  // A new step opens the panel again, folded to its action line.
   useEffect(() => {
     setOpen(true)
     setExpanded(false)
@@ -54,29 +56,41 @@ export function LessonPanel() {
   }
 
   return (
-    <div className={`lesson-panel ${step?.free ? 'is-free' : ''} ${open ? '' : 'is-shut'} ${trouble ? 'is-trouble' : ''}`} role="status" aria-live="polite" ref={box}>
+    <div className={`lesson-panel ${step?.free ? 'is-free' : ''} ${open ? '' : 'is-shut'} ${trouble ? 'is-trouble' : ''} ${expanded ? 'is-expanded' : ''}`} role="status" aria-live="polite" ref={box}>
       <div className="lesson-panel-top">
         <span className="lesson-panel-head">
-          Lesson {index + 1} of {LESSONS.length}: {def.title}. Step {lesson.progress.step + 1} of {def.steps.length}
+          Lesson {index + 1} of {LESSONS.length}
+          <span className="lesson-panel-title">: {def.title}</span>. Step {lesson.progress.step + 1} of {def.steps.length}
           {step?.free ? ', on your own' : ''}
         </span>
-        <button type="button" className="btn-quiet lesson-panel-toggle" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
-          {open ? 'Hide' : 'Show'}
-        </button>
+        <span className="lesson-panel-tools">
+          {open && !trouble && (
+            <button type="button" className="btn-quiet lesson-panel-more" onClick={() => setExpanded((v) => !v)} aria-expanded={expanded}>
+              {expanded ? 'Less' : 'More'}
+            </button>
+          )}
+          {!trouble && (
+            <button type="button" className="btn-quiet lesson-panel-retry" onClick={retryStep}>
+              Retry
+            </button>
+          )}
+          <button type="button" className="btn-quiet lesson-panel-toggle" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
+            {open ? 'Hide' : 'Show'}
+          </button>
+        </span>
       </div>
       {open && !trouble && (
-        <p className={`lesson-panel-say ${expanded ? '' : 'is-folded'}`} onClick={() => setExpanded((v) => !v)}>
-          {step?.say}
+        <p className={`lesson-panel-say ${nudge ? 'is-nudge' : ''}`}>
+          {nudge ?? (
+            <>
+              <span className="lesson-panel-do">{step?.do ?? step?.say}</span>
+              <span className="lesson-panel-full">{step?.say}</span>
+            </>
+          )}
         </p>
       )}
-      {open && !trouble && (
-        <button type="button" className="btn-quiet lesson-panel-more" onClick={() => setExpanded((v) => !v)} aria-expanded={expanded}>
-          {expanded ? 'Less' : 'More'}
-        </button>
-      )}
       {trouble && <p className="lesson-panel-nudge">{trouble}</p>}
-      {nudge && !trouble && <p className="lesson-panel-nudge">{nudge}</p>}
-      {open && (expanded || !!trouble) && (
+      {open && (
         <div className="lesson-panel-actions">
           <button type="button" className={trouble ? 'btn btn-primary' : 'btn-quiet'} onClick={retryStep}>
             Retry this step

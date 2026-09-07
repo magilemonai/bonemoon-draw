@@ -1,0 +1,217 @@
+{
+  "items": [
+    {
+      "font": "16px",
+      "rect": {
+        "height": 80.3125,
+        "width": 300,
+        "x": 70,
+        "y": 12
+      },
+      "selector": "sig sig-theirs  ",
+      "text": "Opponent\nDaxon\n20\nHealth\nSpark\n0 / 0\nHand\n0 / 8\nDeck\n25"
+    },
+    {
+      "font": "14px",
+      "rect": {
+        "height": 30.796875,
+        "width": 153,
+        "x": 411.5,
+        "y": 209.8203125
+      },
+      "selector": "card-name",
+      "text": "The Guard Post"
+    },
+    {
+      "font": "11px",
+      "rect": {
+        "height": 15,
+        "width": 36.984375,
+        "x": 469.5078125,
+        "y": 241.6171875
+      },
+      "selector": "kw kw-guard",
+      "text": "Guard"
+    },
+    {
+      "font": "10px",
+      "rect": {
+        "height": 16,
+        "width": 42.625,
+        "x": 520.875,
+        "y": 258.703125
+      },
+      "selector": "card-wounds",
+      "text": "1 wound"
+    },
+    {
+      "font": "14px",
+      "rect": {
+        "height": 30.796875,
+        "width": 153,
+        "x": 411.5,
+        "y": 209.8203125
+      },
+      "selector": "card-name",
+      "text": "The Guard Post"
+    },
+    {
+      "font": "11px",
+      "rect": {
+        "height": 15,
+        "width": 60.375,
+        "x": 457.8125,
+        "y": 241.6171875
+      },
+      "selector": "kw kw-windborne",
+      "text": "Windborne"
+    },
+    {
+      "font": "14px",
+      "rect": {
+        "height": 30.796875,
+        "width": 153,
+        "x": 589.5,
+        "y": 209.8203125
+      },
+      "selector": "card-name",
+      "text": "Null-Zone Pylon"
+    },
+    {
+      "font": "11px",
+      "rect": {
+        "height": 15,
+        "width": 36.984375,
+        "x": 647.5078125,
+        "y": 241.6171875
+      },
+      "selector": "kw kw-guard",
+      "text": "Guard"
+    },
+    {
+      "font": "14px",
+      "rect": {
+        "height": 30.796875,
+        "width": 153,
+        "x": 589.5,
+        "y": 209.8203125
+      },
+      "selector": "card-name",
+      "text": "Null-Zone Pylon"
+    },
+    {
+      "font": "14px",
+      "rect": {
+        "height": 30.796875,
+        "width": 153,
+        "x": 767.5,
+        "y": 209.8203125
+      },
+      "selector": "card-name",
+      "text": "Wisplight"
+    },
+    {
+      "font": "14px",
+      "rect": {
+        "height": 30.796875,
+        "width": 153,
+        "x": 767.5,
+        "y": 209.8203125
+      },
+      "selector": "card-name",
+      "text": "Wisplight"
+    },
+    {
+      "font": "11px",
+      "rect": {
+        "height": 15,
+        "width": 60.375,
+        "x": 793.875,
+        "y": 241.6171875
+      },
+      "selector": "kw kw-windborne",
+      "text": "Windborne"
+    },
+    {
+      "font": "11px",
+      "rect": {
+        "height": 15,
+        "width": 37.875,
+        "x": 856.25,
+        "y": 241.6171875
+      },
+      "selector": "kw kw-veiled",
+      "text": "Veiled"
+    },
+    {
+      "font": "14px",
+      "rect": {
+        "height": 30.796875,
+        "width": 153,
+        "x": 589.5,
+        "y": 479.8203125
+      },
+      "selector": "card-name",
+      "text": "Elder Voren Nightbloom"
+    },
+    {
+      "font": "14px",
+      "rect": {
+        "height": 30.796875,
+        "width": 153,
+        "x": 589.5,
+        "y": 479.8203125
+      },
+      "selector": "card-name",
+      "text": "Voren, Corrupted"
+    },
+    {
+      "font": "14px",
+      "rect": {
+        "height": 30.796875,
+        "width": 153,
+        "x": 767.5,
+        "y": 479.8203125
+      },
+      "selector": "card-name",
+      "text": "The Oondray"
+    },
+    {
+      "font": "14px",
+      "rect": {
+        "height": 30.796875,
+        "width": 153,
+        "x": 767.5,
+        "y": 479.8203125
+      },
+      "selector": "card-name",
+      "text": "The Oondray"
+    },
+    {
+      "font": "11px",
+      "rect": {
+        "height": 15,
+        "width": 60.375,
+        "x": 813.8125,
+        "y": 511.6171875
+      },
+      "selector": "kw kw-windborne",
+      "text": "Windborne"
+    },
+    {
+      "font": "16px",
+      "rect": {
+        "height": 135.5,
+        "width": 300,
+        "x": 964,
+        "y": 16
+      },
+      "selector": "lesson-panel   ",
+      "text": "Lesson 2 of 3: Turn the fight. Step 1 of 6\nHide\n\nElder Voren stands across from a Null-Zone Pylon, a 1/4 wall. Attack it with Voren: he deals 1 and takes 1. A wound stays on a Figure, even when it turns over."
+    }
+  ],
+  "viewport": [
+    1280,
+    800
+  ]
+}

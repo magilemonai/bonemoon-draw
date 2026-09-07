@@ -23,6 +23,7 @@ export type InspectTarget = { player: PlayerId; lane: LaneIndex } | 'read' | 'ha
 export interface LessonStep {
   id: string
   say: string // the instruction, in full
+  do?: string // the action alone, one line, for a phone's coach; the full say sits behind More
   hints?: LessonHint[] | ((s: GameState) => LessonHint[]) // what lights up, read from the table as it is
   allow?: (a: Action, s: GameState) => boolean // which actions the step accepts; anything, when absent
   nudge?: string // said when something else is tried
@@ -141,6 +142,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'play',
         say: 'Tap the Guard Post in your hand and choose its Reversed face. Reversed, it is 3/1 and Windborne. Then tap Present to place it. It costs 2 Spark; you have 3.',
+        do: 'Tap the Guard Post in your hand, choose Reversed, then tap Present.',
         hints: [
           { kind: 'hand', defId: 'suns-2' },
           { kind: 'face', face: 'reversed' },
@@ -153,6 +155,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'attack',
         say: 'Windborne means it can attack the turn it arrives. Tap the Guard Post, then the open lane across from it. Nothing stands there, so the blow goes to Rorik.',
+        do: 'Tap the Guard Post, then the open lane across from it.',
         hints: (s) => {
           const lane = laneOf(s, 0, 'suns-2')
           return lane === null ? [] : [{ kind: 'slot', player: 0, lane }, { kind: 'slot', player: 1, lane }, { kind: 'sig', player: 1 }]
@@ -164,6 +167,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'end',
         say: 'Rorik is at 17. End the turn. The opponent in a lesson only ends turns, and watch what Rorik does as his turn ends.',
+        do: 'End the turn, and watch what Rorik does as his turn ends.',
         hints: [{ kind: 'endTurn' }],
         allow: (a) => a.type === 'endTurn',
         nudge: 'End the turn.',
@@ -172,6 +176,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'draw',
         say: 'Rorik healed 1 as his turn ended: that is his passive, and he is at 18. Round 2: you gained a Spark, refilled to 4, and drew a card. Play the Zalian Fisherman Upright into any empty lane: when he arrives, he draws a card.',
+        do: 'Play the Zalian Fisherman Upright into any empty lane.',
         hints: (s) => [{ kind: 'hand', defId: 'tides-3' }, { kind: 'face', face: 'upright' }, ...emptyLanes(s, 0).map((lane) => ({ kind: 'slot' as const, player: 0 as PlayerId, lane }))],
         allow: (a, s) => isPlay(a, s, 'tides-3', 'upright'),
         nudge: 'Play the Zalian Fisherman, Upright.',
@@ -181,6 +186,7 @@ export const LESSONS: Lesson[] = [
         id: 'solve',
         free: true,
         say: 'On your own now: bring Rorik to 13 or less before this turn ends. The Guard Post alone will not get there. Sword Guy, your ability, gives a friendly Figure +2 Attack for the turn.',
+        do: 'Bring Rorik to 13 or less before this turn ends. Sword Guy gives +2 Attack.',
         done: (after) => after.players[1].health <= 13,
         within: 'turn',
         missedSay: 'The turn ended with Rorik above 13. Retry this step and finish him before ending the turn.',
@@ -208,6 +214,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'wound',
         say: 'Elder Voren stands across from a Null-Zone Pylon, a 1/4 wall. Attack it with Voren: he deals 1 and takes 1. A wound stays on a Figure, even when it turns over.',
+        do: 'Attack the Null-Zone Pylon with Elder Voren.',
         hints: [
           { kind: 'slot', player: 0, lane: 1 },
           { kind: 'slot', player: 1, lane: 1 },
@@ -219,6 +226,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'inspect',
         say: 'Now inspect the Pylon: tap the small i on its card. Read the comparison. Turned over, it would be 4/0, which is to say dead.',
+        do: 'Tap the small i on the Pylon and read the comparison.',
         hints: [{ kind: 'inspect', player: 1, lane: 1 }],
         allow: () => false,
         nudge: 'Inspect the Pylon first: the small i on its card.',
@@ -227,6 +235,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'flip',
         say: 'Wear a Face turns any Figure over for 2 Spark. Use it on the Pylon.',
+        do: 'Use Wear a Face on the Pylon.',
         hints: [{ kind: 'ability' }, { kind: 'slot', player: 1, lane: 1 }],
         allow: (a) => a.type === 'ability' && a.target?.kind === 'figure' && a.target.player === 1 && a.target.lane === 1,
         nudge: 'Use Wear a Face on the Pylon.',
@@ -235,6 +244,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'end',
         say: 'The wall is gone. It struck Voren once and never again. End the turn.',
+        do: 'End the turn.',
         hints: [{ kind: 'endTurn' }],
         allow: (a) => a.type === 'endTurn',
         nudge: 'End the turn.',
@@ -243,6 +253,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'veiled',
         say: 'The Wisplight in Future is Veiled: Omens and abilities cannot pick it until it attacks. Select Wear a Face and see that it is not offered. Cancel, then tap the Oondray and attack the Wisplight with it instead.',
+        do: 'Select Wear a Face: the Wisplight is not offered. Cancel, then attack it with the Oondray.',
         hints: [{ kind: 'slot', player: 0, lane: 2 }],
         allow: (a) => a.type === 'attack' && a.lane === 2,
         nudge: 'Attack the Wisplight with the Oondray, in Future.',
@@ -252,6 +263,7 @@ export const LESSONS: Lesson[] = [
         id: 'solve',
         free: true,
         say: 'On your own now: the Guard Post in Past already carries a wound. Kill it before this turn ends. Wear a Face has refreshed.',
+        do: 'Kill the Guard Post in Past before this turn ends. Wear a Face has refreshed.',
         done: (after) => after.players[1].lanes[0] === null,
         within: 'turn',
         missedSay: 'The turn ended with the Guard Post standing. Retry this step.',
@@ -277,6 +289,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'room',
         say: 'Look at the turn panel: round 3 is a Full Moon. Everyone draws 2 on a Full Moon, and Lirielle draws 3. Your hand holds 8. With 6 in hand and 3 coming, 1 would burn. Play a card to make room. You have 5 Spark this lesson.',
+        do: 'Play a card to make room for the Full Moon draw.',
         hints: (s) => playable(s, 0),
         allow: (a) => a.type === 'play' || a.type === 'choose',
         nudge: 'Play a card first.',
@@ -287,6 +300,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'read',
         say: 'Read the Stars costs 2 Spark: look at the top three cards of your deck and keep one. Use it now.',
+        do: 'Use Read the Stars, for 2 Spark.',
         hints: [{ kind: 'ability' }],
         allow: (a) => a.type === 'ability',
         nudge: 'Use Read the Stars.',
@@ -295,6 +309,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'look',
         say: 'Three cards. Tap one to read both faces; only Keep commits it. If you know them, keep straight away.',
+        do: 'Tap a card to read both faces, then Keep one.',
         allow: () => false,
         nudge: 'Tap a card to read it before you keep one.',
         doneOnInspect: 'read',
@@ -303,6 +318,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'keep',
         say: 'Keep the one you want. The rest go to the bottom of your deck.',
+        do: 'Keep the one you want.',
         allow: (a) => a.type === 'choose',
         nudge: 'Keep one of the three.',
         done: (after) => after.pending === null,
@@ -310,6 +326,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'count',
         say: 'You kept one, so you are back to 6 in hand: with the Full Moon bringing 3, one would burn again. Play one more card you can afford.',
+        do: 'Play one more card you can afford: 3 are coming, and one would burn.',
         hints: (s) => playable(s, 0),
         allow: (a) => a.type === 'play' || a.type === 'choose',
         nudge: 'Play one more card to make room.',
@@ -320,6 +337,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'moon',
         say: 'Five in hand. End the turn and watch the Full Moon draw.',
+        do: 'End the turn and watch the Full Moon draw.',
         hints: [{ kind: 'endTurn' }],
         allow: (a) => a.type === 'endTurn' || a.type === 'attack',
         nudge: 'End the turn.',
@@ -328,6 +346,7 @@ export const LESSONS: Lesson[] = [
       {
         id: 'bone',
         say: 'Three cards came in and nothing burned. Now the Bone Moon. In this lesson it rises on round 4; in a full reading it is round 10. From then on every Significator loses Health at the start of each turn, more each round. Nobody outlasts it. End the turn and feel the first bite.',
+        do: "End the turn and feel the Bone Moon's first bite.",
         hints: [{ kind: 'endTurn' }],
         done: (after) => myTurnAgain(after, 4) && after.players[0].health < 20,
       },
@@ -335,6 +354,7 @@ export const LESSONS: Lesson[] = [
         id: 'solve',
         free: true,
         say: 'You took 1. Luigi takes his bite at the start of his own turn. On your own now: the next draw is one card and your hand holds 8, so end this turn with 7 or fewer in hand and nothing burns. An Omen needs no lane.',
+        do: 'End this turn with 7 or fewer in hand and nothing burns. An Omen needs no lane.',
         done: (_after, a, before) => a?.type === 'endTurn' && before.active === before.humanPlayer && before.players[0].hand.length <= 7,
       },
     ],
