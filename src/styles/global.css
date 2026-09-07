@@ -46,7 +46,7 @@ body {
   background: var(--night-deep);
   color: var(--ivory);
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.35;
   -webkit-font-smoothing: antialiased;
   overscroll-behavior: none;
@@ -1789,85 +1789,6 @@ h3 {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* ---- Title -------------------------------------------------------------------- */
-
-.title-painting {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.title-painting img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 20%;
-  opacity: 0.9;
-  mask-image: linear-gradient(180deg, #000 0%, #000 45%, rgba(0, 0, 0, 0.55) 70%, transparent 100%);
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 45%, rgba(0, 0, 0, 0.55) 70%, transparent 100%);
-}
-.title.has-painting {
-  justify-content: flex-end;
-  padding-bottom: 16vh;
-}
-.title.has-painting .title-name,
-.title.has-painting .title-sub {
-  text-shadow: 0 2px 18px rgba(12, 10, 34, 0.9);
-}
-.title > *:not(.title-painting) {
-  position: relative;
-  z-index: 1;
-}
-
-.title {
-  position: relative;
-  z-index: 1;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 32px 20px 64px;
-  gap: 14px;
-}
-.title-moon {
-  filter: drop-shadow(0 0 30px rgba(243, 239, 227, 0.35));
-}
-.title-name {
-  font-size: clamp(2.4rem, 9vw, 4.4rem);
-  font-weight: 500;
-  color: var(--gold-3);
-  line-height: 1;
-}
-.title-sub {
-  max-width: 34ch;
-  color: rgba(239, 228, 204, 0.85);
-  font-size: 1.05rem;
-  margin: 0;
-}
-.title-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-  width: min(320px, 100%);
-}
-.title-actions .btn {
-  width: 100%;
-}
-.title-foot {
-  position: absolute;
-  bottom: max(14px, env(safe-area-inset-bottom));
-  font-family: var(--font-display);
-  font-style: italic;
-  color: rgba(232, 199, 108, 0.5);
-  font-size: 0.95rem;
-  margin: 0;
-  padding: 0 20px;
-}
-
 /* ---- Choose ------------------------------------------------------------------- */
 
 .choose,
@@ -2677,69 +2598,6 @@ h3 {
     padding-right: 6px;
   }
 }
-
-
-/* ---- Standing: the record on the title screen ------------------------------- */
-
-.standing {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  width: min(420px, 100%);
-  margin-top: 6px;
-  padding: 10px 14px;
-  border-radius: 14px;
-  background: rgba(12, 10, 34, 0.55);
-  border: 1px solid rgba(232, 199, 108, 0.28);
-}
-.standing-rank {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  gap: 4px 10px;
-}
-.standing-title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.35rem;
-  color: var(--gold-3);
-}
-.standing-renown {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  color: var(--ivory);
-}
-.standing-next {
-  font-size: 0.85rem;
-  color: rgba(239, 228, 204, 0.7);
-}
-.standing-continue {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  align-items: center;
-}
-.standing-continue small {
-  font-weight: 400;
-  font-size: 0.8rem;
-  opacity: 0.85;
-}
-.standing-goal {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--ivory);
-}
-.standing-form {
-  margin: 0;
-  font-size: 0.82rem;
-  color: rgba(239, 228, 204, 0.65);
-}
-.title.has-painting .standing {
-  background: rgba(12, 10, 34, 0.7);
-}
 .sig-choice-record {
   font-size: 0.82rem;
   color: var(--gold-2);
@@ -2758,31 +2616,6 @@ h3 {
   margin: 0;
   flex-basis: 100%;
   text-align: center;
-}
-
-
-/* ---- Standing, continued: goal as an action, the record, and concession -------- */
-
-.standing-goal {
-  width: 100%;
-  text-align: center;
-  white-space: normal;
-  line-height: 1.3;
-}
-.standing-stale {
-  margin: 0;
-  font-size: 0.85rem;
-  color: #ffd9cf;
-}
-.standing-store {
-  margin: 0;
-  font-size: 0.78rem;
-  color: rgba(239, 228, 204, 0.6);
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 2px 6px;
 }
 .btn-note {
   display: block;
@@ -3167,50 +3000,6 @@ h3 {
 .compare-stats .c-stat small {
   font-size: 0.85rem;
   color: rgba(239, 228, 204, 0.75);
-}
-
-/* Title: the words on a surface of their own; the goal as three lines. */
-.title-name,
-.title-sub {
-  position: relative;
-}
-.title.has-painting .title-name {
-  padding: 4px 22px;
-  border-radius: 16px;
-  background: rgba(12, 10, 34, 0.55);
-}
-.title.has-painting .title-sub {
-  padding: 8px 16px;
-  border-radius: 12px;
-  background: rgba(12, 10, 34, 0.62);
-  color: var(--ivory);
-  font-size: 1.1rem;
-  max-width: 40ch;
-}
-.standing-goal {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 10px 14px;
-}
-.goal-match {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.3rem;
-}
-.goal-why {
-  font-size: 0.95rem;
-  color: rgba(239, 228, 204, 0.85);
-}
-.goal-go {
-  font-size: 0.95rem;
-  color: var(--gold-3);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.standing-form,
-.standing-store {
-  font-size: 0.95rem;
 }
 .record-io summary {
   cursor: pointer;
@@ -3942,5 +3731,296 @@ h3 {
   }
   .choose-picks > .btn-quiet {
     padding: 6px 10px;
+  }
+}
+
+
+/* ==== The title: the painting first ============================================
+   The moon sits in the upper middle of the painting, sky and cloud on both sides,
+   the horizon just below half, a dark village and meadow along the bottom. On a
+   wide screen the name lives in the upper-left sky, the actions and the standing run
+   along the ground, and nothing touches the moon. On a phone the painting stands at
+   the top as a vista fading into the night, and everything sits beneath it. */
+
+.title {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  padding: 0 16px max(20px, env(safe-area-inset-bottom));
+}
+.title-hero {
+  position: relative;
+  height: 46vh;
+  min-height: 260px;
+  margin: 0 -16px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.title-hero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 28%;
+  mask-image: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.6) 82%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.6) 82%, transparent 100%);
+}
+.title-moon {
+  position: relative;
+  filter: drop-shadow(0 0 30px rgba(243, 239, 227, 0.35));
+}
+.title-lockup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  margin-top: -6vh;
+}
+.title-name {
+  margin: 0;
+  font-size: clamp(2.8rem, 12vw, 4.6rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--gold-3);
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 24px rgba(12, 10, 34, 0.9);
+}
+.title-sub {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: var(--ivory);
+  text-shadow: 0 1px 12px rgba(12, 10, 34, 0.9);
+}
+.title-foot {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.98rem;
+  color: rgba(232, 199, 108, 0.7);
+}
+.title-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.title-actions .btn {
+  width: 100%;
+  min-height: 46px;
+  font-size: 1.05rem;
+}
+
+/* The standing: rank, the next thing to do, the record. */
+.standing {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(12, 10, 34, 0.62);
+  border: 1px solid rgba(232, 199, 108, 0.25);
+}
+.standing-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.standing-rank {
+  align-items: baseline;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+.standing-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--gold-3);
+}
+.standing-renown {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--ivory);
+}
+.standing-next {
+  font-size: 0.95rem;
+  color: rgba(239, 228, 204, 0.75);
+}
+.standing-up {
+  gap: 8px;
+}
+.standing-continue,
+.standing-goal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  min-height: 52px;
+  padding: 8px 14px;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.2;
+}
+.standing-continue span,
+.standing-goal span {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.standing-continue small,
+.standing-goal small {
+  font-weight: 400;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+.standing-stale {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #ffd9cf;
+}
+.standing-record {
+  font-size: 0.95rem;
+  color: rgba(239, 228, 204, 0.85);
+}
+.standing-store {
+  color: rgba(239, 228, 204, 0.65);
+}
+.standing-store .btn-quiet {
+  padding: 0 4px;
+  min-height: 0;
+  font-size: 0.95rem;
+}
+
+@media (min-width: 720px) {
+  .title-actions {
+    grid-template-columns: repeat(4, auto);
+    justify-content: center;
+  }
+  .title-actions .btn {
+    width: auto;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  .standing {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 18px;
+  }
+  .standing-rank {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .standing-up {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .standing-continue,
+  .standing-goal {
+    flex: 1 1 220px;
+    width: auto;
+  }
+}
+
+/* Wide: the painting fills the screen; the words keep to the sky and the ground. */
+@media (min-width: 1000px) {
+  .title {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      'lockup'
+      '.'
+      'actions'
+      'standing';
+    padding: 6vh 5vw 3vh;
+    gap: 16px;
+  }
+  .title-hero {
+    position: absolute;
+    inset: 0;
+    height: auto;
+    min-height: 0;
+    margin: 0;
+    z-index: 0;
+  }
+  .title-hero img {
+    object-position: 50% 0%;
+    mask-image: linear-gradient(180deg, #000 0%, #000 72%, rgba(0, 0, 0, 0.55) 88%, rgba(0, 0, 0, 0.25) 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 72%, rgba(0, 0, 0, 0.55) 88%, rgba(0, 0, 0, 0.25) 100%);
+  }
+  .title-lockup {
+    grid-area: lockup;
+    z-index: 1;
+    align-items: flex-start;
+    text-align: left;
+    margin: 0;
+    max-width: 30vw;
+    min-width: 320px;
+  }
+  .title-name {
+    font-size: clamp(3.4rem, 5.6vw, 5.4rem);
+  }
+  .title-actions {
+    grid-area: actions;
+    z-index: 1;
+    justify-content: flex-start;
+  }
+  .standing {
+    grid-area: standing;
+    z-index: 1;
+  }
+}
+/* Supporting text at 16px, in the body face; the serif only for names and headings. */
+.standing-next,
+.standing-record,
+.standing-store,
+.standing-store .btn-quiet,
+.standing-continue small,
+.standing-goal small,
+.standing-stale,
+.title-foot {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+.standing-continue small,
+.standing-goal small {
+  font-family: var(--font-body);
+}
+.standing-renown {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+}
+
+/* Phone: the painting is shown close, so the moon reads at the size it deserves. */
+@media (max-width: 999px) {
+  .title-hero {
+    height: 50vh;
+    min-height: 300px;
+  }
+  .title-hero img {
+    width: 178%;
+    height: auto;
+    max-width: none;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, -6%);
+    object-fit: unset;
+  }
+}
+@media (min-width: 1000px) {
+  .title-lockup {
+    max-width: 36vw;
   }
 }
