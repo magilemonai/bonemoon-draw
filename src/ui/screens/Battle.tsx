@@ -1,10 +1,11 @@
 import { AnimatePresence } from 'motion/react'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { card, significator } from '../../data'
-import { faceDef, figureName, other, whyNoAttack, whyNoMove } from '../../engine/queries'
-import type { GameState } from '../../engine/types'
+import { faceDef, figureName, keywords, other, whyNoAttack, whyNoMove } from '../../engine/queries'
+import type { GameState, Keyword } from '../../engine/types'
 import { useStore, type Selection } from '../store'
 import { Board, figureNeedsTarget } from '../components/Board'
+import { KW_LABEL, KW_MARK } from '../components/Card'
 import { FaceChooser, Hand } from '../components/Hand'
 import { SigPanel } from '../components/SigPanel'
 import { MoonDial } from '../components/Moon'
@@ -59,6 +60,9 @@ export function Battle() {
   const concede = useStore((s) => s.concede)
   const lesson = useStore((s) => s.lesson)
   const leaveLesson = useStore((s) => s.leaveLesson)
+  const study = useStore((s) => s.study)
+  const cardStyle = useStore((s) => s.cardStyle)
+  const setCardStyle = useStore((s) => s.setCardStyle)
   const casting = useStore((s) => s.fx.some((f) => f.kind === 'flash' && !!f.defId))
   const [showLog, setShowLog] = useState(false)
   const [conceding, setConceding] = useState(false)
@@ -127,11 +131,23 @@ export function Battle() {
   const them = other(me)
   const prompt = display.active === me && !display.pending && display.phase !== 'over' ? promptFor(display, sel) : null
   const quick = speed > 1
+  // The marks legend: only the marks on the table right now, so it reads as a key.
+  const marks: { mark: string; label: string; cls: string }[] = []
+  if (cardStyle === 'marks') {
+    const seen = new Set<Keyword>()
+    let relics = false
+    for (const pl of [0, 1] as const) for (const f of display.players[pl].lanes) if (f) {
+      for (const k of keywords(display, f)) if (k !== 'entersReversed') seen.add(k)
+      if (f.relics.length) relics = true
+    }
+    for (const k of seen) marks.push({ mark: KW_MARK[k], label: KW_LABEL[k], cls: `kw-${k}` })
+    if (relics) marks.push({ mark: '+', label: 'carries a Relic', cls: 'kw-relic' })
+  }
 
   return (
     <div
       ref={root}
-      className={`battle ${display.round >= display.boneMoonRound ? 'is-bone' : ''} ${reviewing ? 'is-reviewing' : ''} ${lesson ? 'is-lesson' : ''} ${casting ? 'is-casting' : ''}`}
+      className={`battle ${display.round >= display.boneMoonRound ? 'is-bone' : ''} ${reviewing ? 'is-reviewing' : ''} ${lesson ? 'is-lesson' : ''} ${casting ? 'is-casting' : ''} cards-${cardStyle} ${study ? 'is-study' : ''}`}
       onClick={(e) => {
         // Tapping the felt clears a selection.
         if ((e.target as HTMLElement).classList.contains('battle') || (e.target as HTMLElement).classList.contains('board')) select({ kind: 'none' })
@@ -147,14 +163,28 @@ export function Battle() {
           <button type="button" className="btn-quiet" onClick={() => setShowLog((v) => !v)} aria-pressed={showLog}>
             Log
           </button>
-          {display.phase !== 'over' && !lesson && (
+          {display.phase !== 'over' && !lesson && !study && (
             <button type="button" className="btn-quiet" onClick={() => setConceding(true)} aria-pressed={conceding}>
               Concede
             </button>
           )}
+          {study && (
+            <>
+              <button type="button" className={`btn-quiet ${cardStyle === 'words' ? 'is-on' : ''}`} onClick={() => setCardStyle('words')} aria-pressed={cardStyle === 'words'}>
+                Words
+              </button>
+              <button type="button" className={`btn-quiet ${cardStyle === 'marks' ? 'is-on' : ''}`} onClick={() => setCardStyle('marks')} aria-pressed={cardStyle === 'marks'}>
+                Marks
+              </button>
+            </>
+          )}
           {lesson ? (
             <button type="button" className="btn-quiet" onClick={leaveLesson}>
               Leave the lesson
+            </button>
+          ) : study ? (
+            <button type="button" className="btn-quiet" onClick={() => goto('title')}>
+              Leave the study
             </button>
           ) : (
             <button type="button" className="btn-quiet" onClick={() => goto('title')} title="The reading is kept; continue it from the title screen">
@@ -165,6 +195,18 @@ export function Battle() {
       </div>
       <AnimatePresence>{display.players[them].handRevealed && <RevealedHand state={display} />}</AnimatePresence>
       <Board state={display} />
+      {marks.length > 0 && (
+        <div className="mark-legend" aria-label="What the marks mean">
+          {marks.map((m) => (
+            <span key={m.label} className="mark-legend-item">
+              <span className={`mark ${m.cls}`} aria-hidden>
+                {m.mark}
+              </span>
+              {m.label}
+            </span>
+          ))}
+        </div>
+      )}
       <div className="table-mid">
         {prompt && (
           <div className="targeting-hint" role="status">

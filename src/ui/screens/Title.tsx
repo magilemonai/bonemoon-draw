@@ -93,6 +93,7 @@ function Standing({ onRecord }: { onRecord: () => void }) {
 export function Title() {
   const goto = useStore((s) => s.goto)
   const saved = useStore((s) => s.savedMatch)
+  const startStudy = useStore((s) => s.startStudy)
   const [painted, setPainted] = useState(false)
   const [record, setRecord] = useState(false)
   return (
@@ -126,6 +127,9 @@ export function Title() {
           </button>
           <button type="button" className="title-link" onClick={() => goto('rules')}>
             How to play
+          </button>
+          <button type="button" className="title-link" onClick={startStudy} title="One crowded table in both compact card treatments">
+            Card study
           </button>
         </span>
       </nav>

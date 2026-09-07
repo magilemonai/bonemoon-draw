@@ -89,7 +89,7 @@ On round ten the Bone Moon rises. From then on every Significator loses Health a
 
 ## Building a deck
 
-Thirty cards. Two copies at most of any Minor Arcana card, one copy at most of any Major, and never the Major that is your own Significator. Each shipped Significator comes with a 30-card reading built from two suits; the deck builder is next on the list.
+Thirty cards. Two copies at most of any Minor Arcana card, one copy at most of any Major, and never the Major that is your own Significator. Each shipped Significator comes with a 30-card starter list built from two suits. Your decks on the title screen builds and keeps your own lists; every starter can be copied and changed.
 
 ## A worked example
 

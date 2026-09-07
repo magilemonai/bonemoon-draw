@@ -5,9 +5,10 @@
 // Each hero keeps its own deck order across the seat swap (per-hero deck seeds).
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { execSync } from 'node:child_process'
 import { beginGame, createGame, finalState, mulligan, runAction } from '../src/engine/engine'
 import { chooseAction, chooseMulligan } from '../src/ai/ai'
-import { RULES } from '../src/engine/rules'
+import { RULES, RULES_VERSION } from '../src/engine/rules'
 import { SIGNIFICATORS, card } from '../src/data'
 import type { GameEvent, GameState, PlayerId } from '../src/engine/types'
 import { VARIANTS } from './variants'
@@ -21,6 +22,18 @@ const variant = arg('variant', 'baseline')
 const pairs = Number(arg('pairs', '20'))
 const beam = Number(arg('beam', '5'))
 const depth = Number(arg('depth', '2')) as 1 | 2
+const worlds = Number(arg('worlds', '2'))
+// The provenance stamp: which code, which rules, which decks, which planner, which seeds, when.
+const sh = (cmd: string) => {
+  try {
+    return execSync(cmd, { encoding: 'utf8' }).trim()
+  } catch {
+    return 'unknown'
+  }
+}
+const commit = sh('git rev-parse --short HEAD')
+const dirty = sh('git status --porcelain -- src scripts')
+const stampedAt = new Date().toLocaleString('en-US', { timeZone: 'America/New_York', hour12: false, timeZoneName: 'short' })
 if (!VARIANTS[variant]) throw new Error(`unknown variant ${variant}; known: ${Object.keys(VARIANTS).join(', ')}`)
 VARIANTS[variant].apply()
 
@@ -73,7 +86,7 @@ function playGame(sigs: [string, string], seed: number, deckSeeds: [number, numb
   let guard = 0
   const trace: string[] = []
   while (s.phase !== 'over' && guard++ < 900) {
-    const act = chooseAction(s, { seed, depth, beam })
+    const act = chooseAction(s, { seed, depth, beam, worlds })
     const steps = runAction(s, act, false)
     let marker: LethalSource = 'other'
     for (const st of steps) {
@@ -160,7 +173,10 @@ L.push(`# ${variant === 'baseline' ? 'Baseline' : `Experiment: ${variant}`}`)
 L.push('')
 L.push(`${VARIANTS[variant].summary}`)
 L.push('')
-L.push(`${totalGames} games: 15 hero pairings, ${pairs} seed pairs each, both seats, each hero keeping its own deck order across the seat swap. Planner depth ${depth}, beam ${beam}. Run on ${new Date().toISOString().slice(0, 10)} in ${((Date.now() - t0) / 1000).toFixed(0)} seconds.`)
+const deckStamp = SIGNIFICATORS.map((h) => `${h.id.replace('sig-', '')} ${h.deck.length}`).join(', ')
+L.push(`${totalGames} games: 15 hero pairings, ${pairs} seed pairs each, both seats, each hero keeping its own deck order across the seat swap. Planner depth ${depth}, beam ${beam}, ${worlds} sampled worlds. Run in ${((Date.now() - t0) / 1000).toFixed(0)} seconds.`)
+L.push('')
+L.push(`Code ${commit}${dirty ? ' with uncommitted changes in src or scripts' : ', clean tree'}. Rules ${RULES_VERSION}. Starter decks as shipped (${deckStamp}). Seeds: 20260906 + pairing x 104729 + pair x 7919, the seat swap at seed + 1, deck orders hashed per hero. Stamped ${stampedAt}.`)
 L.push('')
 L.push(`Average length ${avgRounds.toFixed(1)} rounds. ${draws} draws. First seat won ${pct(firstSeatWins, totalGames - draws)} of decided games. The Bone Moon was up at the end of ${pct(moonGames, totalGames)} of games.`)
 L.push('')
@@ -211,7 +227,7 @@ L.push('')
 for (const t of traces) L.push('```', t, '```', '')
 
 mkdirSync('docs/experiments', { recursive: true })
-const json = { variant, summary: VARIANTS[variant].summary, games: totalGames, pairs, depth, beam, avgRounds, draws, firstSeatWins, moonGames, stats, matchup, cardUse, hist, lethalTotals }
+const json = { variant, summary: VARIANTS[variant].summary, commit, dirty: !!dirty, rulesVersion: RULES_VERSION, stampedAt, games: totalGames, pairs, depth, beam, worlds, avgRounds, draws, firstSeatWins, moonGames, stats, matchup, cardUse, hist, lethalTotals }
 writeFileSync(`docs/experiments/${variant}.json`, JSON.stringify(json, null, 2) + '\n')
 
 // Delta against the baseline, if one exists and this is not it.

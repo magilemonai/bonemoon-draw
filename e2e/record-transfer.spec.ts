@@ -1,0 +1,33 @@
+import { expect, test } from '@playwright/test'
+import { shot, title } from './helpers'
+
+test('a record with a built deck moves to a fresh browser context', async ({ browser }, info) => {
+  const a = await browser.newContext()
+  const pa = await a.newPage()
+  await title(pa)
+  await pa.getByRole('button', { name: 'Your decks' }).click()
+  await pa.getByRole('button', { name: 'Copy and edit' }).first().click()
+  await pa.getByLabel('Deck name').fill('Carried list')
+  await pa.getByRole('button', { name: 'Your decks' }).first().click()
+  await expect(pa.locator('.decks')).toContainText('Carried list')
+  await pa.getByRole('button', { name: 'Title screen' }).click()
+  await pa.getByRole('button', { name: 'Your record' }).click()
+  await pa.getByText('Back up or move this record').click()
+  const text = await pa.locator('.record-io textarea').first().inputValue()
+  expect(text).toContain('Carried list')
+  await a.close()
+
+  const b = await browser.newContext()
+  const pb = await b.newPage()
+  await title(pb)
+  await pb.getByRole('button', { name: 'Your record' }).click()
+  await pb.getByText('Back up or move this record').click()
+  await pb.locator('.record-io textarea').nth(1).fill(text)
+  await pb.getByRole('button', { name: 'Check it' }).click()
+  await pb.getByRole('button', { name: 'Replace my record' }).click()
+  await pb.getByRole('button', { name: 'Close' }).click()
+  await pb.getByRole('button', { name: 'Your decks' }).click()
+  await expect(pb.locator('.decks')).toContainText('Carried list')
+  await shot(pb, info, 'record-carried')
+  await b.close()
+})

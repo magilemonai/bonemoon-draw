@@ -5653,3 +5653,152 @@ h3 {
     gap: 2px;
   }
 }
+
+
+/* ==== The Card study: two compact treatments on one table =========================== */
+
+/* Marks: each keyword is a letter or two on a small tile, the word is its name, and a key
+   under the board says what is on the table. The footer keeps only the numbers row, so
+   the painting takes the keyword row's height as well. */
+.mark {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 3px;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11.5px;
+  line-height: 1;
+  background: rgba(232, 199, 108, 0.2);
+  color: var(--gold-3);
+}
+.mark-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3px 12px;
+  padding: 2px 8px;
+  font-size: 12.5px;
+  color: rgba(239, 228, 204, 0.85);
+}
+.mark-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+@media (min-width: 1000px) {
+  .mark-legend {
+    grid-area: board;
+    align-self: end;
+    justify-self: center;
+    z-index: 2;
+    pointer-events: none;
+    margin-bottom: 4px;
+  }
+}
+.cards-marks .size-lane .kw,
+.cards-marks .size-hand .kw {
+  font-size: 0;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 3px;
+  border-radius: 4px;
+  display: inline-grid;
+  place-items: center;
+  background: rgba(12, 10, 34, 0.88);
+  color: var(--ivory);
+  box-shadow: 0 0 0 1px rgba(255, 252, 240, 0.35);
+}
+.cards-marks .size-lane .kw::before,
+.cards-marks .size-hand .kw::before {
+  content: attr(data-mark);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+}
+.cards-marks .size-lane .kw-relic,
+.cards-marks .size-hand .kw-relic {
+  font-style: normal;
+  color: var(--gold-3);
+}
+/* The marks ride the painting's lower-left edge; the footer keeps only the numbers. */
+.cards-marks .size-lane .card-text,
+.cards-marks .size-hand .card-text {
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  bottom: 0;
+  height: 27px;
+  min-height: 0;
+  padding: 0;
+  pointer-events: none;
+}
+.cards-marks .size-lane .card-name,
+.cards-marks .size-hand .card-name {
+  margin-bottom: 27px;
+}
+.card-kws-art {
+  position: absolute;
+  left: 3px;
+  bottom: 3px;
+  z-index: 2;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2px;
+  padding: 0;
+  pointer-events: none;
+}
+/* Their corners: wounds top left, Hushed top centre, Aegis top right, marks bottom left,
+   Asleep bottom centre, the Reversed dot bottom right. */
+.cards-marks .size-lane .card-wounds {
+  left: 3px;
+  top: 3px;
+  bottom: auto;
+  transform: none;
+}
+.cards-marks .size-lane .card-state-hushed {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.cards-marks .size-lane .card-state-asleep {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.mark {
+  background: rgba(12, 10, 34, 0.88);
+  color: var(--ivory);
+  box-shadow: 0 0 0 1px rgba(255, 252, 240, 0.35);
+  font-size: 11px;
+}
+.mark.kw-relic {
+  color: var(--gold-3);
+}
+.table-tools .btn-quiet.is-on {
+  opacity: 1;
+  color: var(--gold-3);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* A wide screen keeps its lane and hand sizes: the phone root values above must not win
+   here. (They did between the 477ae92 round and this one, outside lessons.) */
+@media (min-width: 1000px) {
+  :root {
+    --cw-lane: min(176px, 20vh);
+    --cw-hand: min(126px, 13vh);
+  }
+  .mark-legend {
+    align-self: start;
+    justify-self: end;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin: 6px 6px 0 0;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: rgba(12, 10, 34, 0.7);
+    pointer-events: none;
+  }
+}

@@ -1,127 +1,132 @@
 {
   "variant": "tidecaller-gale",
   "summary": "Tidecaller Reversed: +2/+1, Windborne, Gale (was +3/+1 Windborne).",
+  "commit": "c283f90",
+  "dirty": true,
+  "rulesVersion": "2026-09-06",
+  "stampedAt": "9/7/2026, 17:41:41 EDT",
   "games": 600,
   "pairs": 20,
   "depth": 2,
   "beam": 5,
-  "avgRounds": 8.121666666666666,
+  "worlds": 2,
+  "avgRounds": 8.11,
   "draws": 0,
-  "firstSeatWins": 397,
-  "moonGames": 147,
+  "firstSeatWins": 386,
+  "moonGames": 151,
   "stats": {
     "sig-daxon": {
       "games": 200,
       "wins": 155,
       "firstGames": 100,
-      "firstWins": 91,
-      "healing": 713,
-      "burns": 44,
-      "cardsPlayed": 1807,
-      "uprightPlays": 686,
-      "reversedPlays": 1121,
+      "firstWins": 88,
+      "healing": 747,
+      "burns": 47,
+      "cardsPlayed": 1775,
+      "uprightPlays": 655,
+      "reversedPlays": 1120,
       "lostTo": {
-        "attack": 33,
-        "omen": 9,
-        "boneMoon": 3,
+        "attack": 28,
+        "omen": 8,
+        "boneMoon": 8,
         "fatigue": 0,
-        "ability": 0,
+        "ability": 1,
         "other": 0
       }
     },
     "sig-lirielle": {
       "games": 200,
-      "wins": 54,
+      "wins": 63,
       "firstGames": 100,
-      "firstWins": 47,
-      "healing": 13,
-      "burns": 426,
-      "cardsPlayed": 1858,
-      "uprightPlays": 747,
-      "reversedPlays": 1111,
+      "firstWins": 54,
+      "healing": 23,
+      "burns": 411,
+      "cardsPlayed": 1844,
+      "uprightPlays": 753,
+      "reversedPlays": 1091,
       "lostTo": {
-        "attack": 97,
+        "attack": 88,
         "omen": 31,
-        "boneMoon": 11,
-        "fatigue": 0,
-        "ability": 4,
-        "other": 3
-      }
-    },
-    "sig-luigi": {
-      "games": 200,
-      "wins": 86,
-      "firstGames": 100,
-      "firstWins": 64,
-      "healing": 1087,
-      "burns": 243,
-      "cardsPlayed": 2107,
-      "uprightPlays": 994,
-      "reversedPlays": 1113,
-      "lostTo": {
-        "attack": 78,
-        "omen": 29,
-        "boneMoon": 5,
-        "fatigue": 0,
-        "ability": 0,
-        "other": 2
-      }
-    },
-    "sig-rorik": {
-      "games": 200,
-      "wins": 134,
-      "firstGames": 100,
-      "firstWins": 83,
-      "healing": 1869,
-      "burns": 129,
-      "cardsPlayed": 1791,
-      "uprightPlays": 673,
-      "reversedPlays": 1118,
-      "lostTo": {
-        "attack": 54,
-        "omen": 8,
-        "boneMoon": 3,
-        "fatigue": 0,
-        "ability": 0,
-        "other": 1
-      }
-    },
-    "sig-masque": {
-      "games": 200,
-      "wins": 116,
-      "firstGames": 100,
-      "firstWins": 70,
-      "healing": 457,
-      "burns": 160,
-      "cardsPlayed": 1583,
-      "uprightPlays": 649,
-      "reversedPlays": 934,
-      "lostTo": {
-        "attack": 60,
-        "omen": 17,
-        "boneMoon": 3,
+        "boneMoon": 14,
         "fatigue": 0,
         "ability": 1,
         "other": 3
       }
     },
-    "sig-shazz": {
+    "sig-luigi": {
       "games": 200,
-      "wins": 55,
+      "wins": 83,
       "firstGames": 100,
-      "firstWins": 42,
-      "healing": 20,
-      "burns": 141,
-      "cardsPlayed": 1587,
-      "uprightPlays": 442,
-      "reversedPlays": 1145,
+      "firstWins": 62,
+      "healing": 984,
+      "burns": 255,
+      "cardsPlayed": 1990,
+      "uprightPlays": 901,
+      "reversedPlays": 1089,
       "lostTo": {
-        "attack": 103,
-        "omen": 24,
+        "attack": 69,
+        "omen": 25,
+        "boneMoon": 20,
+        "fatigue": 0,
+        "ability": 0,
+        "other": 3
+      }
+    },
+    "sig-rorik": {
+      "games": 200,
+      "wins": 136,
+      "firstGames": 100,
+      "firstWins": 80,
+      "healing": 1912,
+      "burns": 125,
+      "cardsPlayed": 1777,
+      "uprightPlays": 640,
+      "reversedPlays": 1137,
+      "lostTo": {
+        "attack": 42,
+        "omen": 8,
         "boneMoon": 12,
         "fatigue": 0,
-        "ability": 4,
+        "ability": 0,
         "other": 2
+      }
+    },
+    "sig-masque": {
+      "games": 200,
+      "wins": 111,
+      "firstGames": 100,
+      "firstWins": 65,
+      "healing": 410,
+      "burns": 155,
+      "cardsPlayed": 1553,
+      "uprightPlays": 654,
+      "reversedPlays": 899,
+      "lostTo": {
+        "attack": 58,
+        "omen": 20,
+        "boneMoon": 8,
+        "fatigue": 0,
+        "ability": 1,
+        "other": 2
+      }
+    },
+    "sig-shazz": {
+      "games": 200,
+      "wins": 52,
+      "firstGames": 100,
+      "firstWins": 37,
+      "healing": 28,
+      "burns": 140,
+      "cardsPlayed": 1567,
+      "uprightPlays": 458,
+      "reversedPlays": 1109,
+      "lostTo": {
+        "attack": 101,
+        "omen": 23,
+        "boneMoon": 19,
+        "fatigue": 0,
+        "ability": 1,
+        "other": 4
       }
     }
   },
@@ -132,11 +137,11 @@
         "g": 0
       },
       "sig-lirielle": {
-        "w": 34,
+        "w": 30,
         "g": 40
       },
       "sig-luigi": {
-        "w": 29,
+        "w": 31,
         "g": 40
       },
       "sig-rorik": {
@@ -144,17 +149,17 @@
         "g": 40
       },
       "sig-masque": {
-        "w": 29,
+        "w": 30,
         "g": 40
       },
       "sig-shazz": {
-        "w": 37,
+        "w": 38,
         "g": 40
       }
     },
     "sig-lirielle": {
       "sig-daxon": {
-        "w": 6,
+        "w": 10,
         "g": 40
       },
       "sig-lirielle": {
@@ -162,7 +167,7 @@
         "g": 0
       },
       "sig-luigi": {
-        "w": 14,
+        "w": 17,
         "g": 40
       },
       "sig-rorik": {
@@ -170,7 +175,7 @@
         "g": 40
       },
       "sig-masque": {
-        "w": 10,
+        "w": 12,
         "g": 40
       },
       "sig-shazz": {
@@ -180,11 +185,11 @@
     },
     "sig-luigi": {
       "sig-daxon": {
-        "w": 11,
+        "w": 9,
         "g": 40
       },
       "sig-lirielle": {
-        "w": 26,
+        "w": 23,
         "g": 40
       },
       "sig-luigi": {
@@ -192,7 +197,7 @@
         "g": 0
       },
       "sig-rorik": {
-        "w": 10,
+        "w": 14,
         "g": 40
       },
       "sig-masque": {
@@ -200,7 +205,7 @@
         "g": 40
       },
       "sig-shazz": {
-        "w": 29,
+        "w": 27,
         "g": 40
       }
     },
@@ -214,7 +219,7 @@
         "g": 40
       },
       "sig-luigi": {
-        "w": 30,
+        "w": 26,
         "g": 40
       },
       "sig-rorik": {
@@ -222,21 +227,21 @@
         "g": 0
       },
       "sig-masque": {
-        "w": 24,
+        "w": 26,
         "g": 40
       },
       "sig-shazz": {
-        "w": 32,
+        "w": 36,
         "g": 40
       }
     },
     "sig-masque": {
       "sig-daxon": {
-        "w": 11,
+        "w": 10,
         "g": 40
       },
       "sig-lirielle": {
-        "w": 30,
+        "w": 28,
         "g": 40
       },
       "sig-luigi": {
@@ -244,7 +249,7 @@
         "g": 40
       },
       "sig-rorik": {
-        "w": 16,
+        "w": 14,
         "g": 40
       },
       "sig-masque": {
@@ -258,7 +263,7 @@
     },
     "sig-shazz": {
       "sig-daxon": {
-        "w": 3,
+        "w": 2,
         "g": 40
       },
       "sig-lirielle": {
@@ -266,11 +271,11 @@
         "g": 40
       },
       "sig-luigi": {
-        "w": 11,
+        "w": 13,
         "g": 40
       },
       "sig-rorik": {
-        "w": 8,
+        "w": 4,
         "g": 40
       },
       "sig-masque": {
@@ -286,474 +291,474 @@
   "cardUse": {
     "suns-page": {
       "up": 0,
-      "rev": 445,
+      "rev": 454,
       "upWins": 0,
-      "revWins": 318
+      "revWins": 325
     },
     "suns-3": {
-      "up": 81,
-      "rev": 161,
+      "up": 80,
+      "rev": 154,
       "upWins": 62,
-      "revWins": 112
+      "revWins": 111
     },
     "tides-2": {
-      "up": 23,
-      "rev": 53,
-      "upWins": 15,
-      "revWins": 32
+      "up": 27,
+      "rev": 47,
+      "upWins": 18,
+      "revWins": 30
     },
     "major-19": {
-      "up": 72,
-      "rev": 85,
-      "upWins": 57,
-      "revWins": 49
+      "up": 73,
+      "rev": 93,
+      "upWins": 55,
+      "revWins": 53
     },
     "antlers-3": {
-      "up": 2,
-      "rev": 311,
-      "upWins": 2,
-      "revWins": 141
+      "up": 3,
+      "rev": 318,
+      "upWins": 1,
+      "revWins": 142
     },
     "antlers-2": {
-      "up": 8,
-      "rev": 216,
-      "upWins": 2,
-      "revWins": 48
+      "up": 9,
+      "rev": 219,
+      "upWins": 1,
+      "revWins": 55
     },
     "antlers-7": {
-      "up": 50,
-      "rev": 56,
-      "upWins": 13,
-      "revWins": 17
+      "up": 54,
+      "rev": 52,
+      "upWins": 20,
+      "revWins": 10
     },
     "gears-3": {
-      "up": 220,
-      "rev": 3,
-      "upWins": 65,
+      "up": 210,
+      "rev": 1,
+      "upWins": 67,
       "revWins": 1
     },
     "gears-ace": {
-      "up": 247,
-      "rev": 232,
-      "upWins": 64,
-      "revWins": 103
+      "up": 256,
+      "rev": 212,
+      "upWins": 66,
+      "revWins": 99
     },
     "antlers-ace": {
-      "up": 65,
-      "rev": 237,
-      "upWins": 26,
-      "revWins": 110
+      "up": 72,
+      "rev": 238,
+      "upWins": 31,
+      "revWins": 117
     },
     "major-3": {
-      "up": 76,
-      "rev": 32,
-      "upWins": 39,
-      "revWins": 10
+      "up": 69,
+      "rev": 28,
+      "upWins": 37,
+      "revWins": 11
     },
     "major-2": {
-      "up": 70,
-      "rev": 38,
-      "upWins": 14,
-      "revWins": 13
+      "up": 74,
+      "rev": 37,
+      "upWins": 20,
+      "revWins": 12
     },
     "antlers-king": {
-      "up": 94,
+      "up": 95,
       "rev": 5,
-      "upWins": 36,
+      "upWins": 42,
       "revWins": 2
     },
     "suns-8": {
-      "up": 46,
-      "rev": 95,
-      "upWins": 31,
-      "revWins": 83
+      "up": 48,
+      "rev": 85,
+      "upWins": 32,
+      "revWins": 72
     },
     "suns-4": {
-      "up": 142,
-      "rev": 74,
-      "upWins": 70,
-      "revWins": 67
+      "up": 135,
+      "rev": 68,
+      "upWins": 72,
+      "revWins": 63
     },
     "tides-page": {
-      "up": 80,
-      "rev": 42,
-      "upWins": 51,
+      "up": 72,
+      "rev": 43,
+      "upWins": 40,
       "revWins": 13
     },
     "suns-queen": {
       "up": 4,
-      "rev": 115,
-      "upWins": 0,
-      "revWins": 90
+      "rev": 114,
+      "upWins": 2,
+      "revWins": 87
     },
     "tides-ace": {
-      "up": 10,
-      "rev": 277,
-      "upWins": 8,
-      "revWins": 189
+      "up": 11,
+      "rev": 273,
+      "upWins": 9,
+      "revWins": 183
     },
     "tides-10": {
-      "up": 18,
-      "rev": 44,
-      "upWins": 14,
-      "revWins": 38
+      "up": 14,
+      "rev": 50,
+      "upWins": 11,
+      "revWins": 43
     },
     "suns-9": {
-      "up": 78,
-      "rev": 35,
-      "upWins": 60,
-      "revWins": 24
+      "up": 84,
+      "rev": 28,
+      "upWins": 66,
+      "revWins": 16
     },
     "major-14": {
-      "up": 3,
-      "rev": 154,
-      "upWins": 0,
-      "revWins": 114
+      "up": 2,
+      "rev": 157,
+      "upWins": 1,
+      "revWins": 117
     },
     "major-12": {
-      "up": 79,
+      "up": 82,
       "rev": 8,
-      "upWins": 66,
-      "revWins": 7
+      "upWins": 69,
+      "revWins": 6
     },
     "gears-page": {
-      "up": 81,
-      "rev": 168,
-      "upWins": 28,
-      "revWins": 60
+      "up": 86,
+      "rev": 159,
+      "upWins": 33,
+      "revWins": 58
     },
     "antlers-knight": {
-      "up": 175,
+      "up": 178,
       "rev": 0,
-      "upWins": 86,
+      "upWins": 90,
       "revWins": 0
     },
     "major-6": {
-      "up": 49,
-      "rev": 2,
-      "upWins": 19,
-      "revWins": 0
+      "up": 54,
+      "rev": 1,
+      "upWins": 24,
+      "revWins": 1
     },
     "major-10": {
-      "up": 8,
-      "rev": 50,
-      "upWins": 5,
-      "revWins": 44
+      "up": 5,
+      "rev": 56,
+      "upWins": 3,
+      "revWins": 49
     },
     "antlers-6": {
-      "up": 36,
-      "rev": 53,
-      "upWins": 15,
-      "revWins": 14
-    },
-    "gears-queen": {
-      "up": 5,
-      "rev": 201,
-      "upWins": 4,
-      "revWins": 80
-    },
-    "tides-queen": {
-      "up": 20,
-      "rev": 27,
-      "upWins": 13,
+      "up": 29,
+      "rev": 57,
+      "upWins": 10,
       "revWins": 18
     },
+    "tides-queen": {
+      "up": 16,
+      "rev": 33,
+      "upWins": 11,
+      "revWins": 21
+    },
     "suns-7": {
-      "up": 100,
+      "up": 81,
       "rev": 1,
-      "upWins": 60,
+      "upWins": 50,
       "revWins": 0
     },
     "suns-2": {
-      "up": 72,
-      "rev": 155,
+      "up": 69,
+      "rev": 156,
       "upWins": 31,
-      "revWins": 114
+      "revWins": 121
     },
     "tides-5": {
       "up": 44,
-      "rev": 30,
-      "upWins": 34,
+      "rev": 29,
+      "upWins": 35,
       "revWins": 20
     },
     "tides-3": {
-      "up": 150,
-      "rev": 64,
-      "upWins": 91,
-      "revWins": 25
+      "up": 129,
+      "rev": 76,
+      "upWins": 75,
+      "revWins": 26
     },
     "suns-knight": {
-      "up": 133,
-      "rev": 171,
-      "upWins": 63,
-      "revWins": 126
+      "up": 130,
+      "rev": 174,
+      "upWins": 52,
+      "revWins": 123
     },
     "tides-8": {
-      "up": 23,
-      "rev": 70,
-      "upWins": 20,
-      "revWins": 59
+      "up": 21,
+      "rev": 68,
+      "upWins": 18,
+      "revWins": 56
     },
     "gears-4": {
-      "up": 138,
-      "rev": 120,
-      "upWins": 61,
-      "revWins": 35
+      "up": 134,
+      "rev": 121,
+      "upWins": 62,
+      "revWins": 38
     },
     "antlers-page": {
-      "up": 22,
-      "rev": 62,
-      "upWins": 6,
-      "revWins": 22
+      "up": 27,
+      "rev": 58,
+      "upWins": 10,
+      "revWins": 23
     },
     "antlers-4": {
-      "up": 0,
-      "rev": 84,
-      "upWins": 0,
-      "revWins": 25
+      "up": 1,
+      "rev": 87,
+      "upWins": 1,
+      "revWins": 30
+    },
+    "gears-queen": {
+      "up": 8,
+      "rev": 188,
+      "upWins": 7,
+      "revWins": 70
     },
     "gears-10": {
       "up": 0,
-      "rev": 85,
+      "rev": 78,
       "upWins": 0,
-      "revWins": 56
+      "revWins": 53
     },
     "gears-2": {
-      "up": 28,
-      "rev": 268,
-      "upWins": 9,
-      "revWins": 87
+      "up": 37,
+      "rev": 250,
+      "upWins": 11,
+      "revWins": 81
+    },
+    "gears-8": {
+      "up": 15,
+      "rev": 5,
+      "upWins": 6,
+      "revWins": 2
     },
     "antlers-queen": {
-      "up": 7,
-      "rev": 192,
-      "upWins": 4,
-      "revWins": 92
+      "up": 6,
+      "rev": 187,
+      "upWins": 3,
+      "revWins": 98
     },
     "gears-knight": {
-      "up": 250,
-      "rev": 82,
-      "upWins": 97,
-      "revWins": 24
+      "up": 238,
+      "rev": 88,
+      "upWins": 96,
+      "revWins": 23
     },
     "antlers-8": {
       "up": 0,
-      "rev": 75,
+      "rev": 71,
       "upWins": 0,
-      "revWins": 19
+      "revWins": 22
     },
     "suns-5": {
       "up": 0,
-      "rev": 115,
+      "rev": 119,
       "upWins": 0,
-      "revWins": 85
+      "revWins": 87
     },
     "tides-4": {
-      "up": 42,
+      "up": 40,
       "rev": 0,
-      "upWins": 33,
+      "upWins": 35,
       "revWins": 0
     },
     "tok-brog": {
       "up": 1,
       "rev": 198,
       "upWins": 0,
-      "revWins": 85
+      "revWins": 82
     },
     "gears-5": {
-      "up": 185,
-      "rev": 103,
-      "upWins": 69,
+      "up": 175,
+      "rev": 107,
+      "upWins": 56,
       "revWins": 45
     },
     "major-16": {
-      "up": 71,
-      "rev": 36,
+      "up": 73,
+      "rev": 39,
       "upWins": 10,
-      "revWins": 34
+      "revWins": 35
     },
     "gears-king": {
-      "up": 92,
-      "rev": 5,
-      "upWins": 61,
-      "revWins": 1
+      "up": 88,
+      "rev": 4,
+      "upWins": 51,
+      "revWins": 2
     },
     "major-21": {
-      "up": 41,
+      "up": 26,
       "rev": 2,
-      "upWins": 27,
+      "upWins": 16,
       "revWins": 0
     },
     "gears-9": {
-      "up": 4,
-      "rev": 225,
+      "up": 3,
+      "rev": 220,
       "upWins": 3,
-      "revWins": 97
+      "revWins": 92
     },
-    "tides-6": {
-      "up": 52,
-      "rev": 0,
-      "upWins": 26,
-      "revWins": 0
+    "major-18": {
+      "up": 6,
+      "rev": 2,
+      "upWins": 0,
+      "revWins": 1
+    },
+    "tides-7": {
+      "up": 0,
+      "rev": 68,
+      "upWins": 0,
+      "revWins": 31
     },
     "major-13": {
-      "up": 56,
-      "rev": 91,
-      "upWins": 30,
-      "revWins": 33
+      "up": 57,
+      "rev": 93,
+      "upWins": 26,
+      "revWins": 34
     },
     "tides-knight": {
-      "up": 49,
-      "rev": 23,
-      "upWins": 27,
-      "revWins": 6
+      "up": 48,
+      "rev": 18,
+      "upWins": 25,
+      "revWins": 2
     },
     "major-1": {
       "up": 0,
-      "rev": 91,
+      "rev": 86,
       "upWins": 0,
-      "revWins": 37
-    },
-    "tides-7": {
-      "up": 1,
-      "rev": 79,
-      "upWins": 1,
       "revWins": 36
     },
-    "antlers-5": {
-      "up": 0,
-      "rev": 158,
-      "upWins": 0,
-      "revWins": 41
-    },
     "tides-9": {
-      "up": 60,
-      "rev": 13,
-      "upWins": 32,
-      "revWins": 6
+      "up": 57,
+      "rev": 9,
+      "upWins": 27,
+      "revWins": 4
     },
     "gears-7": {
-      "up": 186,
-      "rev": 28,
-      "upWins": 72,
-      "revWins": 15
+      "up": 183,
+      "rev": 29,
+      "upWins": 63,
+      "revWins": 18
     },
-    "major-18": {
-      "up": 7,
-      "rev": 2,
-      "upWins": 2,
-      "revWins": 1
-    },
-    "gears-6": {
-      "up": 2,
-      "rev": 3,
-      "upWins": 1,
-      "revWins": 3
-    },
-    "gears-8": {
-      "up": 9,
-      "rev": 7,
-      "upWins": 5,
-      "revWins": 3
+    "tides-6": {
+      "up": 26,
+      "rev": 0,
+      "upWins": 13,
+      "revWins": 0
     },
     "suns-ace": {
-      "up": 220,
-      "rev": 105,
-      "upWins": 158,
-      "revWins": 66
-    },
-    "major-17": {
-      "up": 7,
-      "rev": 42,
-      "upWins": 1,
-      "revWins": 24
-    },
-    "suns-6": {
-      "up": 24,
-      "rev": 120,
-      "upWins": 16,
-      "revWins": 80
-    },
-    "major-9": {
-      "up": 17,
-      "rev": 70,
-      "upWins": 9,
-      "revWins": 53
-    },
-    "suns-10": {
-      "up": 96,
-      "rev": 13,
-      "upWins": 51,
-      "revWins": 9
+      "up": 205,
+      "rev": 107,
+      "upWins": 141,
+      "revWins": 65
     },
     "antlers-10": {
-      "up": 10,
-      "rev": 51,
-      "upWins": 3,
-      "revWins": 40
+      "up": 7,
+      "rev": 53,
+      "upWins": 0,
+      "revWins": 39
+    },
+    "major-17": {
+      "up": 6,
+      "rev": 43,
+      "upWins": 2,
+      "revWins": 22
+    },
+    "suns-6": {
+      "up": 26,
+      "rev": 103,
+      "upWins": 18,
+      "revWins": 66
+    },
+    "suns-10": {
+      "up": 88,
+      "rev": 17,
+      "upWins": 44,
+      "revWins": 11
+    },
+    "major-9": {
+      "up": 15,
+      "rev": 72,
+      "upWins": 9,
+      "revWins": 56
     },
     "major-0": {
       "up": 0,
-      "rev": 67,
+      "rev": 73,
       "upWins": 0,
-      "revWins": 47
+      "revWins": 48
     },
     "major-7": {
       "up": 32,
       "rev": 39,
-      "upWins": 20,
-      "revWins": 25
+      "upWins": 21,
+      "revWins": 28
     },
     "major-11": {
-      "up": 20,
-      "rev": 26,
-      "upWins": 14,
-      "revWins": 10
+      "up": 19,
+      "rev": 24,
+      "upWins": 13,
+      "revWins": 7
     },
     "major-20": {
-      "up": 1,
-      "rev": 93,
-      "upWins": 1,
-      "revWins": 66
+      "up": 3,
+      "rev": 86,
+      "upWins": 2,
+      "revWins": 58
     },
     "suns-king": {
       "up": 47,
       "rev": 1,
-      "upWins": 37,
+      "upWins": 33,
       "revWins": 1
     },
     "major-4": {
-      "up": 22,
-      "rev": 18,
-      "upWins": 15,
-      "revWins": 3
+      "up": 21,
+      "rev": 13,
+      "upWins": 14,
+      "revWins": 1
     },
     "antlers-9": {
-      "up": 2,
-      "rev": 40,
+      "up": 3,
+      "rev": 38,
       "upWins": 0,
-      "revWins": 20
+      "revWins": 19
+    },
+    "antlers-5": {
+      "up": 0,
+      "rev": 153,
+      "upWins": 0,
+      "revWins": 39
     },
     "major-8": {
-      "up": 26,
+      "up": 23,
       "rev": 0,
-      "upWins": 8,
+      "upWins": 6,
       "revWins": 0
+    },
+    "gears-6": {
+      "up": 1,
+      "rev": 2,
+      "upWins": 0,
+      "revWins": 2
     }
   },
   "hist": {
-    "5 to 6": 117,
-    "7 to 8": 251,
-    "9 to 10": 156,
-    "11 to 12": 69,
-    "13 and up": 7
+    "5 to 6": 121,
+    "7 to 8": 249,
+    "9 to 10": 151,
+    "11 to 12": 68,
+    "13 and up": 11
   },
   "lethalTotals": {
-    "attack": 425,
-    "omen": 118,
-    "boneMoon": 37,
+    "attack": 386,
+    "omen": 115,
+    "boneMoon": 81,
     "fatigue": 0,
-    "ability": 9,
-    "other": 11
+    "ability": 4,
+    "other": 14
   }
 }

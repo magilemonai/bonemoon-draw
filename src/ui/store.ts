@@ -14,6 +14,7 @@ import { abandon, checkSaved, loadProfile, saveProfile, settleMatch, type Award,
 import { isLegalDeck } from '../engine/deck'
 import { loadDecks, resolveDeck, saveDecks, stampOf, starterDeck, type DeckList } from './decks'
 import { afterAction, afterInspect, allowed, currentStep, isStuck, lessonById, type InspectTarget, type LessonProgress } from '../tutorial/lessons'
+import { studyState } from '../tutorial/study'
 import { completeLesson } from './profile'
 
 export type Screen = 'title' | 'choose' | 'battle' | 'codex' | 'rules' | 'decks' | 'build' | 'lessons'
@@ -100,6 +101,10 @@ interface UIState {
   decks: DeckList[] // built decks, kept in this browser
   buildingId: string | null // the deck open in the builder
   lesson: { id: string; progress: LessonProgress; stepStart: GameState; nudge: string | null; stuck: boolean } | null // a lesson in play
+  study: boolean // the Card study: a fixed position, a sleeping opponent, nothing on the record
+  cardStyle: 'words' | 'marks' // how a compact card shows its keywords
+  setCardStyle: (style: 'words' | 'marks') => void
+  startStudy: () => void
   lastDeck: NonNullable<SavedMatch['deck']> | null // the list the last finished reading was played with
   uiKit: boolean // public/art/ui/* is present (probed once)
   tableArt: boolean // public/art/table.jpg is present
@@ -312,11 +317,32 @@ export const useStore = create<UIState>((set, get) => ({
   decks: loadDecks(),
   buildingId: null,
   lesson: null,
+  study: false,
+  cardStyle: (() => {
+    try {
+      return localStorage.getItem('bonemoon.cards') === 'marks' ? 'marks' : 'words'
+    } catch {
+      return 'words'
+    }
+  })(),
+  setCardStyle: (style) => {
+    try {
+      localStorage.setItem('bonemoon.cards', style)
+    } catch {
+      /* the choice lasts the session */
+    }
+    set({ cardStyle: style })
+  },
+  startStudy: () => {
+    const s = studyState()
+    set({ committed: s, display: s, queue: [], playing: false, fx: [], log: [], selection: { kind: 'none' }, reviewing: false, award: null, humanSig: 'sig-shazz', aiSig: 'sig-daxon', lesson: null, study: true, screen: 'battle' })
+    get().tick()
+  },
   lastDeck: null,
   uiKit: false,
   tableArt: false,
 
-  goto: (screen) => set({ screen, selection: { kind: 'none' }, reviewing: false, choosePreset: null, lesson: null }),
+  goto: (screen) => set({ screen, selection: { kind: 'none' }, reviewing: false, choosePreset: null, lesson: null, study: false }),
   openChoose: (preset) => set({ screen: 'choose', selection: { kind: 'none' }, reviewing: false, choosePreset: preset ?? null }),
   dismissStale: () => {
     storeMatch(null)
@@ -352,6 +378,7 @@ export const useStore = create<UIState>((set, get) => ({
       humanSig: lesson.sigs[0],
       aiSig: lesson.sigs[1],
       lesson: { id, progress: { step: 0, complete: false }, stepStart: s, nudge: null, stuck: false },
+      study: false,
       screen: 'battle',
     })
     get().tick()
@@ -407,6 +434,7 @@ export const useStore = create<UIState>((set, get) => ({
     }
     storageOk = storeMatch(saved) && storageOk
     set({
+      study: false,
       committed,
       display: g,
       queue: steps,
@@ -491,6 +519,11 @@ export const useStore = create<UIState>((set, get) => ({
     const steps = runAction(committed, a, true)
     const next = finalState(steps, committed)
     set({ committed: next, queue: [...queue, ...steps], selection: { kind: 'none' } })
+    if (get().study) {
+      // The study is not a reading: nothing settles, nothing is saved.
+      get().tick()
+      return
+    }
     if (next.phase === 'over') {
       // A completed match goes on the record once, under the rules it was started with,
       // and the unfinished-match slot clears.
@@ -537,7 +570,7 @@ export const useStore = create<UIState>((set, get) => ({
       // Queue drained. Is it the AI's turn?
       const c = st.committed
       if (c && c.phase !== 'over' && c.active !== c.humanPlayer && st.screen === 'battle') {
-        const a: Action = st.lesson ? { type: 'endTurn' } : chooseAction(c, { seed: c.seed })
+        const a: Action = st.lesson || st.study ? { type: 'endTurn' } : chooseAction(c, { seed: c.seed })
         // Small human-like pause before the opponent acts.
         set({ playing: true })
         setTimeout(() => {

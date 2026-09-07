@@ -5,6 +5,9 @@ import { card as cardDef } from '../../data'
 import { Sigil } from '../sigils'
 import { ArtImage } from './ArtImage'
 import { useStore } from '../store'
+import { displayName, shortName } from '../names'
+
+export { shortName }
 
 export type CardSize = 'lane' | 'hand' | 'full' | 'mini'
 
@@ -34,7 +37,7 @@ export interface CardProps {
   className?: string
 }
 
-const KW_LABEL: Record<Keyword, string> = {
+export const KW_LABEL: Record<Keyword, string> = {
   guard: 'Guard',
   windborne: 'Windborne',
   veiled: 'Veiled',
@@ -46,6 +49,21 @@ const KW_LABEL: Record<Keyword, string> = {
   whisper: 'Whisper',
   entersReversed: 'Enters Reversed',
   dormant: 'Dormant',
+}
+
+// The marks treatment: a letter or two for each keyword, with the word as its name.
+export const KW_MARK: Record<Keyword, string> = {
+  guard: 'G',
+  windborne: 'W',
+  veiled: 'V',
+  fixed: 'F',
+  rekindle: 'R',
+  feast: 'Fe',
+  aegis: 'A',
+  gale: 'Ga',
+  whisper: 'Wh',
+  entersReversed: 'Rv',
+  dormant: 'D',
 }
 
 // Renders **bold** spans in rules text.
@@ -64,12 +82,6 @@ export function RulesText({ text }: { text: string }) {
   )
 }
 
-// "Death: The Man in Black" is "The Man in Black" on a compact card; the full name is in inspection.
-export function shortName(name: string): string {
-  const i = name.indexOf(': ')
-  return i > 0 ? name.slice(i + 2) : name
-}
-
 function printedStats(def: CardDef, face: Face) {
   if (def.type !== 'figure') return null
   const a = def.attack ?? 0
@@ -80,16 +92,34 @@ function printedStats(def: CardDef, face: Face) {
 function FaceView(props: CardProps & { which: Face }) {
   const { def, which, size } = props
   const uiKit = useStore((s) => s.uiKit)
+  const marksMode = useStore((s) => s.cardStyle) === 'marks'
   const fd = which === 'upright' ? def.upright : def.reversed
   const active = which === props.face
   const stats = active && props.atk !== undefined ? { atk: props.atk, hp: props.hp ?? 0 } : printedStats(def, which)
   const printed = printedStats(def, which)
   const compact = size === 'hand' || size === 'lane' || size === 'mini'
-  const name = compact ? shortName(fd.name ?? def.name) : fd.name ?? def.name
+  const name = compact ? displayName(fd.name ?? def.name) : fd.name ?? def.name
   const kws = active && props.kws ? props.kws : (fd.keywords ?? []).filter((k) => k !== 'entersReversed')
   const showText = size === 'hand' || size === 'full'
   const rel = active ? props.relics ?? [] : []
   const cost = props.cost ?? def.cost
+  // In the marks treatment a compact card's keywords ride the painting's lower edge.
+  const marksOnArt = marksMode && compact && size !== 'mini'
+  const kwRow = (cls: string) => (
+    <div className={`card-kws ${cls}`}>
+      {kws.map((k) => (
+        <span key={k} className={`kw kw-${k}`} data-mark={KW_MARK[k]} title={KW_LABEL[k]}>
+          {KW_LABEL[k]}
+        </span>
+      ))}
+      {size === 'lane' &&
+        rel.map((r) => (
+          <span key={r.uid} className="kw kw-relic" data-mark="+" title={cardDef(r.defId).name}>
+            {cardDef(r.defId).name.split(':')[0]}
+          </span>
+        ))}
+    </div>
+  )
 
   return (
     <div className={`card-face face-${which} ${active ? 'is-active' : ''}`}>
@@ -106,6 +136,7 @@ function FaceView(props: CardProps & { which: Face }) {
           {props.hushed && active && <span className="card-state card-state-hushed">Hushed</span>}
           {props.asleep && active && <span className="card-state card-state-asleep">Asleep</span>}
           {props.aegis && active && <span className="card-aegis" title="Aegis" />}
+          {marksOnArt && kwRow('card-kws-art')}
           {active && size === 'lane' && (props.wounds ?? 0) > 0 && (
             <span className="card-wounds" title={`${props.wounds} wound${props.wounds === 1 ? '' : 's'}: kept through a flip`}>
               {props.wounds} wound{props.wounds === 1 ? '' : 's'}
@@ -120,29 +151,10 @@ function FaceView(props: CardProps & { which: Face }) {
                 <p>
                   <RulesText text={props.hushed && active ? 'Hushed.' : fd.text || '—'} />
                 </p>
-                {size === 'hand' && (
-                  <div className="card-kws card-kws-hand">
-                    {kws.map((k) => (
-                      <span key={k} className={`kw kw-${k}`}>
-                        {KW_LABEL[k]}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                {size === 'hand' && !marksOnArt && kwRow('card-kws-hand')}
               </>
             ) : (
-              <div className="card-kws">
-                {kws.map((k) => (
-                  <span key={k} className={`kw kw-${k}`}>
-                    {KW_LABEL[k]}
-                  </span>
-                ))}
-                {rel.map((r) => (
-                  <span key={r.uid} className="kw kw-relic" title={cardDef(r.defId).name}>
-                    {cardDef(r.defId).name.split(':')[0]}
-                  </span>
-                ))}
-              </div>
+              !marksOnArt && kwRow('')
             )}
             {showText && rel.length > 0 && (
               <div className="card-kws">

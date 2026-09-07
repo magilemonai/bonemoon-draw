@@ -2,139 +2,140 @@
 
 Partial mulligan before the first turn (AI sets aside all but one card costing 5 or more).
 
-600 games: 15 hero pairings, 20 seed pairs each, both seats, each hero keeping its own deck order across the seat swap. Planner depth 2, beam 5. Run on 2026-09-06 in 26 seconds.
+600 games: 15 hero pairings, 20 seed pairs each, both seats, each hero keeping its own deck order across the seat swap. Planner depth 2, beam 5, 2 sampled worlds. Run in 55 seconds.
 
-Average length 8.1 rounds. 0 draws. First seat won 66% of decided games. The Bone Moon was up at the end of 24% of games.
+Code c283f90 with uncommitted changes in src or scripts. Rules 2026-09-06. Starter decks as shipped (daxon 30, lirielle 30, luigi 30, rorik 30, masque 30, shazz 30). Seeds: 20260906 + pairing x 104729 + pair x 7919, the seat swap at seed + 1, deck orders hashed per hero. Stamped 9/7/2026, 17:37:15 EDT.
+
+Average length 8.2 rounds. 0 draws. First seat won 64% of decided games. The Bone Moon was up at the end of 25% of games.
 
 ## Heroes
 
 | Hero | Win rate | Games | First seat | Second seat | Heal per game | Burns per game | Upright plays | Reversed plays |
 |---|---|---|---|---|---|---|---|---|
-| Daxon Lamn | 71% | 200 | 84% | 57% | 3.8 | 0.33 | 37% | 63% |
-| Lirielle Starwhisper | 24% | 200 | 39% | 9% | 0.2 | 1.78 | 41% | 59% |
-| Luigi Bonemoon | 47% | 200 | 66% | 27% | 5.2 | 1.18 | 48% | 52% |
-| Rorik Flamebeard | 70% | 200 | 83% | 57% | 9.5 | 0.67 | 36% | 64% |
-| Lord-Provost Elaina Masque | 66% | 200 | 80% | 51% | 2.0 | 0.70 | 44% | 56% |
-| Imperator Amegmon Shazz | 24% | 200 | 41% | 6% | 0.2 | 0.68 | 30% | 70% |
+| Daxon Lamn | 70% | 200 | 81% | 58% | 3.8 | 0.34 | 38% | 62% |
+| Lirielle Starwhisper | 24% | 200 | 39% | 9% | 0.2 | 1.83 | 41% | 59% |
+| Luigi Bonemoon | 46% | 200 | 63% | 29% | 5.3 | 1.21 | 48% | 52% |
+| Rorik Flamebeard | 72% | 200 | 83% | 61% | 9.6 | 0.67 | 37% | 63% |
+| Lord-Provost Elaina Masque | 66% | 200 | 80% | 52% | 2.0 | 0.69 | 44% | 56% |
+| Imperator Amegmon Shazz | 23% | 200 | 39% | 6% | 0.1 | 0.67 | 30% | 70% |
 
 ## Matchups (row hero win rate against column hero, both seats combined)
 
 | | Daxon | Lirielle | Luigi | Rorik | Lord-Provost | Imperator |
 |---|---|---|---|---|---|---|
-| Daxon |  | 80% | 70% | 43% | 65% | 95% |
+| Daxon |  | 80% | 70% | 40% | 65% | 93% |
 | Lirielle | 20% |  | 30% | 10% | 18% | 43% |
-| Luigi | 30% | 70% |  | 40% | 25% | 68% |
-| Rorik | 58% | 90% | 60% |  | 50% | 93% |
-| Lord-Provost | 35% | 83% | 75% | 50% |  | 85% |
-| Imperator | 5% | 58% | 33% | 8% | 15% |  |
+| Luigi | 30% | 70% |  | 33% | 25% | 73% |
+| Rorik | 60% | 90% | 68% |  | 50% | 93% |
+| Lord-Provost | 35% | 83% | 75% | 50% |  | 88% |
+| Imperator | 8% | 58% | 28% | 8% | 13% |  |
 
 ## Game length
 
-- Rounds 5 to 6: 123
-- Rounds 7 to 8: 253
-- Rounds 9 to 10: 163
-- Rounds 11 to 12: 53
-- Rounds 13 and up: 8
+- Rounds 5 to 6: 122
+- Rounds 7 to 8: 254
+- Rounds 9 to 10: 143
+- Rounds 11 to 12: 70
+- Rounds 13 and up: 11
 
 ## How games ended (the blow that took the loser to zero)
 
-- attack: 440
-- omen: 108
-- boneMoon: 25
+- attack: 401
+- omen: 93
+- boneMoon: 86
 - fatigue: 0
-- ability: 13
-- other: 14
+- ability: 9
+- other: 11
 
 Per hero, what they lost to:
 
 | Hero | attack | omen | Bone Moon | fatigue | ability | other |
 |---|---|---|---|---|---|---|
-| Daxon Lamn | 38 | 10 | 6 | 0 | 3 | 2 |
-| Lirielle Starwhisper | 116 | 30 | 2 | 0 | 2 | 2 |
-| Luigi Bonemoon | 75 | 21 | 6 | 0 | 0 | 5 |
-| Rorik Flamebeard | 41 | 9 | 5 | 0 | 1 | 4 |
-| Lord-Provost Elaina Masque | 50 | 14 | 3 | 0 | 2 | 0 |
-| Imperator Amegmon Shazz | 120 | 24 | 3 | 0 | 5 | 1 |
+| Daxon Lamn | 33 | 8 | 18 | 0 | 1 | 1 |
+| Lirielle Starwhisper | 110 | 26 | 13 | 0 | 2 | 1 |
+| Luigi Bonemoon | 69 | 13 | 20 | 0 | 0 | 6 |
+| Rorik Flamebeard | 37 | 4 | 12 | 0 | 1 | 2 |
+| Lord-Provost Elaina Masque | 47 | 11 | 10 | 0 | 0 | 0 |
+| Imperator Amegmon Shazz | 105 | 31 | 13 | 0 | 5 | 1 |
 
 ## Face usage by card (plays and win rate when played on that face; at least 10 plays)
 
 | Card | Upright plays | Upright win | Reversed plays | Reversed win |
 |---|---|---|---|---|
-| Eldertech Sphere | 250 | 26% | 246 | 39% |
-| Captain Elira Voss | 0 | n/a | 458 | 74% |
-| Mordeaux, the Clockwork Man | 239 | 36% | 94 | 30% |
+| Eldertech Sphere | 256 | 27% | 253 | 38% |
+| Captain Elira Voss | 0 | n/a | 460 | 73% |
+| Mordeaux, the Clockwork Man | 242 | 36% | 94 | 30% |
 | The Oondray | 1 | 0% | 331 | 46% |
-| Dawn Over Aurengate | 237 | 76% | 95 | 63% |
-| General Vath Enverez | 134 | 48% | 188 | 77% |
-| Mr. Boscoe | 49 | 24% | 269 | 37% |
-| Null-Zone Pylon | 169 | 49% | 131 | 28% |
-| Project Tamori | 196 | 36% | 104 | 40% |
-| Wisplight | 66 | 41% | 224 | 47% |
-| Kaipo’s Pearl | 11 | 36% | 254 | 64% |
-| The Guard Post | 81 | 30% | 173 | 69% |
-| Braxon Lamn | 85 | 67% | 167 | 69% |
-| Eva’s Kitchen | 161 | 48% | 89 | 82% |
-| The Sleepless Sentry | 210 | 37% | 37 | 65% |
-| Pommeroy | 87 | 33% | 154 | 40% |
-| Zalian Fisherman | 160 | 49% | 78 | 36% |
-| Elder Voren Nightbloom | 3 | 33% | 227 | 19% |
-| Mr. Zero | 4 | 100% | 206 | 48% |
-| Yvette Mirthwell | 208 | 32% | 1 | 0% |
-| Brog | 0 | n/a | 200 | 47% |
-| Temperance: Brother Soren | 3 | 33% | 185 | 73% |
-| Archivist Esmerelda Gotch | 2 | 100% | 177 | 41% |
-| Kaelen Goldeneye | 2 | 100% | 160 | 48% |
-| The Sun: The Spark | 80 | 75% | 76 | 51% |
-| Thorn of the Bladed Wind | 153 | 42% | 0 | n/a |
-| Shadowling Stalkers | 0 | n/a | 134 | 26% |
-| The Festival of Radiant Dawn | 15 | 87% | 112 | 77% |
-| Taranis, the Laughing Crow | 67 | 34% | 59 | 12% |
-| The Solar Flare Cannon | 90 | 84% | 34 | 56% |
-| The Tower: The Fallen Isle | 71 | 13% | 53 | 91% |
-| Vel, the Emberlight | 2 | 0% | 121 | 76% |
-| Aurium Plate | 37 | 84% | 85 | 79% |
-| Death: The Man in Black | 54 | 56% | 68 | 35% |
-| The Empress: Que’Rubra | 81 | 37% | 39 | 44% |
-| Archmage Severyn Caldreth | 105 | 73% | 7 | 0% |
-| Kaipo Nuvane | 69 | 57% | 42 | 36% |
-| Vraxxis, the Hungering Cinder | 0 | n/a | 106 | 71% |
-| Lake Mirrara | 40 | 45% | 66 | 47% |
-| The Magician: Luigi Castanata | 2 | 0% | 102 | 56% |
-| Kojin, the Fiery Whip | 99 | 61% | 1 | 0% |
-| Fin & Bin | 24 | 21% | 74 | 27% |
-| Cernis, the Horned Forest Lord | 93 | 44% | 2 | 0% |
-| The High Priestess: Nitriti | 59 | 37% | 35 | 26% |
-| Ilzaren, the Resplendent King | 87 | 56% | 6 | 100% |
+| Dawn Over Aurengate | 238 | 78% | 94 | 64% |
+| General Vath Enverez | 139 | 48% | 180 | 77% |
+| Mr. Boscoe | 45 | 24% | 270 | 35% |
+| Null-Zone Pylon | 167 | 50% | 134 | 28% |
+| Project Tamori | 194 | 35% | 105 | 43% |
+| Wisplight | 68 | 44% | 228 | 49% |
+| Kaipo’s Pearl | 11 | 36% | 258 | 62% |
+| The Guard Post | 80 | 31% | 173 | 71% |
+| Braxon Lamn | 87 | 64% | 165 | 70% |
+| Eva’s Kitchen | 167 | 49% | 81 | 84% |
+| Zalian Fisherman | 166 | 43% | 80 | 35% |
+| Pommeroy | 91 | 35% | 149 | 37% |
+| The Sleepless Sentry | 208 | 37% | 32 | 66% |
+| Elder Voren Nightbloom | 5 | 40% | 223 | 18% |
+| Yvette Mirthwell | 215 | 28% | 1 | 0% |
+| Mr. Zero | 4 | 75% | 202 | 48% |
+| Brog | 0 | n/a | 200 | 46% |
+| Temperance: Brother Soren | 3 | 33% | 187 | 74% |
+| Archivist Esmerelda Gotch | 2 | 100% | 183 | 40% |
+| Kaelen Goldeneye | 2 | 100% | 160 | 49% |
+| The Sun: The Spark | 81 | 73% | 80 | 54% |
+| Thorn of the Bladed Wind | 154 | 44% | 0 | n/a |
+| Shadowling Stalkers | 0 | n/a | 135 | 24% |
+| Taranis, the Laughing Crow | 72 | 33% | 55 | 11% |
+| Vel, the Emberlight | 2 | 0% | 124 | 73% |
+| The Festival of Radiant Dawn | 17 | 65% | 109 | 78% |
+| The Solar Flare Cannon | 90 | 81% | 35 | 57% |
+| Aurium Plate | 36 | 86% | 89 | 74% |
+| Death: The Man in Black | 51 | 59% | 74 | 34% |
+| The Tower: The Fallen Isle | 71 | 10% | 51 | 90% |
+| The Empress: Que’Rubra | 81 | 36% | 40 | 48% |
+| Vraxxis, the Hungering Cinder | 0 | n/a | 109 | 70% |
+| Kaipo Nuvane | 65 | 51% | 43 | 28% |
+| Archmage Severyn Caldreth | 100 | 72% | 4 | 0% |
+| Kojin, the Fiery Whip | 101 | 56% | 1 | 0% |
+| Fin & Bin | 27 | 19% | 75 | 29% |
+| The Magician: Luigi Castanata | 0 | n/a | 102 | 52% |
+| Lake Mirrara | 34 | 47% | 62 | 42% |
+| Ilzaren, the Resplendent King | 87 | 59% | 7 | 100% |
+| Cernis, the Horned Forest Lord | 88 | 47% | 3 | 0% |
+| Judgement: The Septor’s Chorus | 0 | n/a | 90 | 78% |
 | Portal of Autumn Leaves | 1 | 100% | 88 | 26% |
-| Judgement: The Septor’s Chorus | 0 | n/a | 87 | 77% |
-| The Hanged Man: Rorik Flamebeard | 78 | 64% | 7 | 71% |
-| Brookskippers | 30 | 70% | 53 | 47% |
-| The Hermit: Luigi Bonemoon | 23 | 52% | 59 | 75% |
-| The Chariot: The Solar Wind | 37 | 65% | 36 | 81% |
-| Merrick Blackwater | 53 | 62% | 18 | 50% |
-| The Fool: Daxon Lamn | 0 | n/a | 71 | 70% |
-| Tidecaller: Low Tide | 3 | 33% | 63 | 79% |
-| The Heartwood | 13 | 0% | 53 | 83% |
-| Bill Boggs, Cartel Runner | 37 | 73% | 26 | 69% |
-| The Garbage Boyz | 47 | 34% | 16 | 44% |
+| The High Priestess: Nitriti | 54 | 39% | 33 | 24% |
+| The Hanged Man: Rorik Flamebeard | 76 | 63% | 7 | 57% |
+| The Hermit: Luigi Bonemoon | 24 | 50% | 58 | 76% |
+| Merrick Blackwater | 61 | 59% | 16 | 50% |
+| Brookskippers | 26 | 65% | 50 | 48% |
+| The Chariot: The Solar Wind | 38 | 66% | 37 | 81% |
+| The Fool: Daxon Lamn | 0 | n/a | 69 | 72% |
+| Tidecaller: Low Tide | 3 | 0% | 63 | 81% |
+| Bill Boggs, Cartel Runner | 38 | 74% | 26 | 62% |
+| The Heartwood | 12 | 8% | 52 | 87% |
+| The Garbage Boyz | 46 | 33% | 17 | 29% |
 | Inspector Bramble | 0 | n/a | 62 | 21% |
 | The Mirrored Dome | 0 | n/a | 62 | 52% |
-| Marin, Spirit of Ocean Waves | 23 | 57% | 35 | 74% |
-| Tyserion I, the Golden Blade | 57 | 74% | 1 | 100% |
-| Wheel of Fortune: The Orrery | 6 | 67% | 49 | 92% |
-| The Star: Lirielle Starwhisper | 6 | 50% | 45 | 58% |
-| The Sunken Empire Rises | 2 | 50% | 48 | 42% |
-| The Serattan Oath-Coin | 49 | 73% | 0 | n/a |
-| The Lovers: Althea & Caelum | 45 | 38% | 3 | 0% |
-| Justice: Dagan, Sovereign of the Scales | 11 | 73% | 36 | 47% |
-| Calvera Blackwake, the Mad Pirate Queen | 17 | 65% | 27 | 48% |
-| Bimp Bossington | 42 | 62% | 0 | n/a |
-| The World: The Eldspyre | 36 | 56% | 3 | 0% |
-| Lorien of the Hand | 3 | 0% | 31 | 39% |
-| The Emperor: Izuriel Sakazarac II | 19 | 53% | 8 | 25% |
-| Strength: Grimore | 25 | 32% | 0 | n/a |
-| The Libra Stellae | 9 | 44% | 6 | 33% |
-| Liquid Mana | 4 | 25% | 6 | 67% |
+| Marin, Spirit of Ocean Waves | 23 | 52% | 32 | 69% |
+| Tyserion I, the Golden Blade | 53 | 77% | 2 | 100% |
+| The Star: Lirielle Starwhisper | 6 | 50% | 45 | 64% |
+| The Sunken Empire Rises | 1 | 100% | 48 | 46% |
+| The Lovers: Althea & Caelum | 44 | 34% | 3 | 0% |
+| Justice: Dagan, Sovereign of the Scales | 11 | 73% | 35 | 51% |
+| The Serattan Oath-Coin | 45 | 71% | 0 | n/a |
+| Wheel of Fortune: The Orrery | 6 | 67% | 38 | 87% |
+| Calvera Blackwake, the Mad Pirate Queen | 17 | 65% | 26 | 42% |
+| Bimp Bossington | 39 | 59% | 0 | n/a |
+| The World: The Eldspyre | 38 | 50% | 1 | 0% |
+| Lorien of the Hand | 3 | 0% | 30 | 33% |
+| The Emperor: Izuriel Sakazarac II | 21 | 52% | 6 | 33% |
+| Strength: Grimore | 27 | 33% | 0 | n/a |
+| The Libra Stellae | 11 | 36% | 7 | 29% |
 
 ## Sample traces (first 14 plays)
 
@@ -193,15 +194,15 @@ sig-daxon vs sig-lirielle seed 20373554: winner sig-lirielle in round 7 by attac
 
 ## Change against the baseline
 
-Average length 8.1 to 8.1 rounds.
+Average length 8.2 to 8.2 rounds.
 
 | Hero | Baseline | This run | Change |
 |---|---|---|---|
-| Daxon Lamn | 76% | 71% | -5 |
-| Lirielle Starwhisper | 30% | 24% | -6 |
-| Luigi Bonemoon | 44% | 47% | +3 |
-| Rorik Flamebeard | 71% | 70% | -1 |
-| Lord-Provost Elaina Masque | 54% | 66% | +12 |
-| Imperator Amegmon Shazz | 27% | 24% | -3 |
+| Daxon Lamn | 75% | 70% | -6 |
+| Lirielle Starwhisper | 32% | 24% | -8 |
+| Luigi Bonemoon | 43% | 46% | +3 |
+| Rorik Flamebeard | 70% | 72% | +3 |
+| Lord-Provost Elaina Masque | 56% | 66% | +11 |
+| Imperator Amegmon Shazz | 26% | 23% | -3 |
 
 With 200 games per hero, a swing under about 7 points is inside the noise.

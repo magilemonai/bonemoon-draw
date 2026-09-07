@@ -26,3 +26,8 @@ CLAUDE_FOLLOWUP.md
 moonwyld-response-followup.zip
 VERIFICATION.md
 moonwyld-e0190e6-verification.zip
+MOONWYLD_NEXT_MILESTONES.md
+CLAUDE_NEXT_ROUND_REPLY.md
+e2e/evidence/
+test-results/
+playwright-report/
