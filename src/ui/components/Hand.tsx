@@ -5,6 +5,7 @@ import { availableSpark, cardCost, playableFaces, previewPlay, targetsFor } from
 import type { Face, GameState } from '../../engine/types'
 import { useStore } from '../store'
 import { Card } from './Card'
+import { FlipIn } from './CardBack'
 import { useLessonHints } from '../lessonHints'
 
 export function Hand({ state }: { state: GameState }) {
@@ -63,12 +64,13 @@ export function Hand({ state }: { state: GameState }) {
                 key={h.uid}
                 className={`hand-card ${selected ? 'is-selected' : ''} ${!affordable ? 'is-poor' : ''} ${lit ? 'is-lesson' : ''}`}
                 layout
-                initial={{ opacity: 0, y: -80, x: 120, rotate: 20 }}
+                initial={{ opacity: 0, y: -60, x: 40, rotate: 8 }}
                 animate={{ opacity: 1, y: selected ? -22 : 0, x: 0, rotate: selected ? 0 : tilt }}
                 exit={{ opacity: 0, y: -40, scale: 0.9, transition: { duration: 0.25 } }}
                 transition={{ type: 'spring', stiffness: 300, damping: 26 }}
                 style={{ zIndex: selected ? 50 : i + 1 }}
               >
+                <FlipIn>
                 <Card
                   def={def}
                   face={sel.kind === 'hand' && sel.uid === h.uid && sel.face ? sel.face : 'upright'}
@@ -91,6 +93,7 @@ export function Hand({ state }: { state: GameState }) {
                     select({ kind: 'hand', uid: h.uid })
                   }}
                 />
+                </FlipIn>
               </motion.div>
             )
           })}

@@ -27,6 +27,8 @@ export interface Fx {
   text?: string
   sub?: string
   toRef?: TargetRef
+  defId?: string // a card to show turning over (an Omen as it is cast)
+  face?: Face
   until: number
 }
 
@@ -162,7 +164,7 @@ function durationFor(ev: GameEvent, speed: number): number {
       case 'move':
         return 380
       case 'omen':
-        return 650
+        return 1250
       case 'countered':
         return 700
       case 'boneMoon':
@@ -270,7 +272,7 @@ function fxFor(ev: GameEvent, st: GameState, now: number, speed: number): Fx[] {
     case 'boneMoon':
       return [{ id: fxId++, kind: 'banner', text: 'The Bone Moon rises', sub: 'Only the chilling white of bone.', until: d(1800) }]
     case 'omen':
-      return [{ id: fxId++, kind: 'flash', text: card(ev.defId).name, sub: ev.face, until: d(900) }]
+      return [{ id: fxId++, kind: 'flash', text: card(ev.defId).name, sub: ev.face, defId: ev.defId, face: ev.face, until: d(1500) }]
     case 'countered':
       return [{ id: fxId++, kind: 'flash', text: 'Countered', sub: '"Worth it."', until: d(900) }]
     case 'gameOver': {

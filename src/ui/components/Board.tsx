@@ -6,6 +6,7 @@ import type { FigureInstance, GameState, LaneIndex, PlayerId, TargetRef } from '
 import { LANE_NAMES } from '../../engine/types'
 import { useStore, type Selection } from '../store'
 import { Card } from './Card'
+import { FlipIn } from './CardBack'
 import { significator } from '../../data'
 import { ArtImage } from './ArtImage'
 import { useLessonHints } from '../lessonHints'
@@ -189,6 +190,7 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
             exit={{ opacity: 0, scale: 0.6, rotate: isMine ? -14 : 14, filter: 'blur(4px)', transition: { duration: 0.45 } }}
             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
           >
+            <FlipIn className={isMine ? 'is-flat' : ''} duration={isMine ? 0 : 0.6}>
             <Card
               def={card(fig.defId)}
               face={fig.face}
@@ -210,6 +212,7 @@ function Slot({ state, owner, lane, fig, isMine }: { state: GameState; owner: Pl
               onClick={onClick}
               onInspect={() => inspect(fig.defId, fig.face, fig.uid)}
             />
+            </FlipIn>
           </motion.div>
         )}
       </AnimatePresence>

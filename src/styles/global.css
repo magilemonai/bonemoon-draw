@@ -4386,3 +4386,91 @@ h3 {
     zoom: 1.2;
   }
 }
+
+/* ==== The back of the card ====================================================== */
+
+.card-3d {
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+.card-3d-front,
+.card-3d-back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.card-3d-front {
+  position: relative;
+  transform: rotateY(0deg);
+}
+.card-3d-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+}
+.card-3d.is-flat .card-3d-back {
+  display: none;
+}
+.hand-card,
+.slot-fig,
+.read-option,
+.flash-card {
+  perspective: 1000px;
+}
+.card-back-face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 2px solid var(--gold);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(232, 199, 108, 0.35) 0 2px, transparent 3px),
+    linear-gradient(180deg, #2a2466, #151233);
+  box-shadow: inset 0 0 0 1px rgba(255, 252, 240, 0.35), 0 6px 14px -8px rgba(0, 0, 0, 0.7);
+}
+.card-back-face img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card-back-rim {
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(232, 199, 108, 0.6);
+  border-radius: calc(var(--radius) - 4px);
+  pointer-events: none;
+}
+
+/* An Omen, revealed on the table as it is cast. */
+.flash.has-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.flash-card .card {
+  --cw: min(56vw, 30vh, 210px);
+  pointer-events: none;
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.9), 0 0 40px rgba(232, 199, 108, 0.25);
+}
+@media (min-width: 720px) {
+  .flash-card .card {
+    --cw: min(230px, 32vh);
+  }
+}
+/* The flash centres with `translate`, which the motion library's transform leaves alone. */
+.flash {
+  left: 50%;
+  transform: none;
+  translate: -50% 0;
+}
+.flash.has-card {
+  top: 50%;
+  translate: -50% -50%;
+  border-radius: 18px;
+  padding: 14px 18px 12px;
+  background: rgba(12, 10, 34, 0.82);
+  pointer-events: none;
+}

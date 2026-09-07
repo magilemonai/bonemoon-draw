@@ -4,6 +4,7 @@ import { attackOf, cardCost, faceDef, healthOf, keywords, previewPlay } from '..
 import type { Face, GameState } from '../../engine/types'
 import { useStore } from '../store'
 import { Card, RulesText } from './Card'
+import { FlipIn } from './CardBack'
 import { ArtImage } from './ArtImage'
 import { CardInspect, type LiveInfo, type Stats } from './Hero'
 import { shortName } from './Card'
@@ -28,7 +29,14 @@ export function Banners() {
       </AnimatePresence>
       <AnimatePresence>
         {flashes.slice(-1).map((b) => (
-          <motion.div key={b.id} className="flash" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
+          <motion.div key={b.id} className={`flash ${b.defId ? 'has-card' : ''}`} initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.92 }} transition={{ duration: 0.25 }}>
+            {b.defId && (
+              <div className="flash-card">
+                <FlipIn duration={0.5}>
+                  <Card def={card(b.defId)} face={b.face ?? 'upright'} size="full" />
+                </FlipIn>
+              </div>
+            )}
             <span className="flash-text">{b.text}</span>
             {b.sub && <span className={`flash-sub flash-${b.sub}`}>{b.sub}</span>}
           </motion.div>
@@ -51,11 +59,13 @@ export function ReadChooser({ state }: { state: GameState }) {
         <div className="modal-title">Your choice: keep one</div>
         <p className="modal-copy">The rest go to the bottom of your deck. Tap a card to read it in full.</p>
         <div className="read-options">
-          {pend.options.map((o) => {
+          {pend.options.map((o, i) => {
             const def = card(o.defId)
             return (
               <div key={o.uid} className="read-option">
-                <Card def={def} face="upright" size="hand" cost={cardCost(state, pend.player, def.id)} onClick={() => inspect(def.id, 'upright', o.uid)} />
+                <FlipIn delay={0.15 + i * 0.22}>
+                  <Card def={def} face="upright" size="hand" cost={cardCost(state, pend.player, def.id)} onClick={() => inspect(def.id, 'upright', o.uid)} />
+                </FlipIn>
                 <div className="read-text">
                   <span className="rt-up">
                     <b>Upright</b> <RulesText text={def.upright.text || 'No text.'} />
