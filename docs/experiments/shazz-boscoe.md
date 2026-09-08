@@ -2,9 +2,9 @@
 
 Shazz's deck: The Mirrored Dome becomes a second Mr. Boscoe.
 
-600 games: 15 hero pairings, 20 seed pairs each, both seats, each hero keeping its own deck order across the seat swap. Planner depth 2, beam 5, 2 sampled worlds. Run in 55 seconds.
+600 games: 15 hero pairings, 20 seed pairs each, both seats, each hero keeping its own deck order across the seat swap. Planner depth 2, beam 5, 2 sampled worlds. Run in 54 seconds.
 
-Code c283f90 with uncommitted changes in src or scripts. Rules 2026-09-06. Starter decks as shipped (daxon 30, lirielle 30, luigi 30, rorik 30, masque 30, shazz 30). Seeds: 20260906 + pairing x 104729 + pair x 7919, the seat swap at seed + 1, deck orders hashed per hero. Stamped 9/7/2026, 17:43:25 EDT.
+Code b077b9e with uncommitted changes in src or scripts. Rules 2026-09-06. Starter decks as shipped (daxon 30, lirielle 30, luigi 30, rorik 30, masque 30, shazz 30). Seeds: 20260906 + pairing x 104729 + pair x 7919, the seat swap at seed + 1, deck orders hashed per hero. Stamped 9/7/2026, 20:09:27 EDT.
 
 Average length 8.3 rounds. 0 draws. First seat won 65% of decided games. The Bone Moon was up at the end of 28% of games.
 
@@ -195,4 +195,13 @@ Average length 8.2 to 8.3 rounds.
 | Lord-Provost Elaina Masque | 56% | 57% | +1 |
 | Imperator Amegmon Shazz | 26% | 26% | +1 |
 
-With 200 games per hero, a swing under about 7 points is inside the noise.
+| Hero | Paired change | 95% interval | Games |
+|---|---|---|---|
+| Daxon Lamn | -0.5 points | -1.5 to +0.5 | 200 |
+| Lirielle Starwhisper | +0.5 points | -2.1 to +3.1 | 200 |
+| Luigi Bonemoon | -1.0 points | -2.4 to +0.4 | 200 |
+| Rorik Flamebeard | -0.5 points | -1.5 to +0.5 | 200 |
+| Lord-Provost Elaina Masque | +1.0 points | -1.4 to +3.4 | 200 |
+| Imperator Amegmon Shazz | +0.5 points | -3.6 to +4.6 | 200 |
+
+A change whose interval includes zero is not shown to be a change by this run.

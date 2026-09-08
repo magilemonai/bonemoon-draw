@@ -17,6 +17,7 @@ export function Choose() {
   const saved = useStore((s) => s.savedMatch)
   const [mine, setMine] = useState<string>(preset?.mine ?? 'sig-daxon')
   const [theirs, setTheirs] = useState<string>(preset?.theirs ?? 'random')
+  const [trial, setTrial] = useState<'' | 'seat-token'>('')
   const [deckId, setDeckId] = useState<string>(preset?.deck ?? starterId(preset?.mine ?? 'sig-daxon'))
   const my = significator(mine)
   const deck = resolveDeck(decks, deckId) ?? resolveDeck(decks, starterId(mine))!
@@ -35,7 +36,7 @@ export function Choose() {
       const pool = SIGNIFICATORS.filter((s) => s.id !== mine)
       opp = pool[Math.floor(Math.random() * pool.length)].id
     }
-    startGame(mine, opp, deck.id)
+    startGame(mine, opp, deck.id, undefined, trial ? { trial } : undefined)
   }
 
   return (
@@ -117,6 +118,14 @@ export function Choose() {
                 </option>
               ))}
             </select>
+          </label>
+          <label className="choose-trial">
+            <span>Experiment</span>
+            <select value={trial} onChange={(e) => setTrial(e.target.value as '' | 'seat-token')} aria-label="Play under an experiment">
+              <option value="">Shipped rules</option>
+              <option value="seat-token">Seat trial: the second player opens with a Spent Sphere</option>
+            </select>
+            {trial && <span className="choose-trial-note">An experiment on the seat gap. A reading under a trial is on the record as one and earns no Renown. Afterwards, Play the other seat repeats the same deal from the other side.</span>}
           </label>
           <button type="button" className="btn-quiet" onClick={() => openBuilder(deck.id)}>
             {deck.id === starterId(mine) ? 'Look at this deck' : 'Edit this deck'}

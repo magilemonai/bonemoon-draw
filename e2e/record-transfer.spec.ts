@@ -1,23 +1,22 @@
 import { expect, test } from '@playwright/test'
-import { shot, title } from './helpers'
+import { buildAndLaunch, concede, finishLessonOne, shot, title } from './helpers'
 
-test('a record with a built deck moves to a fresh browser context', async ({ browser }, info) => {
-  const a = await browser.newContext()
+test('a record with a lesson mark, a conceded reading and a built deck moves to a fresh context', async ({ browser }, info) => {
+  const opts = info.project.use
+  const a = await browser.newContext(opts)
   const pa = await a.newPage()
-  await title(pa)
-  await pa.getByRole('button', { name: 'Your decks' }).click()
-  await pa.getByRole('button', { name: 'Copy and edit' }).first().click()
-  await pa.getByLabel('Deck name').fill('Carried list')
-  await pa.getByRole('button', { name: 'Your decks' }).first().click()
-  await expect(pa.locator('.decks')).toContainText('Carried list')
+  await finishLessonOne(pa)
+  await buildAndLaunch(pa, 'Carried list')
+  await concede(pa)
   await pa.getByRole('button', { name: 'Title screen' }).click()
   await pa.getByRole('button', { name: 'Your record' }).click()
+  await expect(pa.locator('.record-modal')).toContainText('1 reading completed')
   await pa.getByText('Back up or move this record').click()
   const text = await pa.locator('.record-io textarea').first().inputValue()
   expect(text).toContain('Carried list')
   await a.close()
 
-  const b = await browser.newContext()
+  const b = await browser.newContext(opts)
   const pb = await b.newPage()
   await title(pb)
   await pb.getByRole('button', { name: 'Your record' }).click()
@@ -25,9 +24,15 @@ test('a record with a built deck moves to a fresh browser context', async ({ bro
   await pb.locator('.record-io textarea').nth(1).fill(text)
   await pb.getByRole('button', { name: 'Check it' }).click()
   await pb.getByRole('button', { name: 'Replace my record' }).click()
+  await expect(pb.locator('.record-modal')).toContainText('1 reading completed')
+  await expect(pb.locator('.record-row').first()).toContainText('conceded')
   await pb.getByRole('button', { name: 'Close' }).click()
+  await pb.getByRole('button', { name: 'Tutorial', exact: true }).click()
+  await expect(pb.locator('.lessons button').filter({ hasText: /^(Start|Play it again)$/ }).nth(0)).toHaveText('Play it again')
+  await pb.getByRole('button', { name: 'Title screen' }).click()
   await pb.getByRole('button', { name: 'Your decks' }).click()
-  await expect(pb.locator('.decks')).toContainText('Carried list')
+  const row = pb.locator('.deck-row').filter({ hasText: 'Carried list' })
+  await expect(row).toContainText('30 of 30 cards, revision 3')
   await shot(pb, info, 'record-carried')
   await b.close()
 })

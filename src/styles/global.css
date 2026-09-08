@@ -5750,6 +5750,10 @@ h3 {
   padding: 0;
   pointer-events: none;
 }
+.card-kws-art .kw,
+.cards-marks .size-lane .card-text .kw {
+  pointer-events: auto;
+}
 /* Their corners: wounds top left, Hushed top centre, Aegis top right, marks bottom left,
    Asleep bottom centre, the Reversed dot bottom right. */
 .cards-marks .size-lane .card-wounds {
@@ -5801,4 +5805,118 @@ h3 {
     background: rgba(12, 10, 34, 0.7);
     pointer-events: none;
   }
+}
+
+
+/* ==== The recap, the key, the trial, the deck code =============================== */
+.recap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 4px 0 10px;
+  text-align: left;
+}
+.recap-deck {
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--gold-2);
+  font-size: 0.95rem;
+}
+.recap-lines {
+  margin: 0;
+  padding: 8px 12px;
+  list-style: none;
+  border-radius: 10px;
+  border: 1px solid rgba(232, 199, 108, 0.25);
+  background: rgba(12, 10, 34, 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: var(--ivory);
+}
+.recap-lines li::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 8px 2px 0;
+  border-radius: 50%;
+  background: var(--gold-2);
+}
+.recap-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  align-items: center;
+}
+.status-modal {
+  max-width: 520px;
+}
+.status-list {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.status-row dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--gold-3);
+}
+.status-row dd {
+  margin: 2px 0 0 26px;
+  color: var(--ivory);
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+.choose-trial {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: var(--gold-2);
+}
+.choose-trial select {
+  max-width: 100%;
+}
+.choose-trial-note {
+  color: rgba(239, 228, 204, 0.8);
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+.deck-code {
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(232, 199, 108, 0.25);
+  background: rgba(12, 10, 34, 0.45);
+}
+.deck-code summary {
+  cursor: pointer;
+  color: var(--gold-3);
+  font-family: var(--font-display);
+}
+.deck-code .record-field {
+  margin-top: 8px;
+}
+.mark-legend {
+  display: none;
+}
+/* A keyword on a table card is a button now; it looks the same and takes no focus ring
+   except from the keyboard. */
+button.kw {
+  font-family: inherit;
+  cursor: pointer;
+  border: 0;
+}
+button.kw:focus-visible {
+  outline: 2px solid var(--spark);
+  outline-offset: 1px;
 }

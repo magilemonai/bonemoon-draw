@@ -36,6 +36,8 @@ The study also found a regression: since the 477ae92 round a phone root rule had
 
 `src/ai/tactics.test.ts`: five positions with one right answer. The planner takes lethal, blocks a lethal attacker, attacks with a Windborne arrival, and flips a wounded enemy for the kill. It does not play a cheap card to avoid a burn at eight in hand; that case is kept as a known gap so the suite says when it closes.
 
+Correction, later on 2026-09-07: the burn case was wrong, and so was the sentence above. The hand it gave the planner held only Eldertech Spheres, which draw a card as they are played, so no line could shrink the hand; the planner played both Spheres and was right to. The review caught it. The case now gives it Mr. Boscoe and passes, and the file says what it does and does not show. `docs/DELIVERY_REVIEW_RESPONSE.md` has the rest.
+
 ## Decisions waiting
 
 1. The card treatment, from the study on your phone.

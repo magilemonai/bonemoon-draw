@@ -5,6 +5,7 @@ import { useStore } from '../store'
 import { ArtImage } from '../components/ArtImage'
 import { decksFor, newDeck, remove, starterDeck, upsert, type DeckList } from '../decks'
 import { deckRecord } from '../profile'
+import { decodeDeck } from '../deckcode'
 
 function DeckRow({ deck, starter }: { deck: DeckList; starter: boolean }) {
   const decks = useStore((s) => s.decks)
@@ -69,6 +70,20 @@ export function Decks() {
   const decks = useStore((s) => s.decks)
   const setDecks = useStore((s) => s.setDecks)
   const openBuilder = useStore((s) => s.openBuilder)
+  const [code, setCode] = useState('')
+  const [codeError, setCodeError] = useState<string | null>(null)
+  const bring = () => {
+    const parsed = decodeDeck(code)
+    if (!parsed) {
+      setCodeError('That is not a Moonwyld deck code.')
+      return
+    }
+    const d = { ...newDeck(decks, parsed.sig), name: 'Brought by code', cards: parsed.cards }
+    setDecks(upsert(decks, d))
+    setCode('')
+    setCodeError(null)
+    openBuilder(d.id)
+  }
   return (
     <div className="decks">
       <div className="choose-head">
@@ -80,6 +95,19 @@ export function Decks() {
           Thirty cards from your Significator's two suits and the Major Arcana. Two copies of a Minor at most, one of a Major, never your own card. Every starter can be copied and changed.
         </span>
       </div>
+      <details className="deck-code">
+        <summary>Bring a deck by its code</summary>
+        <label className="record-field">
+          Paste a deck code (Copy deck code in the builder makes one)
+          <textarea value={code} rows={2} onChange={(e) => setCode(e.target.value)} placeholder="MW1 sig-shazz antlers-2x2 ..." aria-label="Deck code" />
+        </label>
+        <div className="modal-actions">
+          <button type="button" className="btn" disabled={!code.trim()} onClick={bring}>
+            Add it to my decks
+          </button>
+          {codeError && <span className="record-error">{codeError}</span>}
+        </div>
+      </details>
       {SIGNIFICATORS.map((s) => (
         <section key={s.id} className={`deck-group suit-${s.suits[0]}`} aria-label={`${s.name}'s decks`}>
           <div className="deck-group-head">

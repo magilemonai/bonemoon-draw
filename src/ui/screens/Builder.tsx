@@ -4,6 +4,8 @@ import { SUIT_NAMES, card, significator } from '../../data'
 import { DECK_SIZE, addProblem, cardPoolFor, countOf, deckProblems, deckShape, maxCopies } from '../../engine/deck'
 import type { CardDef, Keyword, Suit } from '../../engine/types'
 import { useStore } from '../store'
+import { shortSigName } from '../names'
+import { encodeDeck } from '../deckcode'
 import { InspectModal } from '../components/Overlays'
 import { RulesText } from '../components/Card'
 import { Sigil } from '../sigils'
@@ -106,7 +108,9 @@ export function Builder() {
   const buildingId = useStore((s) => s.buildingId)
   const openBuilder = useStore((s) => s.openBuilder)
   const openChoose = useStore((s) => s.openChoose)
+  const builderOpponent = useStore((s) => s.builderOpponent)
   const profile = useStore((s) => s.profile)
+  const [copied, setCopied] = useState(false)
   const sel = useStore((s) => s.selection)
   const [q, setQ] = useState('')
   const [suit, setSuit] = useState<Suit | 'all'>('all')
@@ -248,8 +252,23 @@ export function Builder() {
               Copy and edit
             </button>
           ) : null}
-          <button type="button" className="btn btn-primary" disabled={!legal} onClick={() => openChoose({ mine: deck.sig, theirs: 'random', deck: deck.id })} title={legal ? '' : problems.join(' ')}>
-            Play this deck
+          <button type="button" className="btn btn-primary" disabled={!legal} onClick={() => openChoose({ mine: deck.sig, theirs: builderOpponent ?? 'random', deck: deck.id })} title={legal ? '' : problems.join(' ')}>
+            {builderOpponent ? `Play this deck against ${shortSigName(builderOpponent)}` : 'Play this deck'}
+          </button>
+          <button
+            type="button"
+            className="btn-quiet"
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(encodeDeck(deck.sig, deck.cards))
+                setCopied(true)
+              } catch {
+                setCopied(false)
+              }
+            }}
+            title="One line of text that names this list; paste it under Your decks on another device"
+          >
+            {copied ? 'Code copied' : 'Copy deck code'}
           </button>
           {!legal && <span className="builder-blocked">{problems[0]}</span>}
         </div>

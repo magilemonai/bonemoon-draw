@@ -5,7 +5,7 @@
 
 import { SIGNIFICATORS, significator } from '../data'
 import { RULES_VERSION } from '../engine/rules'
-import type { GameState } from '../engine/types'
+import type { Action, GameState, PlayerId } from '../engine/types'
 import type { DeckStamp } from './decks'
 
 export interface MatchRecord {
@@ -20,7 +20,14 @@ export interface MatchRecord {
   version: string // the rules the match was started under
   conceded?: boolean
   deck?: DeckStamp // the list it was played with; absent on records from before decks
+  trial?: Trial // played under an experiment's rules; on the record, never credited
+  seed?: number // with the actions, enough to play the reading again
+  firstPlayer?: PlayerId
+  actions?: Action[]
 }
+
+// An experiment a reading can be played under. The shipped rules stay as they are.
+export type Trial = 'seat-token'
 
 // The best result in one directional matchup. Expert and the mastery objective are
 // reserved for when those exist; nothing awards them yet.
@@ -58,6 +65,10 @@ export interface SavedMatch {
   deck?: DeckStamp & { cards: string[] } // the exact list dealt, kept with the reading
   committed: GameState
   log: string[]
+  seed?: number
+  firstPlayer?: PlayerId
+  actions?: Action[] // every action so far, the opponent's too, in order
+  trial?: Trial
 }
 
 export const RENOWN = { standard: 10, expert: 25, objective: 5 } as const
@@ -116,7 +127,7 @@ export interface Award {
 // Credit one completed match. A match id is credited once, even after its detail has
 // left the list; a matchup's Standard win is credited once; Renown needs the current rules.
 export function recordMatch(p: Profile, rec: MatchRecord): { profile: Profile; award: Award } {
-  const none: Award = { gained: 0, firstClear: false, counted: false, eligible: rec.version === RULES_VERSION, conceded: !!rec.conceded }
+  const none: Award = { gained: 0, firstClear: false, counted: false, eligible: rec.version === RULES_VERSION && !rec.trial, conceded: !!rec.conceded }
   if (p.ids.includes(rec.id)) return { profile: p, award: none }
   const matches = [...p.matches, rec].slice(-MAX_MATCHES)
   const ids = [...p.ids, rec.id].slice(-MAX_IDS)
@@ -170,6 +181,8 @@ export function settleMatch(p: Profile, saved: SavedMatch, final: GameState, now
     version: saved.version,
     ...(conceded ? { conceded: true } : {}),
     ...(saved.deck ? { deck: { id: saved.deck.id, name: saved.deck.name, rev: saved.deck.rev, starter: saved.deck.starter } } : {}),
+    ...(saved.trial ? { trial: saved.trial } : {}),
+    ...(saved.seed !== undefined && saved.actions ? { seed: saved.seed, firstPlayer: saved.firstPlayer, actions: saved.actions } : {}),
   }
   const r = recordMatch(p, record)
   return { ...r, record }

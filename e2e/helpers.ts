@@ -33,6 +33,11 @@ export async function playFace(page: Page, cardName: string, face: 'upright' | '
   await page.getByRole('button', { name: `Play ${cardName} ${face}` }).click()
 }
 
+// The table is settled and it is your turn when the End turn button says just that.
+export async function settle(page: Page) {
+  await expect(page.locator('.end-turn')).toHaveText(/^End turn$/, { timeout: 20_000 })
+}
+
 export const mySlot = (page: Page, lane: 0 | 1 | 2) => page.locator('.slot:not(.slot-theirs)').nth(lane)
 export const theirSlot = (page: Page, lane: 0 | 1 | 2) => page.locator('.slot.slot-theirs').nth(lane)
 export const coach = (page: Page) => page.locator('.lesson-panel-head')
@@ -64,4 +69,39 @@ export async function buildAndLaunch(page: Page, name: string) {
   await expect(page.locator('.choose')).toBeVisible()
   await page.locator('.choose').getByRole('button', { name: 'Play', exact: true }).click()
   await expect(page.locator('.battle')).toBeVisible()
+}
+
+// Lesson 1 to its end: the Guard Post Reversed into Present, its attack, End turn, the
+// Fisherman, then Sword Guy on the Post and the attack that brings Rorik to 13.
+export async function finishLessonOne(page: Page) {
+  await startLesson(page, 1)
+  await playFace(page, 'The Guard Post', 'reversed')
+  await mySlot(page, 1).click()
+  await expect(coach(page)).toContainText('Step 2 of 5')
+  await settle(page)
+  await mySlot(page, 1).locator('.card').click()
+  await theirSlot(page, 1).click()
+  await expect(coach(page)).toContainText('Step 3 of 5')
+  await settle(page)
+  await page.getByRole('button', { name: /End your turn/ }).click()
+  await expect(coach(page)).toContainText('Step 4 of 5', { timeout: 20_000 })
+  await settle(page)
+  await playFace(page, 'Zalian Fisherman', 'upright')
+  await mySlot(page, 0).click()
+  await expect(coach(page)).toContainText('Step 5 of 5')
+  await settle(page)
+  await page.getByRole('button', { name: /Sword Guy/ }).click()
+  await mySlot(page, 1).locator('.card').click()
+  await settle(page)
+  await mySlot(page, 1).locator('.card').click()
+  await expect(page.locator('.card.is-selected')).toHaveCount(1)
+  await theirSlot(page, 1).click()
+  await expect(page.locator('.lesson-panel.is-complete')).toBeVisible({ timeout: 20_000 })
+}
+
+// Give up the reading in play; it goes on the record as a conceded loss.
+export async function concede(page: Page) {
+  await page.getByRole('button', { name: 'Concede', exact: true }).click()
+  await page.locator('.concede-modal').getByRole('button', { name: 'Concede', exact: true }).click()
+  await expect(page.locator('.gameover')).toBeVisible({ timeout: 15_000 })
 }

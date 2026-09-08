@@ -5,7 +5,7 @@ import { faceDef, figureName, keywords, other, whyNoAttack, whyNoMove } from '..
 import type { GameState, Keyword } from '../../engine/types'
 import { useStore, type Selection } from '../store'
 import { Board, figureNeedsTarget } from '../components/Board'
-import { KW_LABEL, KW_MARK } from '../components/Card'
+import { KW_DEF, KW_LABEL, KW_MARK } from '../components/Card'
 import { FaceChooser, Hand } from '../components/Hand'
 import { SigPanel } from '../components/SigPanel'
 import { MoonDial } from '../components/Moon'
@@ -63,6 +63,9 @@ export function Battle() {
   const study = useStore((s) => s.study)
   const cardStyle = useStore((s) => s.cardStyle)
   const setCardStyle = useStore((s) => s.setCardStyle)
+  const showStatus = useStore((s) => s.showStatus)
+  const openStatus = useStore((s) => s.openStatus)
+  const closeStatus = useStore((s) => s.closeStatus)
   const casting = useStore((s) => s.fx.some((f) => f.kind === 'flash' && !!f.defId))
   const [showLog, setShowLog] = useState(false)
   const [conceding, setConceding] = useState(false)
@@ -131,17 +134,17 @@ export function Battle() {
   const them = other(me)
   const prompt = display.active === me && !display.pending && display.phase !== 'over' ? promptFor(display, sel) : null
   const quick = speed > 1
-  // The marks legend: only the marks on the table right now, so it reads as a key.
-  const marks: { mark: string; label: string; cls: string }[] = []
-  if (cardStyle === 'marks') {
+  // The key: only the marks on the table right now, each with what it does.
+  const marks: { mark: string; label: string; cls: string; text: string }[] = []
+  if (showStatus) {
     const seen = new Set<Keyword>()
     let relics = false
     for (const pl of [0, 1] as const) for (const f of display.players[pl].lanes) if (f) {
       for (const k of keywords(display, f)) if (k !== 'entersReversed') seen.add(k)
       if (f.relics.length) relics = true
     }
-    for (const k of seen) marks.push({ mark: KW_MARK[k], label: KW_LABEL[k], cls: `kw-${k}` })
-    if (relics) marks.push({ mark: '+', label: 'carries a Relic', cls: 'kw-relic' })
+    for (const k of seen) marks.push({ mark: KW_MARK[k], label: KW_LABEL[k], cls: `kw-${k}`, text: KW_DEF[k] })
+    if (relics) marks.push({ mark: '+', label: 'Carries a Relic', cls: 'kw-relic', text: 'A Relic attached to the Figure: its numbers and keywords are added to the card. Inspect the card to read it.' })
   }
 
   return (
@@ -178,6 +181,11 @@ export function Battle() {
               </button>
             </>
           )}
+          {cardStyle === 'marks' && (
+            <button type="button" className="btn-quiet" onClick={openStatus} aria-haspopup="dialog">
+              Key
+            </button>
+          )}
           {lesson ? (
             <button type="button" className="btn-quiet" onClick={leaveLesson}>
               Leave the lesson
@@ -195,16 +203,33 @@ export function Battle() {
       </div>
       <AnimatePresence>{display.players[them].handRevealed && <RevealedHand state={display} />}</AnimatePresence>
       <Board state={display} />
-      {marks.length > 0 && (
-        <div className="mark-legend" aria-label="What the marks mean">
-          {marks.map((m) => (
-            <span key={m.label} className="mark-legend-item">
-              <span className={`mark ${m.cls}`} aria-hidden>
-                {m.mark}
-              </span>
-              {m.label}
-            </span>
-          ))}
+      {showStatus && (
+        <div className="modal-scrim" onClick={closeStatus}>
+          <div className="modal status-modal" role="dialog" aria-label="What is on the table" onClick={(e) => e.stopPropagation()}>
+            <div className="inspect-head">
+              <span className="modal-title">On the table</span>
+              <button type="button" className="btn-quiet" onClick={closeStatus} autoFocus>
+                Close
+              </button>
+            </div>
+            {marks.length === 0 ? (
+              <p className="modal-copy">No keywords on the table right now.</p>
+            ) : (
+              <dl className="status-list">
+                {marks.map((m) => (
+                  <div key={m.label} className="status-row">
+                    <dt>
+                      <span className={`mark ${m.cls}`} aria-hidden>
+                        {m.mark}
+                      </span>
+                      {m.label}
+                    </dt>
+                    <dd>{m.text}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </div>
         </div>
       )}
       <div className="table-mid">

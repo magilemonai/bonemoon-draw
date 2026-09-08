@@ -10,7 +10,9 @@ import { card, significator } from '../data'
 import { figureName, other } from '../engine/queries'
 import { RULES_VERSION } from '../engine/rules'
 import { artSrc } from './art'
-import { abandon, checkSaved, loadProfile, saveProfile, settleMatch, type Award, type Profile, type SavedMatch } from './profile'
+import { abandon, checkSaved, loadProfile, saveProfile, settleMatch, type Award, type Profile, type SavedMatch, type Trial } from './profile'
+import { RULES } from '../engine/rules'
+import type { MatchTrace } from './recap'
 import { isLegalDeck } from '../engine/deck'
 import { loadDecks, resolveDeck, saveDecks, stampOf, starterDeck, type DeckList } from './decks'
 import { afterAction, afterInspect, allowed, currentStep, isStuck, lessonById, type InspectTarget, type LessonProgress } from '../tutorial/lessons'
@@ -65,6 +67,18 @@ function loadMatch(): { saved: SavedMatch | null; stale: StaleMatch | null } {
 }
 
 // True when the write took.
+// An experiment's rules hold only while its own reading is being played. Everything else
+// (lessons, the study, a reading with no trial) sees the shipped rules.
+function applyTrial(trial: Trial | undefined) {
+  RULES.secondPlayerSparkToken = trial === 'seat-token'
+}
+
+// What the recap needs from a finished reading.
+function traceOf(m: SavedMatch | null): UIState['lastMatch'] {
+  if (!m || m.seed === undefined || !m.actions) return null
+  return { humanSig: m.humanSig, aiSig: m.aiSig, seed: m.seed, cards: m.deck?.cards, firstPlayer: m.firstPlayer, actions: m.actions, seat: m.seat, trial: m.trial, deck: m.deck }
+}
+
 function storeMatch(m: SavedMatch | null): boolean {
   try {
     if (m) localStorage.setItem(MATCH_KEY, JSON.stringify(m))
@@ -102,6 +116,11 @@ interface UIState {
   buildingId: string | null // the deck open in the builder
   lesson: { id: string; progress: LessonProgress; stepStart: GameState; nudge: string | null; stuck: boolean } | null // a lesson in play
   study: boolean // the Card study: a fixed position, a sleeping opponent, nothing on the record
+  lastMatch: (MatchTrace & { seat: 'first' | 'second'; trial?: Trial; deck: SavedMatch['deck'] }) | null // the reading just finished, for the recap
+  builderOpponent: string | null // the opponent to play again when the builder says Play
+  showStatus: boolean // the key to the marks on the table
+  openStatus: () => void
+  closeStatus: () => void
   cardStyle: 'words' | 'marks' // how a compact card shows its keywords
   setCardStyle: (style: 'words' | 'marks') => void
   startStudy: () => void
@@ -110,7 +129,7 @@ interface UIState {
   tableArt: boolean // public/art/table.jpg is present
 
   goto: (s: Screen) => void
-  startGame: (humanSig: string, aiSig: string, deckId?: string, list?: NonNullable<SavedMatch['deck']>) => void
+  startGame: (humanSig: string, aiSig: string, deckId?: string, list?: NonNullable<SavedMatch['deck']>, opts?: { seed?: number; firstPlayer?: PlayerId; trial?: Trial }) => void
   dispatch: (a: Action) => void
   select: (sel: Selection) => void
   inspect: (defId: string, face: Face, uid?: number) => void
@@ -124,7 +143,7 @@ interface UIState {
   openChoose: (preset?: { mine: string; theirs: string; deck?: string }) => void
   replaceProfile: (p: Profile, decks?: DeckList[]) => void
   setDecks: (decks: DeckList[]) => void
-  openBuilder: (id: string) => void
+  openBuilder: (id: string, opponent?: string | null) => void
   startLesson: (id: string) => void
   rematch: () => void
   retryStep: () => void
@@ -318,6 +337,11 @@ export const useStore = create<UIState>((set, get) => ({
   buildingId: null,
   lesson: null,
   study: false,
+  lastMatch: null,
+  builderOpponent: null,
+  showStatus: false,
+  openStatus: () => set({ showStatus: true }),
+  closeStatus: () => set({ showStatus: false }),
   cardStyle: (() => {
     try {
       return localStorage.getItem('bonemoon.cards') === 'marks' ? 'marks' : 'words'
@@ -334,6 +358,7 @@ export const useStore = create<UIState>((set, get) => ({
     set({ cardStyle: style })
   },
   startStudy: () => {
+    applyTrial(undefined)
     const s = studyState()
     set({ committed: s, display: s, queue: [], playing: false, fx: [], log: [], selection: { kind: 'none' }, reviewing: false, award: null, humanSig: 'sig-shazz', aiSig: 'sig-daxon', lesson: null, study: true, screen: 'battle' })
     get().tick()
@@ -357,13 +382,14 @@ export const useStore = create<UIState>((set, get) => ({
     const ok = saveDecks(decks)
     set({ decks, storageOk: get().storageOk && ok })
   },
-  openBuilder: (id) => set({ screen: 'build', buildingId: id, selection: { kind: 'none' }, reviewing: false }),
+  openBuilder: (id, opponent = null) => set({ screen: 'build', buildingId: id, builderOpponent: opponent, selection: { kind: 'none' }, reviewing: false }),
 
   // A lesson: a fixed position, a sleeping opponent, nothing on the record. The saved
   // reading, if any, is left where it is.
   startLesson: (id) => {
     const lesson = lessonById(id)
     if (!lesson) return
+    applyTrial(undefined)
     const s = lesson.setup()
     set({
       committed: s,
@@ -409,7 +435,7 @@ export const useStore = create<UIState>((set, get) => ({
   },
   setReviewing: (reviewing) => set({ reviewing, selection: { kind: 'none' } }),
 
-  startGame: (humanSig, aiSig, deckId, list) => {
+  startGame: (humanSig, aiSig, deckId, list, opts) => {
     // The list is snapshotted here; editing the deck later cannot touch this reading. A
     // rematch passes the finished reading's own snapshot, so it is the same list, not the
     // deck's latest revision.
@@ -418,13 +444,14 @@ export const useStore = create<UIState>((set, get) => ({
       return deck.sig === humanSig ? { ...stampOf(deck), cards: deck.cards.slice() } : null
     })()
     if (!stamp || !isLegalDeck(humanSig, stamp.cards)) return
-    const seed = (Date.now() ^ Math.floor(Math.random() * 1e9)) | 0
-    const g = createGame({ sigs: [humanSig, aiSig], seed, humanPlayer: 0, decks: [stamp.cards.slice(), undefined] })
+    const seed = opts?.seed ?? (Date.now() ^ Math.floor(Math.random() * 1e9)) | 0
+    applyTrial(opts?.trial)
+    const g = createGame({ sigs: [humanSig, aiSig], seed, humanPlayer: 0, firstPlayer: opts?.firstPlayer, decks: [stamp.cards.slice(), undefined] })
     const steps = beginGame(g, true)
     const committed = finalState(steps, g)
     const matchId = `${Date.now().toString(36)}-${(seed >>> 0).toString(36)}`
     const seat: 'first' | 'second' = g.active === 0 ? 'first' : 'second'
-    const saved: SavedMatch = { id: matchId, humanSig, aiSig, seat, version: RULES_VERSION, deck: { ...stamp, cards: stamp.cards.slice() }, committed, log: [] }
+    const saved: SavedMatch = { id: matchId, humanSig, aiSig, seat, version: RULES_VERSION, deck: { ...stamp, cards: stamp.cards.slice() }, committed, log: [], seed, firstPlayer: g.active, actions: [], ...(opts?.trial ? { trial: opts.trial } : {}) }
     // A reading left unfinished and replaced is counted as abandoned, and disclosed.
     let profile = get().profile
     let storageOk = get().storageOk
@@ -469,13 +496,15 @@ export const useStore = create<UIState>((set, get) => ({
       next = { profile: r.profile, award: r.award, storageOk: saveProfile(r.profile) && next.storageOk }
     }
     storeMatch(null)
-    set({ committed: over, display: over, queue: [], playing: false, fx: [], selection: { kind: 'none' }, reviewing: false, savedMatch: null, lastDeck: savedMatch?.deck ?? null, ...next })
+    applyTrial(undefined)
+    set({ committed: over, display: over, queue: [], playing: false, fx: [], selection: { kind: 'none' }, reviewing: false, savedMatch: null, lastDeck: savedMatch?.deck ?? null, lastMatch: traceOf(savedMatch), ...next })
   },
 
   // Pick an unfinished reading back up where it was left, with no replay of what happened.
   resumeGame: () => {
     const m = get().savedMatch
     if (!m || checkSaved(m) !== 'ok') return
+    applyTrial(m.trial)
     set({
       committed: m.committed,
       display: m.committed,
@@ -516,6 +545,7 @@ export const useStore = create<UIState>((set, get) => ({
       get().tick()
       return
     }
+    if (!get().study) applyTrial(savedMatch?.trial)
     const steps = runAction(committed, a, true)
     const next = finalState(steps, committed)
     set({ committed: next, queue: [...queue, ...steps], selection: { kind: 'none' } })
@@ -524,20 +554,22 @@ export const useStore = create<UIState>((set, get) => ({
       get().tick()
       return
     }
+    // The reading's own record of what was done, the opponent's actions included.
+    const withAction: SavedMatch | null = savedMatch ? { ...savedMatch, committed: next, log: log.slice(-40), actions: [...(savedMatch.actions ?? []), a] } : null
     if (next.phase === 'over') {
       // A completed match goes on the record once, under the rules it was started with,
       // and the unfinished-match slot clears.
-      if (savedMatch) {
-        const r = settleMatch(profile, savedMatch, next, Date.now())
+      if (withAction) {
+        const r = settleMatch(profile, withAction, next, Date.now())
         const ok = saveProfile(r.profile)
         set({ profile: r.profile, award: r.award, storageOk: get().storageOk && ok })
       }
       storeMatch(null)
-      set({ savedMatch: null, lastDeck: savedMatch?.deck ?? null })
-    } else if (savedMatch) {
-      const saved: SavedMatch = { ...savedMatch, committed: next, log: log.slice(-40) }
-      const ok = storeMatch(saved)
-      set({ savedMatch: saved, storageOk: get().storageOk && ok })
+      applyTrial(undefined)
+      set({ savedMatch: null, lastDeck: savedMatch?.deck ?? null, lastMatch: traceOf(withAction) })
+    } else if (withAction) {
+      const ok = storeMatch(withAction)
+      set({ savedMatch: withAction, storageOk: get().storageOk && ok })
     }
     get().tick()
   },

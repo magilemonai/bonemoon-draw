@@ -1,8 +1,11 @@
+import { useMemo } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { card, significator } from '../../data'
 import { attackOf, cardCost, faceDef, healthOf, keywords, previewPlay } from '../../engine/queries'
 import type { Face, GameState } from '../../engine/types'
 import { useStore } from '../store'
+import { recapLines } from '../recap'
+import { newDeck, resolveDeck, starterDeck, upsert } from '../decks'
 import { Card, RulesText } from './Card'
 import { FlipIn } from './CardBack'
 import { Sigil } from '../sigils'
@@ -264,6 +267,61 @@ function RematchButton({ className = 'btn btn-primary' }: { className?: string }
   )
 }
 
+// The recap and the way back into the list: what decided the reading, which list it was,
+// and the door to edit it and play the same opponent again.
+function Recap() {
+  const last = useStore((s) => s.lastMatch)
+  const decks = useStore((s) => s.decks)
+  const setDecks = useStore((s) => s.setDecks)
+  const openBuilder = useStore((s) => s.openBuilder)
+  const startGame = useStore((s) => s.startGame)
+  const lines = useMemo(() => (last ? recapLines(last) : []), [last])
+  if (!last) return null
+  const deck = last.deck
+  const edit = () => {
+    if (!deck) return
+    const existing = deck.starter ? null : resolveDeck(decks, deck.id)
+    if (existing) {
+      openBuilder(existing.id, last.aiSig)
+      return
+    }
+    // A starter, or a deck since deleted: edit a copy of the list as it was played.
+    const from = deck.starter ? starterDeck(last.humanSig) : { id: deck.id, name: deck.name, sig: last.humanSig, cards: deck.cards, rev: deck.rev, updated: 0 }
+    const d = newDeck(decks, last.humanSig, from)
+    setDecks(upsert(decks, d))
+    openBuilder(d.id, last.aiSig)
+  }
+  const otherSeat = () => startGame(last.humanSig, last.aiSig, undefined, deck, { seed: last.seed, firstPlayer: last.seat === 'first' ? 1 : 0, trial: last.trial })
+  return (
+    <div className="recap">
+      {deck && (
+        <p className="recap-deck">
+          Played with {deck.name}
+          {deck.starter ? '' : `, revision ${deck.rev}`}
+          {last.trial === 'seat-token' ? ', under the seat trial' : ''}.
+        </p>
+      )}
+      {lines.length > 0 && (
+        <ul className="recap-lines" aria-label="What decided it">
+          {lines.map((l) => (
+            <li key={l}>{l}</li>
+          ))}
+        </ul>
+      )}
+      <div className="recap-actions">
+        {deck && (
+          <button type="button" className="btn" onClick={edit}>
+            {deck.starter ? 'Edit a copy of this deck' : 'Edit this deck'}
+          </button>
+        )}
+        <button type="button" className="btn-quiet" onClick={otherSeat} title="The same list and the same deal, from the other seat">
+          Play the other seat
+        </button>
+      </div>
+    </div>
+  )
+}
+
 export function GameOver({ state }: { state: GameState }) {
   const goto = useStore((s) => s.goto)
   const queue = useStore((s) => s.queue)
@@ -278,6 +336,7 @@ export function GameOver({ state }: { state: GameState }) {
         <div className="modal-title">{state.winner === 'draw' ? 'Both readings end together' : win ? 'The reading is yours' : 'The reading goes against you'}</div>
         <p className="modal-copy">{resultLine(state)}</p>
         <AwardLine state={state} />
+        <Recap />
         <div className="modal-actions">
           <RematchButton />
           <button type="button" className="btn" onClick={() => setReviewing(true)}>

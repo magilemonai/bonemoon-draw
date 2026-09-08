@@ -66,6 +66,8 @@ let draws = 0
 let firstSeatWins = 0
 let totalGames = 0
 const traces: string[] = []
+// Every game's outcome, in schedule order, so a variant can be compared game by game.
+const games: { sigs: [string, string]; seed: number; winner: PlayerId | 'draw'; rounds: number }[] = []
 
 function hash(a: number, b: number): number {
   let h = (a ^ 0x9e3779b9) | 0
@@ -105,6 +107,7 @@ function playGame(sigs: [string, string], seed: number, deckSeeds: [number, numb
     s = finalState(steps, s)
   }
   totalGames++
+  games.push({ sigs, seed, winner: s.winner === 'draw' || s.winner === null ? 'draw' : s.winner, rounds: s.round })
   rounds.push(s.round)
   if (s.round >= s.boneMoonRound) moonGames++
   if (s.winner === 'draw' || s.winner === null) draws++
@@ -227,7 +230,7 @@ L.push('')
 for (const t of traces) L.push('```', t, '```', '')
 
 mkdirSync('docs/experiments', { recursive: true })
-const json = { variant, summary: VARIANTS[variant].summary, commit, dirty: !!dirty, rulesVersion: RULES_VERSION, stampedAt, games: totalGames, pairs, depth, beam, worlds, avgRounds, draws, firstSeatWins, moonGames, stats, matchup, cardUse, hist, lethalTotals }
+const json = { variant, summary: VARIANTS[variant].summary, commit, dirty: !!dirty, rulesVersion: RULES_VERSION, stampedAt, games: totalGames, pairs, depth, beam, worlds, avgRounds, outcomes: games, draws, firstSeatWins, moonGames, stats, matchup, cardUse, hist, lethalTotals }
 writeFileSync(`docs/experiments/${variant}.json`, JSON.stringify(json, null, 2) + '\n')
 
 // Delta against the baseline, if one exists and this is not it.
@@ -247,7 +250,34 @@ if (variant !== 'baseline' && existsSync('docs/experiments/baseline.json')) {
     L.push(`| ${name(h)} | ${br.toFixed(0)}% | ${nr.toFixed(0)}% | ${nr - br >= 0 ? '+' : ''}${(nr - br).toFixed(0)} |`)
   }
   L.push('')
-  L.push(`With ${stats[heroes[0]].games} games per hero, a swing under about 7 points is inside the noise.`)
+  // Paired: the same game (pairing, seed, seat) under both rules, hero by hero. The mean
+  // difference and its 95 percent interval come from the per-game differences, so the
+  // seed pairing is kept rather than treated as two independent samples.
+  if (Array.isArray(base.outcomes) && base.outcomes.length === games.length) {
+    L.push('| Hero | Paired change | 95% interval | Games |')
+    L.push('|---|---|---|---|')
+    for (const h of heroes) {
+      const d: number[] = []
+      for (let i = 0; i < games.length; i++) {
+        const a = base.outcomes[i] as { sigs: [string, string]; winner: PlayerId | 'draw' }
+        const b = games[i]
+        if (a.sigs[0] !== b.sigs[0] || a.sigs[1] !== b.sigs[1]) continue
+        const seat = b.sigs.indexOf(h) as PlayerId | -1
+        if (seat < 0) continue
+        d.push((b.winner === seat ? 1 : 0) - (a.winner === seat ? 1 : 0))
+      }
+      const n = d.length
+      const mean = d.reduce((x, y) => x + y, 0) / n
+      const sd = Math.sqrt(d.reduce((x, y) => x + (y - mean) * (y - mean), 0) / Math.max(1, n - 1))
+      const ci = (1.96 * sd) / Math.sqrt(n)
+      const pt = (x: number) => `${x >= 0 ? '+' : ''}${(100 * x).toFixed(1)}`
+      L.push(`| ${name(h)} | ${pt(mean)} points | ${pt(mean - ci)} to ${pt(mean + ci)} | ${n} |`)
+    }
+    L.push('')
+    L.push('A change whose interval includes zero is not shown to be a change by this run.')
+  } else {
+    L.push(`With ${stats[heroes[0]].games} games per hero, a swing under about 7 points is inside the noise.`)
+  }
   L.push('')
 }
 writeFileSync(`docs/experiments/${variant}.md`, L.join('\n'))

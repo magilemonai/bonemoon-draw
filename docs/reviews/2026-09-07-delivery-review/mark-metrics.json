@@ -1,0 +1,436 @@
+{
+  "items": [
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 153.109375,
+        "height": 76.234375,
+        "left": 54,
+        "right": 138,
+        "top": 76.875,
+        "width": 84,
+        "x": 54,
+        "y": 76.875
+      },
+      "role": null,
+      "text": "Guard\nAegis\nAurium Plate\n1 wound",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 153.109375,
+        "height": 76.234375,
+        "left": 153,
+        "right": 237,
+        "top": 76.875,
+        "width": 84,
+        "x": 153,
+        "y": 76.875
+      },
+      "role": null,
+      "text": "Windborne\nVeiled\nGale",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 153.109375,
+        "height": 76.234375,
+        "left": 252,
+        "right": 336,
+        "top": 76.875,
+        "width": 84,
+        "x": 252,
+        "y": 76.875
+      },
+      "role": null,
+      "text": "Guard\nFixed\nWindborne\nTidecaller\n2 wounds",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 304.703125,
+        "height": 76.234375,
+        "left": 54,
+        "right": 138,
+        "top": 228.46875,
+        "width": 84,
+        "x": 54,
+        "y": 228.46875
+      },
+      "role": null,
+      "text": "Guard",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 304.703125,
+        "height": 76.234375,
+        "left": 153,
+        "right": 237,
+        "top": 228.46875,
+        "width": 84,
+        "x": 153,
+        "y": 228.46875
+      },
+      "role": null,
+      "text": "Windborne\nRekindle\nVeiled",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 304.703125,
+        "height": 76.234375,
+        "left": 252,
+        "right": 336,
+        "top": 228.46875,
+        "width": 84,
+        "x": 252,
+        "y": 228.46875
+      },
+      "role": null,
+      "text": "Fixed\nWhisper\n2 wounds",
+      "title": null
+    },
+    {
+      "class": "mark-legend",
+      "font": "12.5px",
+      "label": "What the marks mean",
+      "rect": {
+        "bottom": 421.984375,
+        "height": 43,
+        "left": 8,
+        "right": 382,
+        "top": 378.984375,
+        "width": 374,
+        "x": 8,
+        "y": 378.984375
+      },
+      "role": null,
+      "text": "G\nGuard\nW\nWindborne\nR\nRekindle\nV\nVeiled\nF\nFixed\nWh\nWhisper\nA\nAegis\nGa\nGale\n+\ncarries a Relic",
+      "title": null
+    },
+    {
+      "class": "mark-legend-item",
+      "font": "12.5px",
+      "label": null,
+      "rect": {
+        "bottom": 398.984375,
+        "height": 18,
+        "left": 21.0546875,
+        "right": 73.8359375,
+        "top": 380.984375,
+        "width": 52.78125,
+        "x": 21.0546875,
+        "y": 380.984375
+      },
+      "role": null,
+      "text": "G\nGuard",
+      "title": null
+    },
+    {
+      "class": "mark-legend-item",
+      "font": "12.5px",
+      "label": null,
+      "rect": {
+        "bottom": 398.984375,
+        "height": 18,
+        "left": 85.8359375,
+        "right": 164.640625,
+        "top": 380.984375,
+        "width": 78.8046875,
+        "x": 85.8359375,
+        "y": 380.984375
+      },
+      "role": null,
+      "text": "W\nWindborne",
+      "title": null
+    },
+    {
+      "class": "mark-legend-item",
+      "font": "12.5px",
+      "label": null,
+      "rect": {
+        "bottom": 398.984375,
+        "height": 18,
+        "left": 176.640625,
+        "right": 242.390625,
+        "top": 380.984375,
+        "width": 65.75,
+        "x": 176.640625,
+        "y": 380.984375
+      },
+      "role": null,
+      "text": "R\nRekindle",
+      "title": null
+    },
+    {
+      "class": "mark-legend-item",
+      "font": "12.5px",
+      "label": null,
+      "rect": {
+        "bottom": 398.984375,
+        "height": 18,
+        "left": 254.390625,
+        "right": 308.0078125,
+        "top": 380.984375,
+        "width": 53.6171875,
+        "x": 254.390625,
+        "y": 380.984375
+      },
+      "role": null,
+      "text": "V\nVeiled",
+      "title": null
+    },
+    {
+      "class": "mark-legend-item",
+      "font": "12.5px",
+      "label": null,
+      "rect": {
+        "bottom": 398.984375,
+        "height": 18,
+        "left": 320.0078125,
+        "right": 368.9375,
+        "top": 380.984375,
+        "width": 48.9296875,
+        "x": 320.0078125,
+        "y": 380.984375
+      },
+      "role": null,
+      "text": "F\nFixed",
+      "title": null
+    },
+    {
+      "class": "mark-legend-item",
+      "font": "12.5px",
+      "label": null,
+      "rect": {
+        "bottom": 419.984375,
+        "height": 18,
+        "left": 51.7890625,
+        "right": 119.9296875,
+        "top": 401.984375,
+        "width": 68.140625,
+        "x": 51.7890625,
+        "y": 401.984375
+      },
+      "role": null,
+      "text": "Wh\nWhisper",
+      "title": null
+    },
+    {
+      "class": "mark-legend-item",
+      "font": "12.5px",
+      "label": null,
+      "rect": {
+        "bottom": 419.984375,
+        "height": 18,
+        "left": 131.9296875,
+        "right": 181.3046875,
+        "top": 401.984375,
+        "width": 49.375,
+        "x": 131.9296875,
+        "y": 401.984375
+      },
+      "role": null,
+      "text": "A\nAegis",
+      "title": null
+    },
+    {
+      "class": "mark-legend-item",
+      "font": "12.5px",
+      "label": null,
+      "rect": {
+        "bottom": 419.984375,
+        "height": 18,
+        "left": 193.3046875,
+        "right": 238.3046875,
+        "top": 401.984375,
+        "width": 45,
+        "x": 193.3046875,
+        "y": 401.984375
+      },
+      "role": null,
+      "text": "Ga\nGale",
+      "title": null
+    },
+    {
+      "class": "mark-legend-item",
+      "font": "12.5px",
+      "label": null,
+      "rect": {
+        "bottom": 419.984375,
+        "height": 18,
+        "left": 250.3046875,
+        "right": 338.2109375,
+        "top": 401.984375,
+        "width": 87.90625,
+        "x": 250.3046875,
+        "y": 401.984375
+      },
+      "role": null,
+      "text": "+\ncarries a Relic",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "role": null,
+      "text": "",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "role": null,
+      "text": "",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "role": null,
+      "text": "",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "role": null,
+      "text": "Veiled",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "role": null,
+      "text": "",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "role": null,
+      "text": "",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "role": null,
+      "text": "Gale",
+      "title": null
+    },
+    {
+      "class": "card-art",
+      "font": "16px",
+      "label": null,
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "role": null,
+      "text": "",
+      "title": null
+    }
+  ]
+}

@@ -2,9 +2,9 @@
 
 Rorik: Forge of Kojin heals 1 at end of turn only if a friendly Figure died this turn.
 
-600 games: 15 hero pairings, 20 seed pairs each, both seats, each hero keeping its own deck order across the seat swap. Planner depth 2, beam 5, 2 sampled worlds. Run in 51 seconds.
+600 games: 15 hero pairings, 20 seed pairs each, both seats, each hero keeping its own deck order across the seat swap. Planner depth 2, beam 5, 2 sampled worlds. Run in 57 seconds.
 
-Code c283f90 with uncommitted changes in src or scripts. Rules 2026-09-06. Starter decks as shipped (daxon 30, lirielle 30, luigi 30, rorik 30, masque 30, shazz 30). Seeds: 20260906 + pairing x 104729 + pair x 7919, the seat swap at seed + 1, deck orders hashed per hero. Stamped 9/7/2026, 17:36:23 EDT.
+Code b077b9e with uncommitted changes in src or scripts. Rules 2026-09-06. Starter decks as shipped (daxon 30, lirielle 30, luigi 30, rorik 30, masque 30, shazz 30). Seeds: 20260906 + pairing x 104729 + pair x 7919, the seat swap at seed + 1, deck orders hashed per hero. Stamped 9/7/2026, 20:02:02 EDT.
 
 Average length 8.1 rounds. 0 draws. First seat won 66% of decided games. The Bone Moon was up at the end of 24% of games.
 
@@ -195,4 +195,13 @@ Average length 8.2 to 8.1 rounds.
 | Lord-Provost Elaina Masque | 56% | 58% | +2 |
 | Imperator Amegmon Shazz | 26% | 28% | +3 |
 
-With 200 games per hero, a swing under about 7 points is inside the noise.
+| Hero | Paired change | 95% interval | Games |
+|---|---|---|---|
+| Daxon Lamn | +0.5 points | -1.2 to +2.2 | 200 |
+| Lirielle Starwhisper | +3.0 points | +0.6 to +5.4 | 200 |
+| Luigi Bonemoon | -1.0 points | -2.4 to +0.4 | 200 |
+| Rorik Flamebeard | -7.0 points | -11.3 to -2.7 | 200 |
+| Lord-Provost Elaina Masque | +2.0 points | +0.1 to +3.9 | 200 |
+| Imperator Amegmon Shazz | +2.5 points | +0.3 to +4.7 | 200 |
+
+A change whose interval includes zero is not shown to be a change by this run.

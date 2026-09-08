@@ -61,13 +61,45 @@ describe('tactics', () => {
     expect(state.winner).toBe(0)
   })
 
-  // Known gap: the planner does not count the burn a full hand takes at the next draw.
-  it.fails('does not end the turn at 8 in hand with a cheap card and a draw coming', () => {
+  // At eight in hand with a cheap Figure the planner plays it. This does not isolate the
+  // burn: a 2-Spark body is a good play on an empty table anyway. (An earlier version of
+  // this case gave it only Eldertech Spheres, which replace themselves, so the hand could
+  // not shrink; the review caught it.)
+  it('plays a cheap card at 8 in hand rather than sitting on a full hand', () => {
     let s = fresh(['sig-luigi', 'sig-daxon'])
-    s = hand(s, 0, 'gears-ace', 'gears-ace', 'gears-10', 'gears-10', 'major-21', 'antlers-king', 'antlers-9', 'gears-queen')
+    s = hand(s, 0, 'gears-2', 'gears-10', 'gears-10', 'major-21', 'antlers-king', 'antlers-9', 'gears-queen', 'gears-queen')
     s = spark(s, 0, 2)
     const { state } = playTurn(s)
     expect(state.players[0].hand.length).toBeLessThan(8)
+  })
+
+  it('Shazz swings with a Reversed Sentry, then turns it over to survive the reply', () => {
+    let s = fresh(['sig-shazz', 'sig-daxon'])
+    s = place(s, 0, 1, 'gears-7', 'reversed') // the Sentry Reversed: 5/2 Windborne, +1 from Pride
+    s = place(s, 1, 1, 'suns-2', 'upright') // the Guard Post 1/3 across from it
+    s = place(s, 1, 0, 'suns-knight', 'upright') // Vath 3/5 beside it, ready to answer
+    s = spark(s, 0, 2)
+    // The line exists: attack (the Post falls, the Sentry keeps 1), then the flip (2/5 with a wound: 2/4).
+    let line = finalState(runAction(s, { type: 'attack', lane: 1, targetLane: 1 }, false), s)
+    expect(line.players[1].lanes[1]).toBeNull()
+    line = finalState(runAction(line, { type: 'ability', target: { kind: 'figure', player: 0, lane: 1 } }, false), line)
+    expect(line.players[0].lanes[1]?.face).toBe('upright')
+    // Does the planner find it?
+    const { state, actions } = playTurn(s)
+    expect(actions).toContain('attack')
+    expect(state.players[1].lanes[1]).toBeNull()
+    expect(state.players[0].lanes[1]?.face).toBe('upright')
+  })
+
+  it('Shazz spends the 2 Spark on the flip that kills, not on a body', () => {
+    let s = fresh(['sig-shazz', 'sig-daxon'])
+    s = place(s, 1, 1, 'gears-4', 'upright', 3) // the Pylon 1/4 with 3 damage: turned over, dead
+    s = place(s, 0, 1, 'antlers-2', 'reversed')
+    s = hand(s, 0, 'gears-2') // Mr. Boscoe, also 2 Spark
+    s = spark(s, 0, 2)
+    const { state, actions } = playTurn(s)
+    expect(actions).toContain('ability')
+    expect(state.players[1].lanes[1]).toBeNull()
   })
 
   it('Shazz flips a wounded enemy for the kill rather than trading a body', () => {
@@ -81,14 +113,21 @@ describe('tactics', () => {
     expect(state.players[0].lanes[1]).not.toBeNull()
   })
 
-  it('blocks an attacker that would be lethal next turn instead of ending the turn', () => {
+  it('blocks an attacker that would be lethal next turn, and lives through the reply', () => {
     let s = fresh(['sig-daxon', 'sig-rorik'])
-    s = place(s, 1, 0, 'suns-knight', 'upright') // Vath across from my empty Past
-    s = health(s, 0, 4)
+    s = place(s, 1, 0, 'suns-knight', 'upright') // Vath 3/5 across from my empty Past
+    s = health(s, 0, 3)
     s = hand(s, 0, 'suns-2') // the Guard Post
     s = spark(s, 0, 2)
-    const { state } = playTurn(s)
-    expect(state.players[0].lanes.some((f) => f !== null)).toBe(true)
+    let { state } = playTurn(s)
+    expect(state.players[0].lanes[0]).not.toBeNull()
+    // The enemy's best reply, played out by the same planner.
+    for (let i = 0; i < 12 && state.phase !== 'over' && state.active === 1; i++) {
+      const a = chooseAction(state, { seed: 2 })
+      state = finalState(runAction(state, a, false), state)
+      if (a.type === 'endTurn') break
+    }
+    expect(state.players[0].health).toBeGreaterThan(0)
   })
 
   it('attacks the Significator with a Windborne arrival when the lane across is open', () => {

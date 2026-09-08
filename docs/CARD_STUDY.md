@@ -4,26 +4,23 @@ Title screen, Card study. One crowded table, Shazz against a sleeping Daxon in r
 
 ## The two treatments
 
-**Words.** Each keyword is its word on a chip under the name, 12px. The numbers keep a reserved 27px row. The painting takes what is left.
+**Words.** Each keyword is its word on a chip under the name, 12px. The numbers keep a reserved 27px row. The painting takes what is left. Words are the default.
 
-**Marks.** Each keyword is a letter or two on a dark tile riding the painting's lower-left edge: G Guard, W Windborne, V Veiled, F Fixed, R Rekindle, Fe Feast, A Aegis, Ga Gale, Wh Whisper, D Dormant, and a gold + for a Relic. The word is the tile's name for a screen reader and a tooltip. A key under the board lists only the marks on the table right now; on a wide screen it is a column at the top right of the board. The play sheet, inspection, the Codex, and the builder keep words everywhere.
+**Marks.** Each keyword is a letter or two on a dark tile riding the painting's lower-left edge: G Guard, W Windborne, V Veiled, F Fixed, R Rekindle, Fe Feast, A Aegis, Ga Gale, Wh Whisper, D Dormant, and a gold + for a Relic. On a table card the tile is a control: tapping it, or focusing it and pressing Enter, opens the key and never selects the card. The key (also Key in the tools) lists the marks on the table right now with the word and what it does. The play sheet, inspection, the Codex, and the builder keep words everywhere.
 
-## Measured, same position, 390 by 664
+## Measured in a settled browser
 
-| | Words | Marks |
-|---|---|---|
-| Lane width | 104px (the hand tucks) | 104px |
-| Painting height, six table cards | 40, 59, 59, 75, 78, 94 | 83 on every card |
-| The captain (three keywords) | painting 40px, chips in two rows | painting 83px, three tiles |
-| Footer under the name | 27px numbers plus 19 to 38px of chips | 27px numbers |
-| Cost on the column | none | the key, one or two lines, only when marks are on the table |
+The browser suite measures both treatments on this table (`e2e/card-study.spec.ts`, evidence in `e2e/evidence/<project>/study-layout.json`). The key is a sheet, so the lanes keep their width in both treatments; an earlier draft had a key strip in the column that cost the lanes 14px, and the earlier numbers here were taken in a hidden tab that never applied it.
 
-At the 84px floor a card holds four tiles in a row before the fifth would slide under the Reversed dot; no card in the pool carries five.
+| | 390 by 664 | 390 by 844 | 1280 by 800 |
+|---|---|---|---|
+| Lane width, both | 105px | 112px | 160px |
+| Painting, words | 43 to 81px | 54 to 108px | 165 to 184px |
+| Painting, marks | 100 to 115px | 111 to 127px | 203px |
+| The general (three keywords, a Relic) | 43 to 100 | 54 to 111 | 165 to 203 |
 
-## Recommendation
+## Where it stands
 
-Marks on compact cards, words everywhere else. The painting is how a card is recognised at a glance, and marks return 20 to 40px of it on every table card at the phone's floor, while keeping the footer the same height on every card so a row reads as a row. The key costs one line on a phone and nothing on a wide screen, and the words are one tap away in inspection. The letters are initials, so the learning is a few games, and the two-letter tiles (Fe, Ga, Wh) are the rare keywords.
+Words stay the default, as the reply preferred and the review recommended. On a wide screen the words already leave most of the painting, and they say what a status is without a key. On a phone the marks give the crowded cards back a third to half of their painting, at the cost of a decoding step: the letters are initials, the two-letter ones are the rare keywords, and the key is one tap away, but a new player still meets G before Guard.
 
-What it costs, honestly: a new player meets G before Guard; a keyword granted mid-game appears as a tile with no word beside it; and the tiles sit over paintings, which the dark tile with an ivory letter handles on the six paintings here and should be checked on the rest. The split treatment (words at 104px and up, marks only at the floor) was the hypothesis; it was not the better answer, because at 104px the words already cost the captain half her painting, and a card that changes shape between phones is harder to recognise than one that does not.
-
-The evidence still missing is a person's: recognition of the tiles after a lesson or two, on a real phone. The study is there to be played on one.
+The marks are a space prototype, kept selectable so the table can be played that way on a real phone. A finished compact treatment for phones would want deliberate symbols (a shield for Guard and an anchor for Fixed are concepts to try), with Windborne and Gale made unmistakably different, and a recognition check with labels before any of it becomes a default. That is a later design item on the board.

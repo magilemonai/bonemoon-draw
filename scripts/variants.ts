@@ -71,6 +71,28 @@ export const VARIANTS: Record<string, { summary: string; apply: () => void }> = 
     },
   },
 
+  'shazz-lowcurve': {
+    summary: "Shazz's deck: the nine cards costing 6 or more become second copies of the Oondray, Yvette, Mr. Boscoe, the Pylon, Taranis, Mordeaux, the Sentry, and two Portals of Autumn Leaves.",
+    apply: () => {
+      const s = significator('sig-shazz')
+      const swaps: [string, string][] = [
+        ['antlers-9', 'antlers-3'],
+        ['gears-9', 'gears-3'],
+        ['gears-queen', 'gears-2'],
+        ['gears-10', 'gears-4'],
+        ['major-4', 'antlers-7'],
+        ['major-16', 'gears-knight'],
+        ['major-13', 'gears-7'],
+        ['major-2', 'antlers-4'],
+        ['major-8', 'antlers-4'],
+      ]
+      for (const [out, into] of swaps) {
+        const i = s.deck.indexOf(out)
+        if (i >= 0) s.deck[i] = into
+      }
+    },
+  },
+
   'shazz-boscoe': {
     summary: "Shazz's deck: The Mirrored Dome becomes a second Mr. Boscoe.",
     apply: () => {

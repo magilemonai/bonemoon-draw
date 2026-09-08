@@ -2,9 +2,9 @@
 
 Seat: the first player draws no card on turn one (opening hands 4 and 5, then draws as usual).
 
-600 games: 15 hero pairings, 20 seed pairs each, both seats, each hero keeping its own deck order across the seat swap. Planner depth 2, beam 5, 2 sampled worlds. Run in 52 seconds.
+600 games: 15 hero pairings, 20 seed pairs each, both seats, each hero keeping its own deck order across the seat swap. Planner depth 2, beam 5, 2 sampled worlds. Run in 55 seconds.
 
-Code c283f90 with uncommitted changes in src or scripts. Rules 2026-09-06. Starter decks as shipped (daxon 30, lirielle 30, luigi 30, rorik 30, masque 30, shazz 30). Seeds: 20260906 + pairing x 104729 + pair x 7919, the seat swap at seed + 1, deck orders hashed per hero. Stamped 9/7/2026, 17:38:10 EDT.
+Code b077b9e with uncommitted changes in src or scripts. Rules 2026-09-06. Starter decks as shipped (daxon 30, lirielle 30, luigi 30, rorik 30, masque 30, shazz 30). Seeds: 20260906 + pairing x 104729 + pair x 7919, the seat swap at seed + 1, deck orders hashed per hero. Stamped 9/7/2026, 20:03:57 EDT.
 
 Average length 8.2 rounds. 0 draws. First seat won 61% of decided games. The Bone Moon was up at the end of 24% of games.
 
@@ -196,4 +196,13 @@ Average length 8.2 to 8.2 rounds.
 | Lord-Provost Elaina Masque | 56% | 57% | +1 |
 | Imperator Amegmon Shazz | 26% | 30% | +4 |
 
-With 200 games per hero, a swing under about 7 points is inside the noise.
+| Hero | Paired change | 95% interval | Games |
+|---|---|---|---|
+| Daxon Lamn | +2.0 points | -3.7 to +7.7 | 200 |
+| Lirielle Starwhisper | -10.0 points | -15.9 to -4.1 | 200 |
+| Luigi Bonemoon | -0.5 points | -7.4 to +6.4 | 200 |
+| Rorik Flamebeard | +3.5 points | -2.9 to +9.9 | 200 |
+| Lord-Provost Elaina Masque | +1.0 points | -5.5 to +7.5 | 200 |
+| Imperator Amegmon Shazz | +4.0 points | -1.7 to +9.7 | 200 |
+
+A change whose interval includes zero is not shown to be a change by this run.

@@ -1,16 +1,5418 @@
 {
   "variant": "shazz-boscoe",
   "summary": "Shazz's deck: The Mirrored Dome becomes a second Mr. Boscoe.",
-  "commit": "c283f90",
+  "commit": "b077b9e",
   "dirty": true,
   "rulesVersion": "2026-09-06",
-  "stampedAt": "9/7/2026, 17:43:25 EDT",
+  "stampedAt": "9/7/2026, 20:09:27 EDT",
   "games": 600,
   "pairs": 20,
   "depth": 2,
   "beam": 5,
   "worlds": 2,
   "avgRounds": 8.29,
+  "outcomes": [
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20365635,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20365636,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20373554,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20373555,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20381473,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20381474,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20389392,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20389393,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20397311,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20397312,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20405230,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20405231,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20413149,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20413150,
+      "winner": 0,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20421068,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20421069,
+      "winner": 1,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20428987,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20428988,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20436906,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20436907,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20444825,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20444826,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20452744,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20452745,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20460663,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20460664,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20468582,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20468583,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20476501,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20476502,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20484420,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20484421,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20492339,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20492340,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20500258,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20500259,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20508177,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20508178,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-lirielle"
+      ],
+      "seed": 20516096,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-daxon"
+      ],
+      "seed": 20516097,
+      "winner": 1,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20470364,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20470365,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20478283,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20478284,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20486202,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20486203,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20494121,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20494122,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20502040,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20502041,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20509959,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20509960,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20517878,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20517879,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20525797,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20525798,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20533716,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20533717,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20541635,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20541636,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20549554,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20549555,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20557473,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20557474,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20565392,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20565393,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20573311,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20573312,
+      "winner": 1,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20581230,
+      "winner": 1,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20581231,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20589149,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20589150,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20597068,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20597069,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20604987,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20604988,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20612906,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20612907,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-luigi"
+      ],
+      "seed": 20620825,
+      "winner": 1,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-daxon"
+      ],
+      "seed": 20620826,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20575093,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20575094,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20583012,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20583013,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20590931,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20590932,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20598850,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20598851,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20606769,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20606770,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20614688,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20614689,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20622607,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20622608,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20630526,
+      "winner": 0,
+      "rounds": 14
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20630527,
+      "winner": 1,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20638445,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20638446,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20646364,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20646365,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20654283,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20654284,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20662202,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20662203,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20670121,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20670122,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20678040,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20678041,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20685959,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20685960,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20693878,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20693879,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20701797,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20701798,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20709716,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20709717,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20717635,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20717636,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-rorik"
+      ],
+      "seed": 20725554,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-daxon"
+      ],
+      "seed": 20725555,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20679822,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20679823,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20687741,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20687742,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20695660,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20695661,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20703579,
+      "winner": 0,
+      "rounds": 4
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20703580,
+      "winner": 1,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20711498,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20711499,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20719417,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20719418,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20727336,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20727337,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20735255,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20735256,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20743174,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20743175,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20751093,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20751094,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20759012,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20759013,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20766931,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20766932,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20774850,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20774851,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20782769,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20782770,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20790688,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20790689,
+      "winner": 0,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20798607,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20798608,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20806526,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20806527,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20814445,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20814446,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20822364,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20822365,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-masque"
+      ],
+      "seed": 20830283,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-daxon"
+      ],
+      "seed": 20830284,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20784551,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20784552,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20792470,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20792471,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20800389,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20800390,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20808308,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20808309,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20816227,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20816228,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20824146,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20824147,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20832065,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20832066,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20839984,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20839985,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20847903,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20847904,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20855822,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20855823,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20863741,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20863742,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20871660,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20871661,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20879579,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20879580,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20887498,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20887499,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20895417,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20895418,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20903336,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20903337,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20911255,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20911256,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20919174,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20919175,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20927093,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20927094,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-daxon",
+        "sig-shazz"
+      ],
+      "seed": 20935012,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-daxon"
+      ],
+      "seed": 20935013,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20889280,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20889281,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20897199,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20897200,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20905118,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20905119,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20913037,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20913038,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20920956,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20920957,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20928875,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20928876,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20936794,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20936795,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20944713,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20944714,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20952632,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20952633,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20960551,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20960552,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20968470,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20968471,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20976389,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20976390,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20984308,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20984309,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 20992227,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 20992228,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 21000146,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 21000147,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 21008065,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 21008066,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 21015984,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 21015985,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 21023903,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 21023904,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 21031822,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 21031823,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-luigi"
+      ],
+      "seed": 21039741,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-lirielle"
+      ],
+      "seed": 21039742,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 20994009,
+      "winner": 1,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 20994010,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21001928,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21001929,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21009847,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21009848,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21017766,
+      "winner": 1,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21017767,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21025685,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21025686,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21033604,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21033605,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21041523,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21041524,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21049442,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21049443,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21057361,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21057362,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21065280,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21065281,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21073199,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21073200,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21081118,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21081119,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21089037,
+      "winner": 0,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21089038,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21096956,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21096957,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21104875,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21104876,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21112794,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21112795,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21120713,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21120714,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21128632,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21128633,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21136551,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21136552,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-rorik"
+      ],
+      "seed": 21144470,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-lirielle"
+      ],
+      "seed": 21144471,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21098738,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21098739,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21106657,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21106658,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21114576,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21114577,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21122495,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21122496,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21130414,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21130415,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21138333,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21138334,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21146252,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21146253,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21154171,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21154172,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21162090,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21162091,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21170009,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21170010,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21177928,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21177929,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21185847,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21185848,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21193766,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21193767,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21201685,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21201686,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21209604,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21209605,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21217523,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21217524,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21225442,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21225443,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21233361,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21233362,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21241280,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21241281,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-masque"
+      ],
+      "seed": 21249199,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-lirielle"
+      ],
+      "seed": 21249200,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21203467,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21203468,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21211386,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21211387,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21219305,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21219306,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21227224,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21227225,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21235143,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21235144,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21243062,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21243063,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21250981,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21250982,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21258900,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21258901,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21266819,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21266820,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21274738,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21274739,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21282657,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21282658,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21290576,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21290577,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21298495,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21298496,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21306414,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21306415,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21314333,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21314334,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21322252,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21322253,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21330171,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21330172,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21338090,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21338091,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21346009,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21346010,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-lirielle",
+        "sig-shazz"
+      ],
+      "seed": 21353928,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-lirielle"
+      ],
+      "seed": 21353929,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21308196,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21308197,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21316115,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21316116,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21324034,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21324035,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21331953,
+      "winner": 0,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21331954,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21339872,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21339873,
+      "winner": 1,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21347791,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21347792,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21355710,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21355711,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21363629,
+      "winner": 0,
+      "rounds": 14
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21363630,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21371548,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21371549,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21379467,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21379468,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21387386,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21387387,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21395305,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21395306,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21403224,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21403225,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21411143,
+      "winner": 0,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21411144,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21419062,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21419063,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21426981,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21426982,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21434900,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21434901,
+      "winner": 1,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21442819,
+      "winner": 0,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21442820,
+      "winner": 1,
+      "rounds": 14
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21450738,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21450739,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-rorik"
+      ],
+      "seed": 21458657,
+      "winner": 1,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-luigi"
+      ],
+      "seed": 21458658,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21412925,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21412926,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21420844,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21420845,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21428763,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21428764,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21436682,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21436683,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21444601,
+      "winner": 0,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21444602,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21452520,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21452521,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21460439,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21460440,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21468358,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21468359,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21476277,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21476278,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21484196,
+      "winner": 0,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21484197,
+      "winner": 0,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21492115,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21492116,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21500034,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21500035,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21507953,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21507954,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21515872,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21515873,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21523791,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21523792,
+      "winner": 0,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21531710,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21531711,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21539629,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21539630,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21547548,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21547549,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21555467,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21555468,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-masque"
+      ],
+      "seed": 21563386,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-luigi"
+      ],
+      "seed": 21563387,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21517654,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21517655,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21525573,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21525574,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21533492,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21533493,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21541411,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21541412,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21549330,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21549331,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21557249,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21557250,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21565168,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21565169,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21573087,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21573088,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21581006,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21581007,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21588925,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21588926,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21596844,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21596845,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21604763,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21604764,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21612682,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21612683,
+      "winner": 0,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21620601,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21620602,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21628520,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21628521,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21636439,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21636440,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21644358,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21644359,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21652277,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21652278,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21660196,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21660197,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-luigi",
+        "sig-shazz"
+      ],
+      "seed": 21668115,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-luigi"
+      ],
+      "seed": 21668116,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21622383,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21622384,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21630302,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21630303,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21638221,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21638222,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21646140,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21646141,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21654059,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21654060,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21661978,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21661979,
+      "winner": 0,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21669897,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21669898,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21677816,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21677817,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21685735,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21685736,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21693654,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21693655,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21701573,
+      "winner": 0,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21701574,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21709492,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21709493,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21717411,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21717412,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21725330,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21725331,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21733249,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21733250,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21741168,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21741169,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21749087,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21749088,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21757006,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21757007,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21764925,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21764926,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-masque"
+      ],
+      "seed": 21772844,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-rorik"
+      ],
+      "seed": 21772845,
+      "winner": 1,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21727112,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21727113,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21735031,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21735032,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21742950,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21742951,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21750869,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21750870,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21758788,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21758789,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21766707,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21766708,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21774626,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21774627,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21782545,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21782546,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21790464,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21790465,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21798383,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21798384,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21806302,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21806303,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21814221,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21814222,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21822140,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21822141,
+      "winner": 1,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21830059,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21830060,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21837978,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21837979,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21845897,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21845898,
+      "winner": 1,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21853816,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21853817,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21861735,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21861736,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21869654,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21869655,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-rorik",
+        "sig-shazz"
+      ],
+      "seed": 21877573,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-rorik"
+      ],
+      "seed": 21877574,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21831841,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21831842,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21839760,
+      "winner": 0,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21839761,
+      "winner": 1,
+      "rounds": 13
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21847679,
+      "winner": 0,
+      "rounds": 5
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21847680,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21855598,
+      "winner": 0,
+      "rounds": 12
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21855599,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21863517,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21863518,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21871436,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21871437,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21879355,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21879356,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21887274,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21887275,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21895193,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21895194,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21903112,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21903113,
+      "winner": 1,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21911031,
+      "winner": 0,
+      "rounds": 11
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21911032,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21918950,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21918951,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21926869,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21926870,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21934788,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21934789,
+      "winner": 1,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21942707,
+      "winner": 0,
+      "rounds": 9
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21942708,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21950626,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21950627,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21958545,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21958546,
+      "winner": 1,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21966464,
+      "winner": 0,
+      "rounds": 10
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21966465,
+      "winner": 0,
+      "rounds": 8
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21974383,
+      "winner": 0,
+      "rounds": 6
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21974384,
+      "winner": 1,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-masque",
+        "sig-shazz"
+      ],
+      "seed": 21982302,
+      "winner": 0,
+      "rounds": 7
+    },
+    {
+      "sigs": [
+        "sig-shazz",
+        "sig-masque"
+      ],
+      "seed": 21982303,
+      "winner": 1,
+      "rounds": 10
+    }
+  ],
   "draws": 0,
   "firstSeatWins": 392,
   "moonGames": 167,

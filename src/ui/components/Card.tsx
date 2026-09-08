@@ -51,6 +51,21 @@ export const KW_LABEL: Record<Keyword, string> = {
   dormant: 'Dormant',
 }
 
+// What each keyword does, in a line, for the key and for a screen reader.
+export const KW_DEF: Record<Keyword, string> = {
+  guard: 'Attacks aimed at your Significator from an adjacent empty lane hit this Figure instead.',
+  windborne: 'Can attack the turn it arrives.',
+  veiled: "Can't be targeted by the enemy's Omens or abilities until it attacks.",
+  fixed: "Can't be flipped.",
+  rekindle: 'The first time this would die, it returns Reversed with 1 Health.',
+  feast: 'Damage this deals also heals your Significator.',
+  aegis: 'Absorbs the next damage it would take.',
+  gale: 'Can attack into any enemy lane.',
+  whisper: 'Takes no damage back from Figures it attacks.',
+  entersReversed: 'Enters the table Reversed.',
+  dormant: "Can't attack.",
+}
+
 // The marks treatment: a letter or two for each keyword, with the word as its name.
 export const KW_MARK: Record<Keyword, string> = {
   guard: 'G',
@@ -93,6 +108,7 @@ function FaceView(props: CardProps & { which: Face }) {
   const { def, which, size } = props
   const uiKit = useStore((s) => s.uiKit)
   const marksMode = useStore((s) => s.cardStyle) === 'marks'
+  const openStatus = useStore((s) => s.openStatus)
   const fd = which === 'upright' ? def.upright : def.reversed
   const active = which === props.face
   const stats = active && props.atk !== undefined ? { atk: props.atk, hp: props.hp ?? 0 } : printedStats(def, which)
@@ -105,13 +121,32 @@ function FaceView(props: CardProps & { which: Face }) {
   const cost = props.cost ?? def.cost
   // In the marks treatment a compact card's keywords ride the painting's lower edge.
   const marksOnArt = marksMode && compact && size !== 'mini'
+  // On a table card each keyword is a control: it opens the key, and never selects the card.
   const kwRow = (cls: string) => (
     <div className={`card-kws ${cls}`}>
-      {kws.map((k) => (
-        <span key={k} className={`kw kw-${k}`} data-mark={KW_MARK[k]} title={KW_LABEL[k]}>
-          {KW_LABEL[k]}
-        </span>
-      ))}
+      {kws.map((k) =>
+        size === 'lane' ? (
+          <button
+            key={k}
+            type="button"
+            className={`kw kw-${k}`}
+            data-mark={KW_MARK[k]}
+            aria-label={`${KW_LABEL[k]}: ${KW_DEF[k]}`}
+            title={KW_DEF[k]}
+            onClick={(e) => {
+              e.stopPropagation()
+              openStatus()
+            }}
+            onKeyDown={(e) => e.stopPropagation()}
+          >
+            {KW_LABEL[k]}
+          </button>
+        ) : (
+          <span key={k} className={`kw kw-${k}`} data-mark={KW_MARK[k]} title={KW_DEF[k]}>
+            {KW_LABEL[k]}
+          </span>
+        ),
+      )}
       {size === 'lane' &&
         rel.map((r) => (
           <span key={r.uid} className="kw kw-relic" data-mark="+" title={cardDef(r.defId).name}>

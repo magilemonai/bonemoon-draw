@@ -79,6 +79,7 @@ export function RecordModal({ onClose }: { onClose: () => void }) {
                   {m.deck ? `${m.deck.name}${m.deck.starter ? '' : ` rev ${m.deck.rev}`}, ` : ''}
                   {m.seat} seat, round {m.rounds}
                   {m.version !== RULES_VERSION ? ', earlier rules' : ''}
+                  {m.trial === 'seat-token' ? ', seat trial' : ''}
                 </span>
                 <span className="record-result">{m.conceded ? 'conceded' : m.result === 'win' ? 'won' : m.result === 'loss' ? 'lost' : 'drawn'}</span>
               </div>
