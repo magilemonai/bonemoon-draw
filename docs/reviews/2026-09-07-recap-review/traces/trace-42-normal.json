@@ -1,0 +1,691 @@
+{
+  "trace": {
+    "humanSig": "sig-shazz",
+    "aiSig": "sig-daxon",
+    "seed": 42,
+    "cards": [
+      "antlers-2",
+      "antlers-5",
+      "antlers-5",
+      "antlers-6",
+      "antlers-6",
+      "antlers-9",
+      "antlers-7",
+      "antlers-3",
+      "gears-ace",
+      "gears-ace",
+      "gears-3",
+      "gears-4",
+      "gears-5",
+      "gears-5",
+      "gears-6",
+      "gears-6",
+      "gears-9",
+      "gears-knight",
+      "gears-queen",
+      "gears-10",
+      "gears-7",
+      "gears-2",
+      "major-4",
+      "major-18",
+      "major-16",
+      "major-13",
+      "major-2",
+      "major-8",
+      "major-10",
+      "major-0"
+    ],
+    "firstPlayer": 1,
+    "actions": [
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "play",
+        "uid": 40,
+        "face": "reversed",
+        "lane": 0,
+        "target": {
+          "kind": "sig",
+          "player": 0
+        }
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "play",
+        "uid": 11,
+        "face": "upright",
+        "lane": 0,
+        "target": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 0,
+          "uid": 40
+        }
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "play",
+        "uid": 46,
+        "face": "upright",
+        "target": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 0,
+          "uid": 40
+        }
+      },
+      {
+        "type": "attack",
+        "lane": 0,
+        "targetLane": 0
+      },
+      {
+        "type": "ability",
+        "target": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 0,
+          "uid": 40
+        }
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "play",
+        "uid": 12,
+        "face": "reversed",
+        "lane": 0
+      },
+      {
+        "type": "move",
+        "lane": 0,
+        "to": 1
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "play",
+        "uid": 59,
+        "face": "reversed",
+        "lane": 1,
+        "target": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 0,
+          "uid": 40
+        }
+      },
+      {
+        "type": "attack",
+        "lane": 0,
+        "targetLane": 0
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "play",
+        "uid": 18,
+        "face": "reversed",
+        "lane": 0
+      },
+      {
+        "type": "attack",
+        "lane": 1,
+        "targetLane": 1
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "attack",
+        "lane": 0,
+        "targetLane": 0
+      },
+      {
+        "type": "play",
+        "uid": 58,
+        "face": "upright",
+        "lane": 1,
+        "target": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 0,
+          "uid": 40
+        }
+      },
+      {
+        "type": "play",
+        "uid": 45,
+        "face": "reversed",
+        "target": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 1,
+          "uid": 58
+        }
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "play",
+        "uid": 3,
+        "face": "reversed",
+        "lane": 1
+      },
+      {
+        "type": "play",
+        "uid": 22,
+        "face": "reversed",
+        "lane": 0
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "play",
+        "uid": 57,
+        "face": "upright",
+        "lane": 2
+      },
+      {
+        "type": "attack",
+        "lane": 0,
+        "targetLane": 0
+      },
+      {
+        "type": "attack",
+        "lane": 1,
+        "targetLane": 1
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "play",
+        "uid": 2,
+        "face": "reversed",
+        "lane": 2
+      },
+      {
+        "type": "attack",
+        "lane": 1,
+        "targetLane": 1
+      },
+      {
+        "type": "play",
+        "uid": 1,
+        "face": "reversed",
+        "lane": 0
+      },
+      {
+        "type": "play",
+        "uid": 9,
+        "face": "upright"
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "play",
+        "uid": 55,
+        "face": "upright",
+        "lane": 1
+      },
+      {
+        "type": "attack",
+        "lane": 2,
+        "targetLane": 2
+      },
+      {
+        "type": "attack",
+        "lane": 0,
+        "targetLane": 0
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "play",
+        "uid": 21,
+        "face": "upright",
+        "lane": 1
+      },
+      {
+        "type": "play",
+        "uid": 2,
+        "face": "reversed",
+        "lane": 0
+      },
+      {
+        "type": "endTurn"
+      },
+      {
+        "type": "attack",
+        "lane": 2,
+        "targetLane": 2
+      },
+      {
+        "type": "play",
+        "uid": 39,
+        "face": "upright",
+        "target": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 1,
+          "uid": 55
+        }
+      },
+      {
+        "type": "ability",
+        "target": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 1,
+          "uid": 55
+        }
+      },
+      {
+        "type": "attack",
+        "lane": 1,
+        "targetLane": 1
+      }
+    ]
+  },
+  "expectedFinal": {
+    "players": [
+      {
+        "id": 0,
+        "sigId": "sig-shazz",
+        "health": 0,
+        "maxHealth": 20,
+        "spark": 0,
+        "maxSpark": 7,
+        "tempSpark": 0,
+        "deck": [
+          {
+            "uid": 6,
+            "defId": "antlers-9"
+          },
+          {
+            "uid": 25,
+            "defId": "major-16"
+          },
+          {
+            "uid": 17,
+            "defId": "gears-9"
+          },
+          {
+            "uid": 26,
+            "defId": "major-13"
+          },
+          {
+            "uid": 10,
+            "defId": "gears-ace"
+          },
+          {
+            "uid": 20,
+            "defId": "gears-10"
+          },
+          {
+            "uid": 15,
+            "defId": "gears-6"
+          },
+          {
+            "uid": 7,
+            "defId": "antlers-7"
+          },
+          {
+            "uid": 29,
+            "defId": "major-10"
+          },
+          {
+            "uid": 5,
+            "defId": "antlers-6"
+          },
+          {
+            "uid": 30,
+            "defId": "major-0"
+          },
+          {
+            "uid": 24,
+            "defId": "major-18"
+          },
+          {
+            "uid": 14,
+            "defId": "gears-5"
+          },
+          {
+            "uid": 19,
+            "defId": "gears-queen"
+          }
+        ],
+        "hand": [
+          {
+            "uid": 28,
+            "defId": "major-8"
+          },
+          {
+            "uid": 27,
+            "defId": "major-2"
+          },
+          {
+            "uid": 23,
+            "defId": "major-4"
+          },
+          {
+            "uid": 8,
+            "defId": "antlers-3"
+          },
+          {
+            "uid": 4,
+            "defId": "antlers-6"
+          }
+        ],
+        "lanes": [
+          {
+            "uid": 2,
+            "defId": "antlers-5",
+            "owner": 0,
+            "lane": 0,
+            "face": "reversed",
+            "damage": 0,
+            "permAtk": 0,
+            "permHp": 0,
+            "tempAtk": 0,
+            "tempHp": 0,
+            "grantedKw": [],
+            "removedKw": [],
+            "hushed": false,
+            "aegis": false,
+            "rekindled": false,
+            "asleep": false,
+            "summonedTurn": 14,
+            "attacksThisTurn": 0,
+            "movedThisTurn": false,
+            "onceUsed": [],
+            "relics": []
+          },
+          null,
+          null
+        ],
+        "graveyard": [
+          {
+            "uid": 11,
+            "defId": "gears-3"
+          },
+          {
+            "uid": 12,
+            "defId": "gears-4"
+          },
+          {
+            "uid": 18,
+            "defId": "gears-knight"
+          },
+          {
+            "uid": 16,
+            "defId": "gears-6"
+          },
+          {
+            "uid": 13,
+            "defId": "gears-5"
+          },
+          {
+            "uid": 22,
+            "defId": "gears-2"
+          },
+          {
+            "uid": 3,
+            "defId": "antlers-5"
+          },
+          {
+            "uid": 9,
+            "defId": "gears-ace"
+          },
+          {
+            "uid": 1,
+            "defId": "antlers-2"
+          },
+          {
+            "uid": 21,
+            "defId": "gears-7"
+          }
+        ],
+        "fatigue": 0,
+        "abilityUsed": false,
+        "costNextDiscount": 0,
+        "omenDiscount": 0,
+        "handRevealed": false,
+        "omensCastThisTurn": 0,
+        "friendlyDeathsThisTurn": 0,
+        "burnsThisGame": 0
+      },
+      {
+        "id": 1,
+        "sigId": "sig-daxon",
+        "health": 20,
+        "maxHealth": 20,
+        "spark": 2,
+        "maxSpark": 8,
+        "tempSpark": 0,
+        "deck": [
+          {
+            "uid": 48,
+            "defId": "tides-3"
+          },
+          {
+            "uid": 49,
+            "defId": "tides-4"
+          },
+          {
+            "uid": 34,
+            "defId": "suns-3"
+          },
+          {
+            "uid": 50,
+            "defId": "tides-5"
+          },
+          {
+            "uid": 35,
+            "defId": "suns-4"
+          },
+          {
+            "uid": 51,
+            "defId": "tides-8"
+          },
+          {
+            "uid": 42,
+            "defId": "suns-knight"
+          },
+          {
+            "uid": 32,
+            "defId": "suns-2"
+          },
+          {
+            "uid": 60,
+            "defId": "major-19"
+          },
+          {
+            "uid": 41,
+            "defId": "suns-page"
+          },
+          {
+            "uid": 38,
+            "defId": "suns-7"
+          },
+          {
+            "uid": 52,
+            "defId": "tides-8"
+          },
+          {
+            "uid": 44,
+            "defId": "suns-9"
+          },
+          {
+            "uid": 54,
+            "defId": "tides-page"
+          },
+          {
+            "uid": 36,
+            "defId": "suns-4"
+          },
+          {
+            "uid": 31,
+            "defId": "suns-2"
+          }
+        ],
+        "hand": [
+          {
+            "uid": 56,
+            "defId": "tides-2"
+          },
+          {
+            "uid": 53,
+            "defId": "tides-page"
+          },
+          {
+            "uid": 47,
+            "defId": "tides-3"
+          },
+          {
+            "uid": 33,
+            "defId": "suns-3"
+          },
+          {
+            "uid": 37,
+            "defId": "suns-5"
+          },
+          {
+            "uid": 43,
+            "defId": "suns-queen"
+          }
+        ],
+        "lanes": [
+          {
+            "uid": 40,
+            "defId": "suns-page",
+            "owner": 1,
+            "lane": 0,
+            "face": "upright",
+            "damage": 4,
+            "permAtk": 2,
+            "permHp": 2,
+            "tempAtk": 0,
+            "tempHp": 0,
+            "grantedKw": [],
+            "removedKw": [
+              "veiled",
+              "guard"
+            ],
+            "hushed": true,
+            "aegis": false,
+            "rekindled": false,
+            "asleep": false,
+            "summonedTurn": 3,
+            "attacksThisTurn": 0,
+            "movedThisTurn": false,
+            "onceUsed": [],
+            "relics": [
+              {
+                "uid": 46,
+                "defId": "tides-ace",
+                "face": "upright"
+              }
+            ]
+          },
+          {
+            "uid": 55,
+            "defId": "tides-10",
+            "owner": 1,
+            "lane": 1,
+            "face": "upright",
+            "damage": 0,
+            "permAtk": 0,
+            "permHp": 0,
+            "tempAtk": 2,
+            "tempHp": 0,
+            "grantedKw": [],
+            "removedKw": [],
+            "hushed": false,
+            "aegis": true,
+            "rekindled": false,
+            "asleep": false,
+            "summonedTurn": 13,
+            "attacksThisTurn": 1,
+            "movedThisTurn": false,
+            "onceUsed": [],
+            "relics": [
+              {
+                "uid": 39,
+                "defId": "suns-8",
+                "face": "upright"
+              }
+            ]
+          },
+          {
+            "uid": 57,
+            "defId": "tides-queen",
+            "owner": 1,
+            "lane": 2,
+            "face": "upright",
+            "damage": 0,
+            "permAtk": 0,
+            "permHp": 0,
+            "tempAtk": 0,
+            "tempHp": 0,
+            "grantedKw": [],
+            "removedKw": [],
+            "hushed": false,
+            "aegis": false,
+            "rekindled": false,
+            "asleep": false,
+            "summonedTurn": 11,
+            "attacksThisTurn": 1,
+            "movedThisTurn": false,
+            "onceUsed": [],
+            "relics": []
+          }
+        ],
+        "graveyard": [
+          {
+            "uid": 59,
+            "defId": "major-14"
+          },
+          {
+            "uid": 58,
+            "defId": "major-12"
+          }
+        ],
+        "fatigue": 0,
+        "abilityUsed": true,
+        "costNextDiscount": 0,
+        "omenDiscount": 0,
+        "handRevealed": false,
+        "omensCastThisTurn": 0,
+        "friendlyDeathsThisTurn": 0,
+        "burnsThisGame": 0
+      }
+    ],
+    "active": 1,
+    "round": 8,
+    "turn": 15,
+    "boneMoonRound": 10,
+    "phase": "over",
+    "winner": 1,
+    "seed": 56364939,
+    "nextUid": 62,
+    "pending": null,
+    "humanPlayer": 0
+  }
+}

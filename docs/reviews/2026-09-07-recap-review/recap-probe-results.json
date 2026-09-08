@@ -1,0 +1,1811 @@
+[
+  {
+    "seed": 4242,
+    "trial": false,
+    "customSwap": {
+      "removed": "antlers-2",
+      "added": "major-0"
+    },
+    "actions": 30,
+    "original": {
+      "phase": "over",
+      "winner": 1,
+      "round": 7,
+      "turn": 13,
+      "health": [
+        0,
+        20
+      ],
+      "seed": 688204809
+    },
+    "uiReplay": {
+      "phase": "over",
+      "winner": 1,
+      "round": 7,
+      "turn": 13,
+      "health": [
+        0,
+        20
+      ],
+      "seed": -1143361004
+    },
+    "uiReplayExact": false,
+    "illegalReplayActions": 0,
+    "initialRng": {
+      "original": 688204809,
+      "forced": -1143361004
+    },
+    "firstStateMismatch": null,
+    "lines": [
+      "Round 7: The Dusk, Wearing Bill’s Face's attack took you from 7 to 0.",
+      "Round 5: their turn cost you 9 Health, the most in the reading.",
+      "Round 7: Archivist Esmerelda Gotch (6 Spark) fell, your costliest loss.",
+      "Your hand was full for 1 draw: Strength: Grimore burned.",
+      "You ended turns with 4 Spark unspent in all."
+    ],
+    "controlFinalExact": true,
+    "controlLines": [
+      "Round 7: The Dusk, Wearing Bill’s Face's attack took you from 7 to 0.",
+      "Round 5: their turn cost you 9 Health, the most in the reading.",
+      "Round 7: Archivist Esmerelda Gotch (6 Spark) fell, your costliest loss.",
+      "Your hand was full for 1 draw: Strength: Grimore burned.",
+      "You ended turns with 4 Spark unspent in all."
+    ],
+    "eventHealthMismatchCount": 8,
+    "firstEventMismatch": {
+      "event": {
+        "kind": "attackStart",
+        "attacker": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 0,
+          "uid": 50
+        },
+        "defender": {
+          "kind": "sig",
+          "player": 0
+        }
+      },
+      "actionIndex": 16,
+      "actual": [
+        20,
+        20
+      ],
+      "recapState": [
+        13,
+        20
+      ]
+    },
+    "fatal": {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 7
+      },
+      "actualPriorHealth": 7,
+      "action": {
+        "type": "attack",
+        "lane": 0,
+        "targetLane": 0
+      },
+      "precedingEvents": [
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "figure",
+              "player": 0,
+              "lane": 0,
+              "uid": 19
+            },
+            "n": 5
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "death",
+            "target": {
+              "kind": "figure",
+              "player": 0,
+              "lane": 0,
+              "uid": 19
+            },
+            "defId": "gears-queen",
+            "uid": 19
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "sig",
+              "player": 0
+            },
+            "n": 2
+          },
+          "health": [
+            7,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            7,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "attackStart",
+            "attacker": {
+              "kind": "figure",
+              "player": 1,
+              "lane": 0,
+              "uid": 50
+            },
+            "defender": {
+              "kind": "sig",
+              "player": 0
+            }
+          },
+          "health": [
+            7,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "sig",
+              "player": 0
+            },
+            "n": 7
+          },
+          "health": [
+            0,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "gameOver",
+            "winner": 1
+          },
+          "health": [
+            0,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        }
+      ]
+    },
+    "recordDeck": {
+      "id": "probe-custom",
+      "name": "Recap audit",
+      "rev": 1,
+      "starter": false
+    },
+    "recordContainsList": false
+  },
+  {
+    "seed": 7,
+    "trial": false,
+    "customSwap": {
+      "removed": "antlers-2",
+      "added": "major-0"
+    },
+    "actions": 38,
+    "original": {
+      "phase": "over",
+      "winner": 1,
+      "round": 7,
+      "turn": 14,
+      "health": [
+        -1,
+        17
+      ],
+      "seed": 688200574
+    },
+    "uiReplay": {
+      "phase": "over",
+      "winner": 1,
+      "round": 7,
+      "turn": 14,
+      "health": [
+        -1,
+        17
+      ],
+      "seed": -1143365239
+    },
+    "uiReplayExact": false,
+    "illegalReplayActions": 0,
+    "initialRng": {
+      "original": 688200574,
+      "forced": -1143365239
+    },
+    "firstStateMismatch": null,
+    "lines": [
+      "Round 7: Marin, the Storm Held in Check's attack took you from 6 to 0.",
+      "Round 5: their turn cost you 10 Health, the most in the reading.",
+      "Round 4: Mordeaux, the Clockwork Man (4 Spark) fell, your costliest loss.",
+      "Your hand was full for 1 draw: The Mirrored Dome burned.",
+      "At the end 7 cards were still in hand; the cheapest cost 4."
+    ],
+    "controlFinalExact": true,
+    "controlLines": [
+      "Round 7: Marin, the Storm Held in Check's attack took you from 6 to 0.",
+      "Round 5: their turn cost you 10 Health, the most in the reading.",
+      "Round 4: Mordeaux, the Clockwork Man (4 Spark) fell, your costliest loss.",
+      "Your hand was full for 1 draw: The Mirrored Dome burned.",
+      "At the end 7 cards were still in hand; the cheapest cost 4."
+    ],
+    "eventHealthMismatchCount": 10,
+    "firstEventMismatch": {
+      "event": {
+        "kind": "attackStart",
+        "attacker": {
+          "kind": "figure",
+          "player": 0,
+          "lane": 1,
+          "uid": 30
+        },
+        "defender": {
+          "kind": "sig",
+          "player": 1
+        }
+      },
+      "actionIndex": 8,
+      "actual": [
+        20,
+        20
+      ],
+      "recapState": [
+        20,
+        16
+      ]
+    },
+    "fatal": {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 7
+      },
+      "actualPriorHealth": 6,
+      "action": {
+        "type": "attack",
+        "lane": 0,
+        "targetLane": 1
+      },
+      "precedingEvents": [
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            6,
+            17
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "played",
+            "player": 1,
+            "uid": 55,
+            "defId": "tides-10",
+            "face": "reversed",
+            "lane": 0,
+            "cardType": "figure"
+          },
+          "health": [
+            6,
+            17
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "summon",
+            "player": 1,
+            "uid": 55,
+            "defId": "tides-10",
+            "lane": 0,
+            "face": "reversed"
+          },
+          "health": [
+            6,
+            17
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            6,
+            17
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "attackStart",
+            "attacker": {
+              "kind": "figure",
+              "player": 1,
+              "lane": 0,
+              "uid": 55
+            },
+            "defender": {
+              "kind": "sig",
+              "player": 0
+            }
+          },
+          "health": [
+            6,
+            17
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "sig",
+              "player": 0
+            },
+            "n": 7
+          },
+          "health": [
+            -1,
+            17
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "gameOver",
+            "winner": 1
+          },
+          "health": [
+            -1,
+            17
+          ],
+          "round": 7,
+          "active": 1
+        }
+      ]
+    },
+    "recordDeck": {
+      "id": "probe-custom",
+      "name": "Recap audit",
+      "rev": 1,
+      "starter": false
+    },
+    "recordContainsList": false
+  },
+  {
+    "seed": 123,
+    "trial": false,
+    "customSwap": {
+      "removed": "antlers-2",
+      "added": "major-0"
+    },
+    "actions": 27,
+    "original": {
+      "phase": "over",
+      "winner": 1,
+      "round": 6,
+      "turn": 11,
+      "health": [
+        -5,
+        20
+      ],
+      "seed": 688200690
+    },
+    "uiReplay": {
+      "phase": "over",
+      "winner": 1,
+      "round": 6,
+      "turn": 11,
+      "health": [
+        -5,
+        20
+      ],
+      "seed": -1143365123
+    },
+    "uiReplayExact": false,
+    "illegalReplayActions": 0,
+    "initialRng": {
+      "original": 688200690,
+      "forced": -1143365123
+    },
+    "firstStateMismatch": null,
+    "lines": [
+      "Round 6: Temperance: Brother Soren's attack took you from 1 to 0.",
+      "Round 5: their turn cost you 9 Health, the most in the reading.",
+      "At the end 7 cards were still in hand; the cheapest cost 4."
+    ],
+    "controlFinalExact": true,
+    "controlLines": [
+      "Round 6: Temperance: Brother Soren's attack took you from 1 to 0.",
+      "Round 5: their turn cost you 9 Health, the most in the reading.",
+      "At the end 7 cards were still in hand; the cheapest cost 4."
+    ],
+    "eventHealthMismatchCount": 4,
+    "firstEventMismatch": {
+      "event": {
+        "kind": "attackStart",
+        "attacker": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 0,
+          "uid": 48
+        },
+        "defender": {
+          "kind": "sig",
+          "player": 0
+        }
+      },
+      "actionIndex": 9,
+      "actual": [
+        20,
+        20
+      ],
+      "recapState": [
+        14,
+        20
+      ]
+    },
+    "fatal": {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 6
+      },
+      "actualPriorHealth": 1,
+      "action": {
+        "type": "attack",
+        "lane": 0,
+        "targetLane": 0
+      },
+      "precedingEvents": [
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            1,
+            20
+          ],
+          "round": 5,
+          "active": 0
+        },
+        {
+          "ev": {
+            "kind": "turnStart",
+            "player": 1,
+            "round": 6,
+            "moon": "waxing"
+          },
+          "health": [
+            1,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "draw",
+            "player": 1,
+            "uid": 34,
+            "defId": "suns-3"
+          },
+          "health": [
+            1,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            1,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "attackStart",
+            "attacker": {
+              "kind": "figure",
+              "player": 1,
+              "lane": 0,
+              "uid": 59
+            },
+            "defender": {
+              "kind": "sig",
+              "player": 0
+            }
+          },
+          "health": [
+            1,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "sig",
+              "player": 0
+            },
+            "n": 6
+          },
+          "health": [
+            -5,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "gameOver",
+            "winner": 1
+          },
+          "health": [
+            -5,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        }
+      ]
+    },
+    "recordDeck": {
+      "id": "probe-custom",
+      "name": "Recap audit",
+      "rev": 1,
+      "starter": false
+    },
+    "recordContainsList": false
+  },
+  {
+    "seed": 42,
+    "trial": false,
+    "customSwap": {
+      "removed": "antlers-2",
+      "added": "major-0"
+    },
+    "actions": 46,
+    "original": {
+      "phase": "over",
+      "winner": 1,
+      "round": 8,
+      "turn": 15,
+      "health": [
+        0,
+        20
+      ],
+      "seed": 56364939
+    },
+    "uiReplay": {
+      "phase": "over",
+      "winner": 1,
+      "round": 8,
+      "turn": 15,
+      "health": [
+        -4,
+        20
+      ],
+      "seed": -1775200874
+    },
+    "uiReplayExact": false,
+    "illegalReplayActions": 1,
+    "firstIllegal": {
+      "kind": "log",
+      "text": "Illegal action: card not in hand"
+    },
+    "initialRng": {
+      "original": 688200609,
+      "forced": -1143365204
+    },
+    "firstStateMismatch": {
+      "actionIndex": 26,
+      "action": {
+        "type": "play",
+        "uid": 57,
+        "face": "upright",
+        "lane": 2
+      },
+      "original": {
+        "phase": "main",
+        "winner": null,
+        "round": 6,
+        "turn": 11,
+        "health": [
+          14,
+          20
+        ],
+        "seed": 56364939
+      },
+      "replay": {
+        "phase": "main",
+        "winner": null,
+        "round": 6,
+        "turn": 11,
+        "health": [
+          14,
+          20
+        ],
+        "seed": -1775200874
+      }
+    },
+    "lines": [
+      "Round 8: Marin, Spirit of Ocean Waves's attack took you from 5 to 0.",
+      "Round 7: their turn cost you 9 Health, the most in the reading.",
+      "Round 5: Mordeaux, the Clockwork Man (4 Spark) fell, your costliest loss.",
+      "At the end 6 cards were still in hand; the cheapest cost 2."
+    ],
+    "controlFinalExact": true,
+    "controlLines": [
+      "Round 8: Marin, Spirit of Ocean Waves's attack took you from 9 to 0.",
+      "Round 5: Mordeaux, the Clockwork Man (4 Spark) fell, your costliest loss.",
+      "At the end 5 cards were still in hand; the cheapest cost 2."
+    ],
+    "eventHealthMismatchCount": 5,
+    "firstEventMismatch": {
+      "event": {
+        "kind": "played",
+        "player": 1,
+        "uid": 40,
+        "defId": "suns-page",
+        "face": "reversed",
+        "lane": 0,
+        "cardType": "figure"
+      },
+      "actionIndex": 2,
+      "actual": [
+        20,
+        20
+      ],
+      "recapState": [
+        18,
+        20
+      ]
+    },
+    "fatal": {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 9
+      },
+      "actualPriorHealth": 9,
+      "action": {
+        "type": "attack",
+        "lane": 1,
+        "targetLane": 1
+      },
+      "precedingEvents": [
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 8,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "ability",
+            "player": 1
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 8,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "buff",
+            "target": {
+              "kind": "figure",
+              "player": 1,
+              "lane": 1,
+              "uid": 55
+            },
+            "atk": 2,
+            "hp": 0
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 8,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 8,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "attackStart",
+            "attacker": {
+              "kind": "figure",
+              "player": 1,
+              "lane": 1,
+              "uid": 55
+            },
+            "defender": {
+              "kind": "sig",
+              "player": 0
+            }
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 8,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "sig",
+              "player": 0
+            },
+            "n": 9
+          },
+          "health": [
+            0,
+            20
+          ],
+          "round": 8,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "gameOver",
+            "winner": 1
+          },
+          "health": [
+            0,
+            20
+          ],
+          "round": 8,
+          "active": 1
+        }
+      ]
+    },
+    "recordDeck": {
+      "id": "probe-custom",
+      "name": "Recap audit",
+      "rev": 1,
+      "starter": false
+    },
+    "recordContainsList": false
+  },
+  {
+    "seed": 4242,
+    "trial": true,
+    "customSwap": {
+      "removed": "antlers-2",
+      "added": "major-0"
+    },
+    "actions": 31,
+    "original": {
+      "phase": "over",
+      "winner": 1,
+      "round": 7,
+      "turn": 13,
+      "health": [
+        0,
+        20
+      ],
+      "seed": 688204809
+    },
+    "uiReplay": {
+      "phase": "over",
+      "winner": 1,
+      "round": 7,
+      "turn": 13,
+      "health": [
+        0,
+        20
+      ],
+      "seed": -1143361004
+    },
+    "uiReplayExact": false,
+    "illegalReplayActions": 1,
+    "firstIllegal": {
+      "kind": "log",
+      "text": "Illegal action: card not in hand"
+    },
+    "initialRng": {
+      "original": 688204809,
+      "forced": -1143361004
+    },
+    "firstStateMismatch": {
+      "actionIndex": 0,
+      "action": {
+        "type": "endTurn"
+      },
+      "original": {
+        "phase": "main",
+        "winner": null,
+        "round": 1,
+        "turn": 2,
+        "health": [
+          20,
+          20
+        ],
+        "seed": 688204809
+      },
+      "replay": {
+        "phase": "main",
+        "winner": null,
+        "round": 1,
+        "turn": 2,
+        "health": [
+          20,
+          20
+        ],
+        "seed": -1143361004
+      }
+    },
+    "lines": [
+      "Round 7: The Dusk, Wearing Bill’s Face's attack took you from 7 to 0.",
+      "Round 5: their turn cost you 9 Health, the most in the reading.",
+      "Round 7: Archivist Esmerelda Gotch (6 Spark) fell, your costliest loss.",
+      "Your hand was full for 1 draw: Strength: Grimore burned.",
+      "You ended turns with 4 Spark unspent in all."
+    ],
+    "controlFinalExact": true,
+    "controlLines": [
+      "Round 7: The Dusk, Wearing Bill’s Face's attack took you from 7 to 0.",
+      "Round 5: their turn cost you 9 Health, the most in the reading.",
+      "Round 7: Archivist Esmerelda Gotch (6 Spark) fell, your costliest loss.",
+      "Your hand was full for 1 draw: Strength: Grimore burned.",
+      "You ended turns with 4 Spark unspent in all."
+    ],
+    "eventHealthMismatchCount": 8,
+    "firstEventMismatch": {
+      "event": {
+        "kind": "attackStart",
+        "attacker": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 0,
+          "uid": 50
+        },
+        "defender": {
+          "kind": "sig",
+          "player": 0
+        }
+      },
+      "actionIndex": 17,
+      "actual": [
+        20,
+        20
+      ],
+      "recapState": [
+        13,
+        20
+      ]
+    },
+    "fatal": {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 7
+      },
+      "actualPriorHealth": 7,
+      "action": {
+        "type": "attack",
+        "lane": 0,
+        "targetLane": 0
+      },
+      "precedingEvents": [
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "figure",
+              "player": 0,
+              "lane": 0,
+              "uid": 19
+            },
+            "n": 5
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "death",
+            "target": {
+              "kind": "figure",
+              "player": 0,
+              "lane": 0,
+              "uid": 19
+            },
+            "defId": "gears-queen",
+            "uid": 19
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "sig",
+              "player": 0
+            },
+            "n": 2
+          },
+          "health": [
+            7,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            7,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "attackStart",
+            "attacker": {
+              "kind": "figure",
+              "player": 1,
+              "lane": 0,
+              "uid": 50
+            },
+            "defender": {
+              "kind": "sig",
+              "player": 0
+            }
+          },
+          "health": [
+            7,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "sig",
+              "player": 0
+            },
+            "n": 7
+          },
+          "health": [
+            0,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "gameOver",
+            "winner": 1
+          },
+          "health": [
+            0,
+            20
+          ],
+          "round": 7,
+          "active": 1
+        }
+      ]
+    },
+    "recordDeck": {
+      "id": "probe-custom",
+      "name": "Recap audit",
+      "rev": 1,
+      "starter": false
+    },
+    "recordContainsList": false
+  },
+  {
+    "seed": 7,
+    "trial": true,
+    "customSwap": {
+      "removed": "antlers-2",
+      "added": "major-0"
+    },
+    "actions": 34,
+    "original": {
+      "phase": "over",
+      "winner": 1,
+      "round": 6,
+      "turn": 12,
+      "health": [
+        0,
+        10
+      ],
+      "seed": 688200574
+    },
+    "uiReplay": {
+      "phase": "main",
+      "winner": null,
+      "round": 6,
+      "turn": 12,
+      "health": [
+        14,
+        5
+      ],
+      "seed": -1143365239
+    },
+    "uiReplayExact": false,
+    "illegalReplayActions": 12,
+    "firstIllegal": {
+      "kind": "log",
+      "text": "Illegal action: card not in hand"
+    },
+    "initialRng": {
+      "original": 688200574,
+      "forced": -1143365239
+    },
+    "firstStateMismatch": {
+      "actionIndex": 0,
+      "action": {
+        "type": "play",
+        "uid": 10,
+        "face": "upright"
+      },
+      "original": {
+        "phase": "main",
+        "winner": null,
+        "round": 1,
+        "turn": 1,
+        "health": [
+          20,
+          20
+        ],
+        "seed": 688200574
+      },
+      "replay": {
+        "phase": "main",
+        "winner": null,
+        "round": 1,
+        "turn": 1,
+        "health": [
+          20,
+          20
+        ],
+        "seed": -1143365239
+      }
+    },
+    "lines": [],
+    "controlFinalExact": true,
+    "controlLines": [
+      "Round 6: The Solar Flare Cannon took you from 2 to 0.",
+      "Round 3: their turn cost you 6 Health, the most in the reading.",
+      "Round 6: Mr. Zero (6 Spark) fell, your costliest loss.",
+      "At the end 7 cards were still in hand; the cheapest cost 2."
+    ],
+    "eventHealthMismatchCount": 14,
+    "firstEventMismatch": {
+      "event": {
+        "kind": "played",
+        "player": 1,
+        "uid": 41,
+        "defId": "suns-page",
+        "face": "reversed",
+        "lane": 0,
+        "cardType": "figure"
+      },
+      "actionIndex": 3,
+      "actual": [
+        20,
+        20
+      ],
+      "recapState": [
+        18,
+        20
+      ]
+    },
+    "fatal": {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 2
+      },
+      "actualPriorHealth": 2,
+      "action": {
+        "type": "play",
+        "uid": 44,
+        "face": "upright",
+        "target": {
+          "kind": "figure",
+          "player": 0,
+          "lane": 1,
+          "uid": 17
+        }
+      },
+      "precedingEvents": [
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            2,
+            10
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "played",
+            "player": 1,
+            "uid": 44,
+            "defId": "suns-9",
+            "face": "upright",
+            "cardType": "omen"
+          },
+          "health": [
+            2,
+            10
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "omen",
+            "player": 1,
+            "defId": "suns-9",
+            "face": "upright",
+            "target": {
+              "kind": "figure",
+              "player": 0,
+              "lane": 1,
+              "uid": 17
+            }
+          },
+          "health": [
+            2,
+            10
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "figure",
+              "player": 0,
+              "lane": 1,
+              "uid": 17
+            },
+            "n": 5
+          },
+          "health": [
+            2,
+            10
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "death",
+            "target": {
+              "kind": "figure",
+              "player": 0,
+              "lane": 1,
+              "uid": 17
+            },
+            "defId": "gears-9",
+            "uid": 17
+          },
+          "health": [
+            2,
+            10
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "sig",
+              "player": 0
+            },
+            "n": 2
+          },
+          "health": [
+            0,
+            10
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "gameOver",
+            "winner": 1
+          },
+          "health": [
+            0,
+            10
+          ],
+          "round": 6,
+          "active": 1
+        }
+      ]
+    },
+    "recordDeck": {
+      "id": "probe-custom",
+      "name": "Recap audit",
+      "rev": 1,
+      "starter": false
+    },
+    "recordContainsList": false
+  },
+  {
+    "seed": 123,
+    "trial": true,
+    "customSwap": {
+      "removed": "antlers-2",
+      "added": "major-0"
+    },
+    "actions": 30,
+    "original": {
+      "phase": "over",
+      "winner": 1,
+      "round": 6,
+      "turn": 11,
+      "health": [
+        -3,
+        17
+      ],
+      "seed": 688200690
+    },
+    "uiReplay": {
+      "phase": "main",
+      "winner": null,
+      "round": 6,
+      "turn": 11,
+      "health": [
+        14,
+        20
+      ],
+      "seed": -1143365123
+    },
+    "uiReplayExact": false,
+    "illegalReplayActions": 9,
+    "firstIllegal": {
+      "kind": "log",
+      "text": "Illegal action: card not in hand"
+    },
+    "initialRng": {
+      "original": 688200690,
+      "forced": -1143365123
+    },
+    "firstStateMismatch": {
+      "actionIndex": 0,
+      "action": {
+        "type": "endTurn"
+      },
+      "original": {
+        "phase": "main",
+        "winner": null,
+        "round": 1,
+        "turn": 2,
+        "health": [
+          20,
+          20
+        ],
+        "seed": 688200690
+      },
+      "replay": {
+        "phase": "main",
+        "winner": null,
+        "round": 1,
+        "turn": 2,
+        "health": [
+          20,
+          20
+        ],
+        "seed": -1143365123
+      }
+    },
+    "lines": [],
+    "controlFinalExact": true,
+    "controlLines": [
+      "Round 6: Captain Elira Voss's attack took you from 1 to 0.",
+      "Round 5: their turn cost you 9 Health, the most in the reading.",
+      "At the end 7 cards were still in hand; the cheapest cost 4."
+    ],
+    "eventHealthMismatchCount": 5,
+    "firstEventMismatch": {
+      "event": {
+        "kind": "attackStart",
+        "attacker": {
+          "kind": "figure",
+          "player": 0,
+          "lane": 0,
+          "uid": 11
+        },
+        "defender": {
+          "kind": "sig",
+          "player": 1
+        }
+      },
+      "actionIndex": 9,
+      "actual": [
+        20,
+        20
+      ],
+      "recapState": [
+        20,
+        17
+      ]
+    },
+    "fatal": {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 4
+      },
+      "actualPriorHealth": 1,
+      "action": {
+        "type": "attack",
+        "lane": 0,
+        "targetLane": 0
+      },
+      "precedingEvents": [
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            1,
+            17
+          ],
+          "round": 5,
+          "active": 0
+        },
+        {
+          "ev": {
+            "kind": "turnStart",
+            "player": 1,
+            "round": 6,
+            "moon": "waxing"
+          },
+          "health": [
+            1,
+            17
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "draw",
+            "player": 1,
+            "uid": 34,
+            "defId": "suns-3"
+          },
+          "health": [
+            1,
+            17
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            1,
+            17
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "attackStart",
+            "attacker": {
+              "kind": "figure",
+              "player": 1,
+              "lane": 0,
+              "uid": 40
+            },
+            "defender": {
+              "kind": "sig",
+              "player": 0
+            }
+          },
+          "health": [
+            1,
+            17
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "sig",
+              "player": 0
+            },
+            "n": 4
+          },
+          "health": [
+            -3,
+            17
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "gameOver",
+            "winner": 1
+          },
+          "health": [
+            -3,
+            17
+          ],
+          "round": 6,
+          "active": 1
+        }
+      ]
+    },
+    "recordDeck": {
+      "id": "probe-custom",
+      "name": "Recap audit",
+      "rev": 1,
+      "starter": false
+    },
+    "recordContainsList": false
+  },
+  {
+    "seed": 42,
+    "trial": true,
+    "customSwap": {
+      "removed": "antlers-2",
+      "added": "major-0"
+    },
+    "actions": 29,
+    "original": {
+      "phase": "over",
+      "winner": 1,
+      "round": 6,
+      "turn": 11,
+      "health": [
+        -1,
+        20
+      ],
+      "seed": 688200609
+    },
+    "uiReplay": {
+      "phase": "main",
+      "winner": null,
+      "round": 6,
+      "turn": 11,
+      "health": [
+        15,
+        20
+      ],
+      "seed": -1143365204
+    },
+    "uiReplayExact": false,
+    "illegalReplayActions": 15,
+    "firstIllegal": {
+      "kind": "log",
+      "text": "Illegal action: card not in hand"
+    },
+    "initialRng": {
+      "original": 688200609,
+      "forced": -1143365204
+    },
+    "firstStateMismatch": {
+      "actionIndex": 0,
+      "action": {
+        "type": "endTurn"
+      },
+      "original": {
+        "phase": "main",
+        "winner": null,
+        "round": 1,
+        "turn": 2,
+        "health": [
+          20,
+          20
+        ],
+        "seed": 688200609
+      },
+      "replay": {
+        "phase": "main",
+        "winner": null,
+        "round": 1,
+        "turn": 2,
+        "health": [
+          20,
+          20
+        ],
+        "seed": -1143365204
+      }
+    },
+    "lines": [],
+    "controlFinalExact": true,
+    "controlLines": [
+      "Round 6: The Hanged Man: Rorik Flamebeard's attack took you from 9 to 0.",
+      "Round 5: Mordeaux, the Clockwork Man (4 Spark) fell, your costliest loss.",
+      "At the end 7 cards were still in hand; the cheapest cost 1."
+    ],
+    "eventHealthMismatchCount": 3,
+    "firstEventMismatch": {
+      "event": {
+        "kind": "attackStart",
+        "attacker": {
+          "kind": "figure",
+          "player": 1,
+          "lane": 0,
+          "uid": 40
+        },
+        "defender": {
+          "kind": "sig",
+          "player": 0
+        }
+      },
+      "actionIndex": 9,
+      "actual": [
+        20,
+        20
+      ],
+      "recapState": [
+        14,
+        20
+      ]
+    },
+    "fatal": {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 10
+      },
+      "actualPriorHealth": 9,
+      "action": {
+        "type": "attack",
+        "lane": 2,
+        "targetLane": 2
+      },
+      "precedingEvents": [
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "ability",
+            "player": 1
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "buff",
+            "target": {
+              "kind": "figure",
+              "player": 1,
+              "lane": 2,
+              "uid": 58
+            },
+            "atk": 2,
+            "hp": 0
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "log",
+            "text": ""
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "attackStart",
+            "attacker": {
+              "kind": "figure",
+              "player": 1,
+              "lane": 2,
+              "uid": 58
+            },
+            "defender": {
+              "kind": "sig",
+              "player": 0
+            }
+          },
+          "health": [
+            9,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "damage",
+            "target": {
+              "kind": "sig",
+              "player": 0
+            },
+            "n": 10
+          },
+          "health": [
+            -1,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        },
+        {
+          "ev": {
+            "kind": "gameOver",
+            "winner": 1
+          },
+          "health": [
+            -1,
+            20
+          ],
+          "round": 6,
+          "active": 1
+        }
+      ]
+    },
+    "recordDeck": {
+      "id": "probe-custom",
+      "name": "Recap audit",
+      "rev": 1,
+      "starter": false
+    },
+    "recordContainsList": false
+  }
+]

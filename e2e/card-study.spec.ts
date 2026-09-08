@@ -17,10 +17,14 @@ test('the Card study measures both treatments on one table', async ({ page }, in
       return { cards, lane: getComputedStyle(document.querySelector('.slot')!).width }
     })
   }
-  await page.getByRole('button', { name: 'Words', exact: true }).click()
+  // One switch names the other treatment: it reads Marks while words are showing.
+  const toggle = page.locator('.table-tools').getByRole('button', { name: /^(Words|Marks)$/ })
+  if ((await toggle.textContent())?.trim() === 'Words') await toggle.click()
+  await expect(toggle).toHaveText('Marks')
   const words = await measure()
   await shot(page, info, 'study-words')
-  await page.getByRole('button', { name: 'Marks', exact: true }).click()
+  await toggle.click()
+  await expect(toggle).toHaveText('Words')
   const marks = await measure()
   await shot(page, info, 'study-marks')
   mkdirSync(`e2e/evidence/${info.project.name}`, { recursive: true })
@@ -35,5 +39,10 @@ test('the Card study measures both treatments on one table', async ({ page }, in
   await expect(page.locator('.status-modal')).toBeVisible()
   await expect(page.locator('.card.is-selected')).toHaveCount(0)
   await page.locator('.status-modal').getByRole('button', { name: 'Close' }).click()
-  await page.getByRole('button', { name: 'Words', exact: true }).click()
+  // The tools row keeps clear of the opponent's name on a phone.
+  const name = await page.locator('.sig-theirs .sig-name').boundingBox()
+  const tools = await page.locator('.table-tools').boundingBox()
+  if (name && tools && (await page.viewportSize())!.width < 1000) expect(name.x + name.width).toBeLessThanOrEqual(tools.x + 1)
+  await toggle.click()
+  await expect(toggle).toHaveText('Marks')
 })

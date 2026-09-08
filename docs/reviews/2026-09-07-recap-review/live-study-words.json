@@ -1,0 +1,38 @@
+{
+  "cards": [
+    {
+      "art": 76.3203125,
+      "name": "The Guard Post",
+      "width": 105
+    },
+    {
+      "art": 60.640625,
+      "name": "Captain Elira Voss",
+      "width": 105
+    },
+    {
+      "art": 41.640625,
+      "name": "General Vath Enverez",
+      "width": 105
+    },
+    {
+      "art": 79.640625,
+      "name": "Voren, Corrupted",
+      "width": 105
+    },
+    {
+      "art": 57.3203125,
+      "name": "Project Lazarus",
+      "width": 105
+    },
+    {
+      "art": 79.640625,
+      "name": "Mordeaux, Clockwork",
+      "width": 105
+    }
+  ],
+  "viewport": [
+    390,
+    664
+  ]
+}

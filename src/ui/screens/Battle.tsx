@@ -172,14 +172,10 @@ export function Battle() {
             </button>
           )}
           {study && (
-            <>
-              <button type="button" className={`btn-quiet ${cardStyle === 'words' ? 'is-on' : ''}`} onClick={() => setCardStyle('words')} aria-pressed={cardStyle === 'words'}>
-                Words
-              </button>
-              <button type="button" className={`btn-quiet ${cardStyle === 'marks' ? 'is-on' : ''}`} onClick={() => setCardStyle('marks')} aria-pressed={cardStyle === 'marks'}>
-                Marks
-              </button>
-            </>
+            // One switch that names the other treatment, so the row fits a phone.
+            <button type="button" className="btn-quiet" onClick={() => setCardStyle(cardStyle === 'words' ? 'marks' : 'words')} title={`Now showing ${cardStyle}; switch the compact cards`}>
+              {cardStyle === 'words' ? 'Marks' : 'Words'}
+            </button>
           )}
           {cardStyle === 'marks' && (
             <button type="button" className="btn-quiet" onClick={openStatus} aria-haspopup="dialog">
@@ -191,8 +187,8 @@ export function Battle() {
               Leave the lesson
             </button>
           ) : study ? (
-            <button type="button" className="btn-quiet" onClick={() => goto('title')}>
-              Leave the study
+            <button type="button" className="btn-quiet" onClick={() => goto('title')} title="Back to the title screen">
+              Leave
             </button>
           ) : (
             <button type="button" className="btn-quiet" onClick={() => goto('title')} title="The reading is kept; continue it from the title screen">

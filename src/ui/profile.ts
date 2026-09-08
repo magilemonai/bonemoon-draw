@@ -19,10 +19,11 @@ export interface MatchRecord {
   health: [number, number] // hero, opponent, at the end
   version: string // the rules the match was started under
   conceded?: boolean
-  deck?: DeckStamp // the list it was played with; absent on records from before decks
+  deck?: DeckStamp & { cards?: string[] } // the list it was played with, the exact cards when the reading kept them
+  aiCards?: string[] // the opponent's list as dealt
   trial?: Trial // played under an experiment's rules; on the record, never credited
-  seed?: number // with the actions, enough to play the reading again
-  firstPlayer?: PlayerId
+  seed?: number // with the lists and the actions, enough to play the reading again exactly
+  firstPlayer?: PlayerId // only when the seat was forced; absent when the deal chose it
   actions?: Action[]
 }
 
@@ -66,8 +67,9 @@ export interface SavedMatch {
   committed: GameState
   log: string[]
   seed?: number
-  firstPlayer?: PlayerId
-  actions?: Action[] // every action so far, the opponent's too, in order
+  firstPlayer?: PlayerId // only when the seat was forced
+  aiCards?: string[] // the opponent's list as dealt
+  actions?: Action[] // every action so far, the opponent's too, in order, as copies
   trial?: Trial
 }
 
@@ -180,9 +182,10 @@ export function settleMatch(p: Profile, saved: SavedMatch, final: GameState, now
     health: [final.players[me].health, final.players[them].health],
     version: saved.version,
     ...(conceded ? { conceded: true } : {}),
-    ...(saved.deck ? { deck: { id: saved.deck.id, name: saved.deck.name, rev: saved.deck.rev, starter: saved.deck.starter } } : {}),
+    ...(saved.deck ? { deck: { id: saved.deck.id, name: saved.deck.name, rev: saved.deck.rev, starter: saved.deck.starter, cards: saved.deck.cards.slice() } } : {}),
+    ...(saved.aiCards ? { aiCards: saved.aiCards.slice() } : {}),
     ...(saved.trial ? { trial: saved.trial } : {}),
-    ...(saved.seed !== undefined && saved.actions ? { seed: saved.seed, firstPlayer: saved.firstPlayer, actions: saved.actions } : {}),
+    ...(saved.seed !== undefined && saved.actions ? { seed: saved.seed, ...(saved.firstPlayer !== undefined ? { firstPlayer: saved.firstPlayer } : {}), actions: saved.actions } : {}),
   }
   const r = recordMatch(p, record)
   return { ...r, record }

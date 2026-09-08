@@ -301,12 +301,16 @@ function Recap() {
           {last.trial === 'seat-token' ? ', under the seat trial' : ''}.
         </p>
       )}
-      {lines.length > 0 && (
-        <ul className="recap-lines" aria-label="What decided it">
-          {lines.map((l) => (
-            <li key={l}>{l}</li>
-          ))}
-        </ul>
+      {lines === null ? (
+        <p className="recap-unavailable">The recap for this reading is not available: it could not be played again exactly as it went.</p>
+      ) : (
+        lines.length > 0 && (
+          <ul className="recap-lines" aria-label="What decided it">
+            {lines.map((l) => (
+              <li key={l}>{l}</li>
+            ))}
+          </ul>
+        )
       )}
       <div className="recap-actions">
         {deck && (

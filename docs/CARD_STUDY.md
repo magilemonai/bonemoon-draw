@@ -1,6 +1,6 @@
 # The Card study
 
-Title screen, Card study. One crowded table, Shazz against a sleeping Daxon in round six with the Bone Moon a round away: a wounded Guard carrying a Relic and an Aegis, a Veiled Windborne captain with Gale, a buffed and wounded general with a Relic, Voren Reversed on Guard, the Sentry Reversed with Rekindle and Veiled, Mordeaux Fixed with a Whisper and two wounds, eight cards in hand, two of them due to burn. Words and Marks in the tools switch the compact card treatment; the choice is kept and applies to every reading until it is switched back. Leave the study returns to the title. Nothing from the study goes on the record.
+Title screen, Card study. One crowded table, Shazz against a sleeping Daxon in round six with the Bone Moon a round away: a wounded Guard carrying a Relic and an Aegis, a Veiled Windborne captain with Gale, a buffed and wounded general with a Relic, Voren Reversed on Guard, the Sentry Reversed with Rekindle and Veiled, Mordeaux Fixed with a Whisper and two wounds, eight cards in hand, two of them due to burn. One switch in the tools names the other treatment (it reads Marks while words are showing) and swaps the compact cards; the choice is kept and applies to every reading until it is switched back. Leave returns to the title. Nothing from the study goes on the record.
 
 ## The two treatments
 

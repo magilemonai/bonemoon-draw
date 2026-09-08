@@ -5920,3 +5920,27 @@ button.kw:focus-visible {
   outline: 2px solid var(--spark);
   outline-offset: 1px;
 }
+
+
+/* The recap when the reading cannot be played again exactly, and the opponent's name kept
+   clear of a fuller tools row on a phone. */
+.recap-unavailable {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(232, 199, 108, 0.25);
+  background: rgba(12, 10, 34, 0.55);
+  color: rgba(239, 228, 204, 0.85);
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+@media (max-width: 999px) {
+  .sig-theirs .sig-top {
+    padding-right: 220px;
+  }
+  .sig-theirs .sig-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

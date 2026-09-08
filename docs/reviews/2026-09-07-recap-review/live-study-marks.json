@@ -1,0 +1,41 @@
+{
+  "cards": [
+    {
+      "art": 114.3203125,
+      "name": "The Guard Post",
+      "width": 105
+    },
+    {
+      "art": 98.640625,
+      "name": "Captain Elira Voss",
+      "width": 105
+    },
+    {
+      "art": 98.640625,
+      "name": "General Vath Enverez",
+      "width": 105
+    },
+    {
+      "art": 98.640625,
+      "name": "Voren, Corrupted",
+      "width": 105
+    },
+    {
+      "art": 114.3203125,
+      "name": "Project Lazarus",
+      "width": 105
+    },
+    {
+      "art": 98.640625,
+      "name": "Mordeaux, Clockwork",
+      "width": 105
+    }
+  ],
+  "scripts": [
+    "https://magilemonai.github.io/moonwyld/assets/index-C3rmoW5-.js"
+  ],
+  "viewport": [
+    390,
+    664
+  ]
+}

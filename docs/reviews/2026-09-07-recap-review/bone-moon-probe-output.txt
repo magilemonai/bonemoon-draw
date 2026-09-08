@@ -1,0 +1,830 @@
+{
+  "description": "Both players only end their turns. Rorik heals passively; all Significator damage comes from the Bone Moon.",
+  "final": {
+    "round": 15,
+    "winner": 0,
+    "health": [
+      5,
+      -1
+    ]
+  },
+  "lines": [
+    "Round 15: the Bone Moon's bite took Daxon from 5 to 0.",
+    "Round 15: their turn cost you 12 Health, the most in the reading.",
+    "Your hand was full for 15 draws: The Festival of Radiant Dawn, The Fool: Daxon Lamn, Temperance: Brother Soren and more burned.",
+    "The Bone Moon bit you for 21 in all.",
+    "You ended turns with 105 Spark unspent in all."
+  ],
+  "events": [
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 0,
+        "round": 7,
+        "moon": "full"
+      },
+      "round": 7,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        20,
+        20
+      ],
+      "actualHealth": [
+        20,
+        20
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 1,
+        "round": 7,
+        "moon": "full"
+      },
+      "round": 7,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        20,
+        20
+      ],
+      "actualHealth": [
+        20,
+        20
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 0,
+        "round": 8,
+        "moon": "waning"
+      },
+      "round": 8,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        20,
+        20
+      ],
+      "actualHealth": [
+        20,
+        20
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 1,
+        "round": 8,
+        "moon": "waning"
+      },
+      "round": 8,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        20,
+        20
+      ],
+      "actualHealth": [
+        20,
+        20
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 0,
+        "round": 9,
+        "moon": "new"
+      },
+      "round": 9,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        20,
+        20
+      ],
+      "actualHealth": [
+        20,
+        20
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 1,
+        "round": 9,
+        "moon": "new"
+      },
+      "round": 9,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        20,
+        20
+      ],
+      "actualHealth": [
+        20,
+        20
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 0,
+        "round": 10,
+        "moon": "waxing"
+      },
+      "round": 10,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        19,
+        20
+      ],
+      "actualHealth": [
+        20,
+        20
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 0,
+        "n": 1
+      },
+      "round": 10,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        19,
+        20
+      ],
+      "actualHealth": [
+        20,
+        20
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 1
+      },
+      "round": 10,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        19,
+        20
+      ],
+      "actualHealth": [
+        19,
+        20
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 1,
+        "round": 10,
+        "moon": "waxing"
+      },
+      "round": 10,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        20,
+        19
+      ],
+      "actualHealth": [
+        20,
+        20
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 1,
+        "n": 1
+      },
+      "round": 10,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        20,
+        19
+      ],
+      "actualHealth": [
+        20,
+        20
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 1
+        },
+        "n": 1
+      },
+      "round": 10,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        20,
+        19
+      ],
+      "actualHealth": [
+        20,
+        19
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 0,
+        "round": 11,
+        "moon": "full"
+      },
+      "round": 11,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        18,
+        19
+      ],
+      "actualHealth": [
+        20,
+        19
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 0,
+        "n": 2
+      },
+      "round": 11,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        18,
+        19
+      ],
+      "actualHealth": [
+        20,
+        19
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 2
+      },
+      "round": 11,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        18,
+        19
+      ],
+      "actualHealth": [
+        18,
+        19
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 1,
+        "round": 11,
+        "moon": "full"
+      },
+      "round": 11,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        19,
+        17
+      ],
+      "actualHealth": [
+        19,
+        19
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 1,
+        "n": 2
+      },
+      "round": 11,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        19,
+        17
+      ],
+      "actualHealth": [
+        19,
+        19
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 1
+        },
+        "n": 2
+      },
+      "round": 11,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        19,
+        17
+      ],
+      "actualHealth": [
+        19,
+        17
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 0,
+        "round": 12,
+        "moon": "waning"
+      },
+      "round": 12,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        16,
+        17
+      ],
+      "actualHealth": [
+        19,
+        17
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 0,
+        "n": 3
+      },
+      "round": 12,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        16,
+        17
+      ],
+      "actualHealth": [
+        19,
+        17
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 3
+      },
+      "round": 12,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        16,
+        17
+      ],
+      "actualHealth": [
+        16,
+        17
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 1,
+        "round": 12,
+        "moon": "waning"
+      },
+      "round": 12,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        17,
+        14
+      ],
+      "actualHealth": [
+        17,
+        17
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 1,
+        "n": 3
+      },
+      "round": 12,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        17,
+        14
+      ],
+      "actualHealth": [
+        17,
+        17
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 1
+        },
+        "n": 3
+      },
+      "round": 12,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        17,
+        14
+      ],
+      "actualHealth": [
+        17,
+        14
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 0,
+        "round": 13,
+        "moon": "new"
+      },
+      "round": 13,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        13,
+        14
+      ],
+      "actualHealth": [
+        17,
+        14
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 0,
+        "n": 4
+      },
+      "round": 13,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        13,
+        14
+      ],
+      "actualHealth": [
+        17,
+        14
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 4
+      },
+      "round": 13,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        13,
+        14
+      ],
+      "actualHealth": [
+        13,
+        14
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 1,
+        "round": 13,
+        "moon": "new"
+      },
+      "round": 13,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        14,
+        10
+      ],
+      "actualHealth": [
+        14,
+        14
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 1,
+        "n": 4
+      },
+      "round": 13,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        14,
+        10
+      ],
+      "actualHealth": [
+        14,
+        14
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 1
+        },
+        "n": 4
+      },
+      "round": 13,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        14,
+        10
+      ],
+      "actualHealth": [
+        14,
+        10
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 0,
+        "round": 14,
+        "moon": "waxing"
+      },
+      "round": 14,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        9,
+        10
+      ],
+      "actualHealth": [
+        14,
+        10
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 0,
+        "n": 5
+      },
+      "round": 14,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        9,
+        10
+      ],
+      "actualHealth": [
+        14,
+        10
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 5
+      },
+      "round": 14,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        9,
+        10
+      ],
+      "actualHealth": [
+        9,
+        10
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 1,
+        "round": 14,
+        "moon": "waxing"
+      },
+      "round": 14,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        10,
+        5
+      ],
+      "actualHealth": [
+        10,
+        10
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 1,
+        "n": 5
+      },
+      "round": 14,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        10,
+        5
+      ],
+      "actualHealth": [
+        10,
+        10
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 1
+        },
+        "n": 5
+      },
+      "round": 14,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        10,
+        5
+      ],
+      "actualHealth": [
+        10,
+        5
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 0,
+        "round": 15,
+        "moon": "full"
+      },
+      "round": 15,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        4,
+        5
+      ],
+      "actualHealth": [
+        10,
+        5
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 0,
+        "n": 6
+      },
+      "round": 15,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        4,
+        5
+      ],
+      "actualHealth": [
+        10,
+        5
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 0
+        },
+        "n": 6
+      },
+      "round": 15,
+      "active": 0,
+      "actionStartedWith": 1,
+      "recapHealth": [
+        4,
+        5
+      ],
+      "actualHealth": [
+        4,
+        5
+      ]
+    },
+    {
+      "event": {
+        "kind": "turnStart",
+        "player": 1,
+        "round": 15,
+        "moon": "full"
+      },
+      "round": 15,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        5,
+        -1
+      ],
+      "actualHealth": [
+        5,
+        5
+      ]
+    },
+    {
+      "event": {
+        "kind": "boneMoonBite",
+        "player": 1,
+        "n": 6
+      },
+      "round": 15,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        5,
+        -1
+      ],
+      "actualHealth": [
+        5,
+        5
+      ]
+    },
+    {
+      "event": {
+        "kind": "damage",
+        "target": {
+          "kind": "sig",
+          "player": 1
+        },
+        "n": 6
+      },
+      "round": 15,
+      "active": 1,
+      "actionStartedWith": 0,
+      "recapHealth": [
+        5,
+        -1
+      ],
+      "actualHealth": [
+        5,
+        -1
+      ]
+    }
+  ]
+}

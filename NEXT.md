@@ -7,7 +7,7 @@
 - [ ] [cody] Shazz against Daxon: play it yourself in both seats before any card changes
     The bot loses it 57 of 60. The planner attacks half as often as Daxon and flips 0.4 times a game; whether the deck or the planner is at fault needs human hands. docs/experiments/shazz-vs-daxon.md has the probe, shazz-lowcurve.md the low-curve list's run, and the tactics suite now holds the swing-then-flip and play-versus-flip lines. Play the other seat on the result screen repeats a deal from the other side.
 - [ ] [crew] The visual language, second pass: the builder's filter rows and the record screen on the brass, ink, and vellum tokens
-    The Card study on the title screen shows the same crowded position in both compact treatments, words and marks, with the drawer and inspection. Builder rows and the record screen follow once the treatment is chosen.
+    The Card study on the title screen shows the same crowded position in both compact treatments, words and marks, with the drawer and inspection. Builder rows and the record screen follow once the treatment is chosen. The next pass also carries the event motion (arrivals, attacks, flips, wounds, deaths made legible) and the phone symbol strip with labels.
 - [x] [crew] A loss recap on the result screen: the decisive public sequence and the deck revision, from the log
     Built 2026-09-07: every reading keeps its seed and actions; the result screen replays them and says up to five factual lines, names the list and revision, and opens the builder against the same opponent. docs/DELIVERY_REVIEW_RESPONSE.md.
 - [ ] [cody] Play the three lessons once on your phone and say where the words ran ahead of the table
